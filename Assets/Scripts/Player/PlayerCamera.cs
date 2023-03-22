@@ -33,11 +33,6 @@ public class PlayerCamera : MonoBehaviour
         destination = follow.position;
         rotation = follow.rotation;
 
-#if UNITY_EDITOR
-        transform.position = destination;
-        transform.rotation = rotation;
-#endif
-
         transform.position = Vector3.Lerp(
             transform.position, destination, speedMove * Time.deltaTime
         );

@@ -8,6 +8,8 @@ public class UI : MonoBehaviour
 {
     public static UI Instance { get; set; }
 
+    [SerializeField] private UIEvents Events;
+
     void Awake()
     {
         Instance = this;
@@ -41,5 +43,15 @@ public class UI : MonoBehaviour
     public void LoseGame()
     {
 
+    }
+
+    public void Aim()
+    {
+        Events.AimEvent.Invoke();
+    }
+
+    public void Ride()
+    {
+        Events.RideEvent.Invoke();
     }
 }
