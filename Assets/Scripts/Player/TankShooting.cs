@@ -4,29 +4,18 @@ using UnityEngine;
 
 public class TankShooting : MonoBehaviour
 {
-    private float mouseStartX, mouseStartY, diffMouseX, diffMouseY;
-    private Vector3 lastCamPos;
-
-    [SerializeField] private float sensivity;
-
-    private void Awake()
-    {
-        Application.targetFrameRate = 60;
-    }
+    [SerializeField] private Transform muzzle;
+    [SerializeField] private GameObject whizzbangPrefab;
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            mouseStartX = Input.mousePosition.x / Screen.width;
-            mouseStartY = Input.mousePosition.y / Screen.height;
-            lastCamPos = transform.rotation.eulerAngles;
-        }
-        if (Input.GetMouseButton(0))
-        {
-            diffMouseX = (mouseStartX - Input.mousePosition.x / Screen.width)*sensivity;
-            diffMouseY = (mouseStartY - Input.mousePosition.y / Screen.height)*sensivity;
-            transform.rotation = Quaternion.Euler(lastCamPos.x+diffMouseY,lastCamPos.y-diffMouseX,0);
-        }
+        Debug.DrawRay(muzzle.position, muzzle.forward * 100f);
+    }
+
+    public void Shoot()
+    {
+        Vector3 pos = muzzle.position;
+        Vector3 rot = muzzle.eulerAngles;
+        ObjectPool.Instance.Insert(ObjectType.Whizzbang, whizzbangPrefab, pos, rot);
     }
 }

@@ -4,8 +4,17 @@ using UnityEngine;
 
 public class ChangePlayType : MonoBehaviour
 {
-    [SerializeField] private CarController carController;
-    [SerializeField] private TankShooting tankShooting;
+    [SerializeField] private TankController carController;
+    [SerializeField] private TankHeadController tankShooting;
+
+    public void Stoped()
+    {
+        PlayType.Set(PlayState.Stoped);
+        carController.enabled = false;
+        tankShooting.enabled = false;
+        
+        UI.Instance.TouchPad.Off();
+    }
 
     public void Ride()
     {
@@ -15,6 +24,8 @@ public class ChangePlayType : MonoBehaviour
 
         Transform camTarget = GameManager.Instance.rideCamRoot;
         GameManager.Instance.SetFollowTarget(camTarget);
+
+        UI.Instance.TouchPad.On();
     }
 
     public void Aim()
@@ -23,7 +34,9 @@ public class ChangePlayType : MonoBehaviour
         carController.enabled = false;
         tankShooting.enabled = true;
 
-        Transform camTarget = GameManager.Instance.aimCamRoot;
+        Transform camTarget = GameManager.Instance.prepareToAimCamRoot;
         GameManager.Instance.SetFollowTarget(camTarget);
+
+        UI.Instance.TouchPad.Off();
     }
 }

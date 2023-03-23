@@ -13,7 +13,41 @@ public class PlayerCamera : MonoBehaviour
         follow = tf;
     }
 
-    [SerializeField] private float speedMove = 2f;
+    [SerializeField] private float speedRide, rotateRide, speedAim, rotateAim = 2f;
+    private float _speed
+    {
+        get
+        {
+            switch(PlayType.Get())
+            {
+                case PlayState.Ride:
+                    return speedRide;
+                case PlayState.Aim:
+                    return speedAim;
+                default:
+                    break;
+            }
+
+            return 0f;
+        }
+    }
+    private float _rotate
+    {
+        get
+        {
+            switch(PlayType.Get())
+            {
+                case PlayState.Ride:
+                    return rotateRide;
+                case PlayState.Aim:
+                    return rotateAim;
+                default:
+                    break;
+            }
+
+            return 0f;
+        }
+    }
 
     private Vector3 destination;
     private Quaternion rotation;
@@ -34,11 +68,11 @@ public class PlayerCamera : MonoBehaviour
         rotation = follow.rotation;
 
         transform.position = Vector3.Lerp(
-            transform.position, destination, speedMove * Time.deltaTime
+            transform.position, destination, _speed * Time.deltaTime
         );
 
         transform.rotation = Quaternion.Slerp(
-            transform.rotation, rotation, speedMove * Time.deltaTime
+            transform.rotation, rotation, _rotate * Time.deltaTime
         );
     }
 }

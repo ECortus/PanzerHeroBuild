@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     [Header("Camera: ")]
     public PlayerCamera Camera;
     public Transform rideCamRoot;
-    public Transform aimCamRoot;
+    public Transform prepareToAimCamRoot;
 
     void Awake() => Instance = this;
 

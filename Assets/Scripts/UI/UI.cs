@@ -8,6 +8,7 @@ public class UI : MonoBehaviour
 {
     public static UI Instance { get; set; }
 
+    public TouchPad TouchPad;
     [SerializeField] private UIEvents Events;
 
     void Awake()

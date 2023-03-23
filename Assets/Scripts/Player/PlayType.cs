@@ -4,7 +4,7 @@ using UnityEngine;
 
 public static class PlayType
 {
-    private static PlayState State = PlayState.Default;
+    private static PlayState State = PlayState.Ride;
 
     public static PlayState Get() => State;
     public static void Set(PlayState state)
@@ -17,5 +17,5 @@ public static class PlayType
 [System.Serializable]
 public enum PlayState
 {
-    Default, Ride, Aim
+    Default, Ride, Aim, Stoped
 }

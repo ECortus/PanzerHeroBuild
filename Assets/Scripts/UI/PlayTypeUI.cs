@@ -19,7 +19,9 @@ public class PlayTypeUI : MonoBehaviour
                 aimButt.SetActive(true);
                 break;
             case PlayState.Aim:
-                rideButt.SetActive(true);
+                if(TankHeadController.Instance.Aiming) rideButt.SetActive(false);
+                else rideButt.SetActive(true);
+
                 aimButt.SetActive(false);
                 break;
             default:

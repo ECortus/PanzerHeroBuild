@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using DavidJalbert;
 
-public class CarController : MonoBehaviour
+public class TankController : MonoBehaviour
 {
-    public static CarController Instance { get; set; }
+    public static TankController Instance { get; set; }
+
+	public Transform Transform { get { return transform; } }
 
 	[SerializeField] private Rigidbody rb;
 	[SerializeField] private float rotateSpeed;
