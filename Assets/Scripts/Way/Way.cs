@@ -70,7 +70,7 @@ public class Way : MonoBehaviour
             return;
         }
 
-        if(ToSmooth && smoothSections > 0 && dots.Count > 3)
+        if(ToSmooth && smoothSections > 2 && dots.Count > 2 && smoothSections >= dots.Count)
         {
             MatchCurvesToDots();
             List<Vector3> smoothedPoints = new List<Vector3>();

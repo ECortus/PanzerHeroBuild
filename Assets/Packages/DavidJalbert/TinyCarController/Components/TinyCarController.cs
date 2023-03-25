@@ -103,7 +103,7 @@ namespace DavidJalbert
             body.mass = bodyMass * (adjustToScale ? cubicScale : 1);
             body.drag = 0;
             body.angularDrag = 1f;
-            body.constraints = RigidbodyConstraints.None;
+            /* body.constraints = RigidbodyConstraints.None; */
             body.useGravity = false;
             body.isKinematic = false;
             body.interpolation = RigidbodyInterpolation.Extrapolate;

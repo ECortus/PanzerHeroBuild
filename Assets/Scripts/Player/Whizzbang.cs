@@ -34,24 +34,32 @@ public class Whizzbang : MonoBehaviour
         rb.velocity = transform.forward * speed;
     }
 
+    void Update()
+    {
+        if(Vector3.Distance(TankController.Instance.Transform.position, transform.position) > 200f) Off();
+    }
+
+    public void HitAboveSomething()
+    {
+        Off();
+        if(destroyEffect != null) 
+            ObjectPool.Instance.Insert(ObjectType.DestroyEffect, destroyEffect, transform.position, Vector3.zero);
+    }
+
     void OnCollisionEnter(Collision col)
     {
         GameObject go = col.gameObject;
 
         switch(go.tag)
         {
-            case "Untagged":
-                HitOnSomething();
+            case "Ground":
+                HitAboveSomething();
+                break;
+            case "Destrictable":
+                HitAboveSomething();
                 break;
             default:
                 break;
         }
-    }
-
-    void HitOnSomething()
-    {
-        Off();
-        if(destroyEffect != null) 
-            ObjectPool.Instance.Insert(ObjectType.DestroyEffect, destroyEffect, transform.position, Vector3.zero);
     }
 }

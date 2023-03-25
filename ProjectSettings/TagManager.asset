@@ -3,19 +3,24 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - BarrierOnRoad
+  - Building
+  - Whizzbang
+  - Ground
+  - Destrictable
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
   - 
   - Ground
   - 
-  - 
-  - 
+  - Destrictable
+  - WholeBuilding
   - 
   - 
   - 

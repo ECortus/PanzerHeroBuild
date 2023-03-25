@@ -56,7 +56,7 @@ public class TankHeadController : MonoBehaviour
 
     void Update()
     {
-        if(EventSystem.current.IsPointerOverGameObject()) return;
+        if(TouchPad.IsPointerOverUIObject()) return;
 
         if (Input.GetMouseButtonDown(0))
         {

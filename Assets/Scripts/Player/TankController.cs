@@ -44,6 +44,12 @@ public class TankController : MonoBehaviour
 
 	private void FixedUpdate()
 	{
+		if(pointIndex + 1 == points.Count)
+		{
+			engine.setMotor(0);
+			return;
+		}
+
 		if(DistanceToPoint(point) < 1.5f)
 		{
 			pointIndex++;
@@ -55,7 +61,7 @@ public class TankController : MonoBehaviour
 
 			Vector3 tv = -(point - transform.position).normalized;
 			var rotation = Quaternion.LookRotation(tv);
-			rotation = Quaternion.Euler(rotation.eulerAngles.x, rotation.eulerAngles.y + 180f, rotation.eulerAngles.z);
+			rotation = Quaternion.Euler(0f, rotation.eulerAngles.y + 180f, 0f);
 
 			/* rb.MoveRotation(Quaternion.Slerp(transform.localRotation, rotation, rotateSpeed * Time.fixedDeltaTime)); */
 			transform.localRotation = Quaternion.Slerp(transform.localRotation, rotation, rotateSpeed * Time.fixedDeltaTime);

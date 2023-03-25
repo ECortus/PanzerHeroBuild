@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RideEffect : MonoBehaviour
 {
-    [SerializeField] private ParticleSystem _01, _02;
+    [SerializeField] private ParticleSystem[] effects;
 
     [SerializeField] private Rigidbody rb;
     [SerializeField] private bool Active = false;
@@ -24,13 +24,17 @@ public class RideEffect : MonoBehaviour
     public void On()
     {
         Active = true;
-        _01.Play();
-        _02.Play();
+        foreach(ParticleSystem ps in effects)
+        {
+            if(ps != null) ps.Play();
+        }
     }
     public void Off()
     {
         Active = false;
-        _01.Stop();
-        _02.Stop();
+        foreach(ParticleSystem ps in effects)
+        {
+            if(ps != null) ps.Stop();
+        }
     }
 }
