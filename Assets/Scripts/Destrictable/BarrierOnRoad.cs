@@ -2,17 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BarrierOnRoad : DestrictableAction
+public class BarrierOnRoad : DestrictableBuilding
 {
     void OnTriggerEnter(Collider col)
     {
-        if(col.tag == "Player")
+        GameObject go = col.gameObject;
+
+        switch(go.tag)
         {
-            GetDestroyed(col.transform);
-        }
-        else if(col.tag == "Whizzbang")
-        {
-            GetDestroyed(col.transform);
+            case "Player":
+                GetDestroyedByPlayer(col.GetComponent<TankController>());
+                break;
+            default:
+                break;
         }
     }
 }

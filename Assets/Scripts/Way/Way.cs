@@ -28,9 +28,9 @@ public class Way : MonoBehaviour
 
     [Header("Smoothing: ")]
     [SerializeField] private bool ToSmooth = false;
-    [Range(0, 20)]
+    [Range(0, 35)]
     [SerializeField] private int smoothSections = 10;
-    [Range(0f, 10f)]
+    [Range(0f, 15f)]
     [SerializeField] private float smoothDistance = 5f;
     private BezierCurve[] Curves;
 
@@ -70,54 +70,61 @@ public class Way : MonoBehaviour
             return;
         }
 
-        if(ToSmooth && smoothSections > 2 && dots.Count > 2 && smoothSections >= dots.Count)
+        DrawDefaultLine();
+
+        if(ToSmooth && dots.Count > 2)
         {
-            MatchCurvesToDots();
-            List<Vector3> smoothedPoints = new List<Vector3>();
-            
-            for (int i = 0; i < Curves.Length; i++)
-            {
-                Vector3[] segments = Curves[i].GetSegments(smoothSections);
-                for (int j = 0; j < segments.Length; j++)
-                {
-                    smoothedPoints.Add(segments[j]);
-                }
-            }
+            DrawSmoothLine();
+        }
+    }
 
-            Points.Clear();
-            line.positionCount = Curves.Length * smoothSections;
+    void DrawDefaultLine()
+    {
+        Points.Clear();
+        line.positionCount = dots.Count;
 
-            for(int i = 0; i < smoothedPoints.Count; i++)
+        for(int i = 0; i < dots.Count; i++)
+        {
+            Vector3 point = dots[i].position;
+            Points.Add(point);
+            line.SetPosition(i, point);
+        }
+    }
+
+    void DrawSmoothLine()
+    {
+        MatchCurvesToDots();
+        List<Vector3> smoothedPoints = new List<Vector3>();
+        
+        for (int i = 0; i < Curves.Length; i++)
+        {
+            Vector3[] segments = Curves[i].GetSegments(smoothSections);
+            for (int j = 0; j < segments.Length; j++)
             {
-                Vector3 point = smoothedPoints[i];
-                Points.Add(point);
-                line.SetPosition(i, point);
+                smoothedPoints.Add(segments[j]);
             }
         }
-        else
-        {
-            Points.Clear();
-            line.positionCount = dots.Count;
 
-            for(int i = 0; i < dots.Count; i++)
-            {
-                Vector3 point = dots[i].position;
-                Points.Add(point);
-                line.SetPosition(i, point);
-            }
+        Points.Clear();
+        line.positionCount = Curves.Length * smoothSections - (dotsTransform.childCount + 1) - (smoothSections / 5);
+
+        for(int i = 0; i < line.positionCount; i++)
+        {
+            Vector3 point = smoothedPoints[i];
+            Points.Add(point);
+            line.SetPosition(i, point);
         }
     }
 
     private void MatchCurvesToDots()
     {
-        Curves = new BezierCurve[dots.Count - 1];
+        EnsureCurvesMatchLineRendererPositions();
+
         for (int i = 0; i < Curves.Length; i++)
         {
-            Curves[i] = new BezierCurve();
-
-            Vector3 position = dots[i].position;
-            Vector3 lastPosition = i == 0 ? dots[0].position : dots[i - 1].position;
-            Vector3 nextPosition = dots[i + 1].position;
+            Vector3 position = line.GetPosition(i);
+            Vector3 lastPosition = i == 0 ? line.GetPosition(0) : line.GetPosition(i - 1);
+            Vector3 nextPosition = line.GetPosition(i + 1);
 
             Vector3 lastDirection = (position - lastPosition).normalized;
             Vector3 nextDirection = (nextPosition - position).normalized;
@@ -135,5 +142,17 @@ public class Way : MonoBehaviour
         Vector3 lastDir = (Curves[0].EndPosition - Curves[0].StartPosition).normalized;
 
         Curves[0].Points[2] = Curves[0].Points[3] + (nextDir + lastDir) * -1 * smoothDistance;
+    }
+
+    private void EnsureCurvesMatchLineRendererPositions()
+    {
+        if (Curves == null || Curves.Length != line.positionCount - 1)
+        {
+            Curves = new BezierCurve[line.positionCount - 1];
+            for (int i = 0; i < Curves.Length; i++)
+            {
+                Curves[i] = new BezierCurve();
+            }
+        }
     }
 }

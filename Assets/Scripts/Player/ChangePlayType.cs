@@ -13,7 +13,7 @@ public class ChangePlayType : MonoBehaviour
         carController.enabled = false;
         tankShooting.enabled = false;
         
-        UI.Instance.TouchPad.Off();
+        TouchPad.Instance.Off();
     }
 
     public void Ride()
@@ -25,7 +25,7 @@ public class ChangePlayType : MonoBehaviour
         Transform camTarget = GameManager.Instance.rideCamRoot;
         GameManager.Instance.SetFollowTarget(camTarget);
 
-        UI.Instance.TouchPad.On();
+        TouchPad.Instance.On();
     }
 
     public void Aim()
@@ -37,6 +37,6 @@ public class ChangePlayType : MonoBehaviour
         Transform camTarget = GameManager.Instance.prepareToAimCamRoot;
         GameManager.Instance.SetFollowTarget(camTarget);
 
-        UI.Instance.TouchPad.Off();
+        TouchPad.Instance.Off();
     }
 }

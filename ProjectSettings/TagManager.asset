@@ -4,10 +4,8 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - BarrierOnRoad
-  - Building
-  - Whizzbang
   - Ground
+  - Building
   - Destrictable
   layers:
   - Default
@@ -19,9 +17,9 @@ TagManager:
   - 
   - Ground
   - 
-  - Destrictable
-  - WholeBuilding
   - 
+  - Building
+  - Destrictable
   - 
   - 
   - 

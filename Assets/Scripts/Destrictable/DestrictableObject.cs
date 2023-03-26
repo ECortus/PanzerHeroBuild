@@ -1,16 +1,34 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cysharp.Threading.Tasks;
 
+[ExecuteInEditMode]
 public class DestrictableObject : MonoBehaviour
 {
-    private DestrictableAction destrictableScript;
+    private int Layer => (int)Mathf.Log(building.destrictableMask.value, 2);
+
+    private DestrictableBuilding _building;
+    public DestrictableBuilding building
+    {
+        get
+        {   
+            if(_building == null)
+            {
+                _building = GetComponentInParent<DestrictableBuilding>();
+            }
+            return _building;
+        }
+    }
 
     public Vector3 center
     {
         get
         {
-            return transform.position;
+            Bounds bounds = col.sharedMesh.bounds;
+            Vector3 point = transform.TransformPoint(bounds.center);
+            return point;
+            /* return transform.position; */
         }
     }
 
@@ -58,12 +76,12 @@ public class DestrictableObject : MonoBehaviour
         }
     }
 
-    public void Setup(DestrictableAction act, PhysicMaterial mat)
-    {
-        destrictableScript = act;
+    private bool HasObject = false;
 
+    public void Setup()
+    {
         gameObject.tag = "Destrictable";
-        gameObject.layer = 9;
+        gameObject.layer = Layer;
 
         rb.constraints = RigidbodyConstraints.FreezeAll;
         rb.isKinematic = false;
@@ -73,69 +91,50 @@ public class DestrictableObject : MonoBehaviour
 
         col.convex = true;
         col.isTrigger = false;
-        col.material = mat;
+        col.material = building.destrictableMaterial;
 
         this.enabled = true;
     }
 
-    void FixedUpdate()
+    void Update()
+    {
+        /* if(building.CheckPhysicsAlready) CheckPhysicsDown(); */
+    }
+
+    /* public async void ProofPhysics()
     {
         CheckPhysicsDown();
-    }
+        await UniTask.Delay(10);
+        CheckPhysicsDown();
+    } */
 
-    public bool CheckPhysicsDown()
+    public void CheckPhysicsDown()
     {
-        if(destrictableScript.DestrictableObjectsActive)
+        float distanceToDownObject = 2f;
+
+        RaycastHit hit;
+
+        Debug.DrawLine(center, center + Vector3.down * distanceToDownObject, Color.red);
+
+        if(Physics.Raycast(center, Vector3.down, out hit, distanceToDownObject, Layer))
         {
-            if(destrictableScript.HasToCheckFloor)
-            {
-                BoxCollider floorCollider = destrictableScript.floor;
-                Transform floor = floorCollider.transform;
-
-                Vector3 offset = Vector3.zero;
-
-                offset = floor.up * (floor.lossyScale.y * floorCollider.size.y / 2f);
-                Vector3 posTop = floor.position + offset;
-                Vector3 posBottom = floor.position - offset;
-
-                offset = floor.right * (floor.lossyScale.x * floorCollider.size.x / 2f);
-                Vector3 posRight = floor.position + offset;
-                Vector3 posLeft = floor.position - offset;
-
-                float distanceToFloor = 2f;
-                if(Vector3.Distance(transform.position, posTop) < distanceToFloor
-                    || Vector3.Distance(transform.position, posBottom) < distanceToFloor
-                    || Vector3.Distance(transform.position, posRight) < distanceToFloor
-                    || Vector3.Distance(transform.position, posLeft) < distanceToFloor)
-                {
-                    return true;
-                }
-            }
-
-            bool HasObject = false;
-            float distanceToDownObject = 1.2f;
-
-            if(Physics.Raycast(transform.position, Vector3.down, distanceToDownObject, destrictableScript.destrictableMask))
-            {
-                HasObject = true;
-                return true;
-            }
-
-            if(!HasObject) 
-            {
-                Activate();
-                ForceRigidbody(destrictableScript.destrictableForce / 1.5f, transform);
-
-                return false;
-            }
+            Debug.Log($"{hit.transform.name}: distance - {Vector3.Distance(center, hit.point)}, layer - {hit.transform.gameObject.layer}");
+            HasObject = true;
+            return;
         }
 
-        return true;
+        if(!HasObject) 
+        {
+            /* Trigger(); */
+            /* ForceRigidbody(building.destrictableForce / 1.5f, transform.forward); */
+
+            return;
+        }
     }
 
-    public void Activate()
+    public void Trigger()
     {
-        gameObject.layer = 0;
+        /* gameObject.layer = 0; */
 
         rb.constraints = RigidbodyConstraints.None;
         rb.useGravity = true;
@@ -144,29 +143,20 @@ public class DestrictableObject : MonoBehaviour
 
         col.isTrigger = false;
 
-        destrictableScript.RemoveDestrictableObject(this);
+        building.RemoveDestrictableObject(this);
 
         this.enabled = false;
     }
 
-    public void ForceRigidbody(float force, Transform center)
+    public void ForceRigidbody(float force, Vector3 direction)
     {
-        Vector3 direction = center.forward;
-            direction = new Vector3(
-                direction.x + Random.Range(-1f, 1f),
-                direction.y + Random.Range(0.1f, 1f),
-                direction.z + Random.Range(-1f, 1f)
-            );
+        direction = new Vector3(
+            direction.x + Random.Range(-1f, 1f),
+            direction.y + Random.Range(0.1f, 1f),
+            direction.z + Random.Range(-1f, 1f)
+        );
         
         rb.AddForce(direction * force, ForceMode.Force);
         rb.angularVelocity = direction * force / 10f;
-    }
-
-    void OnCollisionEnter(Collision col)
-    {
-        if(col.gameObject.tag == "Whizzbang")
-        {
-            destrictableScript.GetDestroyed(col.gameObject.transform);
-        }
     }
 }

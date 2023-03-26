@@ -8,7 +8,10 @@ public class UI : MonoBehaviour
 {
     public static UI Instance { get; set; }
 
-    public TouchPad TouchPad;
+    [SerializeField] private GameObject infoUI;
+    [SerializeField] private GameObject inputUI;
+
+    [Space]
     [SerializeField] private UIEvents Events;
 
     void Awake()
@@ -18,12 +21,12 @@ public class UI : MonoBehaviour
 
     public void On()
     {
-
+        inputUI.SetActive(true);
     }
 
     public void Off()
     {
-
+        inputUI.SetActive(false);
     }
 
     public void Restart()

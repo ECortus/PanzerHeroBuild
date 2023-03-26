@@ -5,8 +5,61 @@ using UnityEngine;
 public class Whizzbang : MonoBehaviour
 {
     [SerializeField] private float speed;
-    private TrailRenderer trial;
-    private Rigidbody rb;
+    
+    private SphereCollider _sphere;
+    private SphereCollider sphere
+    {
+        get
+        {
+            if(_sphere == null)
+            {
+                _sphere = GetComponent<SphereCollider>();
+            }
+
+            return _sphere;
+        }
+        set
+        {
+            _sphere = value;
+        }
+    }
+
+    private TrailRenderer _trail;
+    private TrailRenderer trial
+    {
+        get
+        {
+            if(_trail == null)
+            {
+                _trail = GetComponentInChildren<TrailRenderer>();
+            }
+
+            return _trail;
+        }
+        set
+        {
+            _trail = value;
+        }
+    }
+
+    private Rigidbody _rb;
+    private Rigidbody rb
+    {
+        get
+        {
+            if(_rb == null)
+            {
+                _rb = GetComponent<Rigidbody>();
+            }
+
+            return _rb;
+        }
+        set
+        {
+            _rb = value;
+        }
+    }
+
     [SerializeField] private GameObject destroyEffect;
 
     public bool Active => gameObject.activeSelf;
@@ -16,21 +69,29 @@ public class Whizzbang : MonoBehaviour
         gameObject.SetActive(true);
         trial.Clear();
     }
+
     public void Off()
     {
         gameObject.SetActive(false);
     }
+
     public void Reset(Vector3 pos, Vector3 rot)
     {
         transform.position = pos;
         transform.eulerAngles = rot;
     }
 
+    public Vector3 center
+    {
+        get
+        {
+            return transform.TransformPoint(sphere.center);
+            /* return transform.position; */
+        }
+    }
+
     void OnEnable()
     {
-        if(rb == null) rb = GetComponent<Rigidbody>();
-        if(trial == null) trial = GetComponentInChildren<TrailRenderer>();
-
         rb.velocity = transform.forward * speed;
     }
 
@@ -44,22 +105,5 @@ public class Whizzbang : MonoBehaviour
         Off();
         if(destroyEffect != null) 
             ObjectPool.Instance.Insert(ObjectType.DestroyEffect, destroyEffect, transform.position, Vector3.zero);
-    }
-
-    void OnCollisionEnter(Collision col)
-    {
-        GameObject go = col.gameObject;
-
-        switch(go.tag)
-        {
-            case "Ground":
-                HitAboveSomething();
-                break;
-            case "Destrictable":
-                HitAboveSomething();
-                break;
-            default:
-                break;
-        }
     }
 }
