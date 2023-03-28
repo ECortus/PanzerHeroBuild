@@ -12,6 +12,7 @@ public static class Money
         money += count;
 
         MoneyUI.Instance.UpdateMoney();
+        ModificationStore.Instance.UpdateUpCells();
     }
     
     public static void Minus(int count)
@@ -20,6 +21,7 @@ public static class Money
         if(money < 0) money = 0;
 
         MoneyUI.Instance.UpdateMoney();
+        ModificationStore.Instance.UpdateUpCells();
     }
 
     public static void Save()

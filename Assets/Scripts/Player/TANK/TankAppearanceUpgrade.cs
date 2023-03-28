@@ -5,29 +5,51 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class TankAppearanceUpgrade : MonoBehaviour
 {
-    [Range(0, 2)]
-    public int UpgradeState = 0;
-    public void SetState(int state)
+    public static TankAppearanceUpgrade Instance { get; set; }
+
+    [SerializeField] private int headState = -1;
+    public void SetHeadState(int state)
     {
-        UpgradeState = state;
-        UpdateAppearance();
+        headState = state;
+        UpdateAppearance(headState, 2 + ammoState);
+    }
+
+    [SerializeField] private int gunState = -1;
+    public void SetGunState(int state)
+    {
+        gunState = state;
+        UpdateAppearance(gunState, 1);
+    }
+
+    [SerializeField] private int bodyState = -1;
+    public void SetBodyState(int state)
+    {
+        bodyState = state;
+        UpdateAppearance(bodyState, 0);
+    }
+
+    [SerializeField] private int ammoState = -1;
+    public void SetAmmoState(int state)
+    {
+        ammoState = state;
+        UpdateAppearance(headState, 2 + ammoState);
     }
 
     [Space]
     [SerializeField] private TankAppearance[] Upgrades = new TankAppearance[1];
     private int UpgradesCount => Upgrades.Length;
 
-    void Update()
-    {
-        UpdateAppearance();
-    }
+    void Awake() => Instance = this;
 
-    void UpdateAppearance()
+    void UpdateAppearance(int upgradeState, int index)
     {
+        int UpgradeState = upgradeState;
         if(UpgradesCount == -1) return;
 
-        if(UpgradeState > UpgradesCount) UpgradeState = UpgradesCount - 1;
+        if(UpgradeState > UpgradesCount - 1) UpgradeState = UpgradesCount - 1;
         else if (UpgradeState < 0) UpgradeState = 0;
+
+        if(index + 1 > Upgrades[UpgradeState].Parts.Length) return;
 
         int state = UpgradeState;
         bool appearanceActive = false;
@@ -37,10 +59,18 @@ public class TankAppearanceUpgrade : MonoBehaviour
             if(i == state) appearanceActive = true;
             else appearanceActive = false;
 
-            GameObject[] parts = Upgrades[i].Parts;
-            foreach(GameObject part in parts)
+            if(index > 1)
             {
-                part.SetActive(appearanceActive);
+                GameObject[] parts = Upgrades[i].Parts;
+                for(int t = 2; t < 5; t++)
+                {
+                    if(t == index) parts[t].SetActive(appearanceActive);
+                    else parts[t].SetActive(false);
+                }
+            }
+            else
+            {
+                Upgrades[i].Parts[index].SetActive(appearanceActive);
             }
         }
     }
@@ -49,5 +79,5 @@ public class TankAppearanceUpgrade : MonoBehaviour
 [System.Serializable]
 public class TankAppearance
 {
-    public GameObject[] Parts = new GameObject[3];
+    public GameObject[] Parts = new GameObject[5];
 }

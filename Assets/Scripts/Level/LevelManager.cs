@@ -27,21 +27,17 @@ public class LevelManager : MonoBehaviour
 
     void LoadOnStart()
     {
-        /* foreach(Level lvl in Levels)
-        {
-            lvl.Off();
-        } */
         LoadLevel();
     }
 
     public void StartLevel()
     {
-        
+        ActualLevel.StartLevel();
     }
 
     public void EndLevel()
     {
-
+        
     }
 
     void LoadLevel()

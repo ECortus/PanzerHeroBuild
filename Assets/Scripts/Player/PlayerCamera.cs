@@ -20,15 +20,11 @@ public class PlayerCamera : MonoBehaviour
         {
             switch(PlayType.Get())
             {
-                case PlayState.Ride:
-                    return speedRide;
                 case PlayState.Aim:
                     return speedAim;
                 default:
-                    break;
+                    return speedRide;
             }
-
-            return 0f;
         }
     }
     private float _rotate
@@ -37,15 +33,11 @@ public class PlayerCamera : MonoBehaviour
         {
             switch(PlayType.Get())
             {
-                case PlayState.Ride:
-                    return rotateRide;
                 case PlayState.Aim:
                     return rotateAim;
                 default:
-                    break;
+                    return rotateRide;
             }
-
-            return 0f;
         }
     }
 

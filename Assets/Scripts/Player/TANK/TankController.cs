@@ -8,6 +8,13 @@ public class TankController : MonoBehaviour
     public static TankController Instance { get; set; }
 
 	public Transform Transform { get { return transform; } }
+	public Vector3 center
+	{
+		get
+		{
+			return transform.position - transform.up * engine.colliderRadius * ((int)engine.colliderRadius / 1 + 1) / 10f;
+		}
+	}
 
 	public Rigidbody rb;
 	[SerializeField] private float rotateSpeed;
@@ -18,6 +25,9 @@ public class TankController : MonoBehaviour
 	int pointIndex = 0;
 	Vector3 point => points[pointIndex];
 
+	public void On() => this.enabled = true;
+    public void Off() => this.enabled = false;
+
 	private void OnEnable()
 	{
 		Instance = this;
@@ -25,18 +35,15 @@ public class TankController : MonoBehaviour
 
 	void OnDisable()
 	{
-		rb.velocity = Vector3.zero;
+		engine.setMotor(0);
 	}
 
 	void Start()
 	{
-		PlayerStats.Instance.On();
-		SpawnAtStart();
-
-		UI.Instance.Ride();
+		
 	}
 
-	void SpawnAtStart()
+	public void SpawnAtStart()
 	{
 		pointIndex = 0;
 		
@@ -58,6 +65,7 @@ public class TankController : MonoBehaviour
 		if(pointIndex + 1 == points.Count)
 		{
 			PlayerStats.Instance.Off();
+			GameManager.Instance.SetActive(false);
 		}
 
 		if(DistanceToPoint(point) < 2.5f)
@@ -82,9 +90,13 @@ public class TankController : MonoBehaviour
 		}
 	}
 
+	public void ForceRigidbody(float force)
+	{
+		rb.AddForce(-transform.forward * force);
+	}
+
 	float DistanceToPoint(Vector3 point)
 	{
-		Vector3 center = transform.position - transform.up * engine.colliderRadius;
 		return Vector3.Distance(center, point);
 	}
 }

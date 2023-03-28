@@ -15,6 +15,18 @@ public class WhizzbangCollision : MonoBehaviour
             case "Untagged":
                 main.HitAboveSomething();
                 break;
+            case "Player":
+                PlayerStats.Instance.GetHit(main.damage);
+                main.HitAboveSomething();
+                break;
+            case "EnemyTank":
+                col.gameObject.GetComponent<EnemyStats>().GetHit(main.damage);
+                main.HitAboveSomething();
+                break;
+            case "EnemyUnit":
+                col.gameObject.GetComponent<EnemyStats>().GetHit(main.damage);
+                main.HitAboveSomething();
+                break;
             case "Building":
                 main.HitAboveSomething();
                 break;

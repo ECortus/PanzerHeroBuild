@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BarrierOnRoad : DestrictableBuilding
+public class ObjectOnRoad : DestrictableBuilding
 {
     void OnTriggerEnter(Collider col)
     {
@@ -11,7 +11,10 @@ public class BarrierOnRoad : DestrictableBuilding
         switch(go.tag)
         {
             case "Player":
-                GetDestroyedByPlayer(col.GetComponent<TankController>());
+                GetDestroyedByTank(col.transform);
+                break;
+            case "EnemyTank":
+                GetDestroyedByTank(col.transform);
                 break;
             default:
                 break;

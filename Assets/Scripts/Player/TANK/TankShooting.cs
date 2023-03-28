@@ -4,10 +4,13 @@ using UnityEngine;
 using Cysharp.Threading.Tasks;
 public class TankShooting : MonoBehaviour
 {
+    [SerializeField] private PlayerStats stats;
     [HideInInspector] public bool IsShooting = false;
 
     [SerializeField] private Transform muzzle;
     [SerializeField] private GameObject whizzbangPrefab;
+
+    private int ReloadTime => (int)(500f/*  / Modifications.TimeReloadMod */);
 
     public async UniTask Shooting()
     {
@@ -33,7 +36,8 @@ public class TankShooting : MonoBehaviour
     {
         Vector3 pos = muzzle.position;
         Vector3 rot = muzzle.eulerAngles;
-        ObjectPool.Instance.Insert(ObjectType.Whizzbang, whizzbangPrefab, pos, rot);
+        GameObject go = ObjectPool.Instance.Insert(ObjectType.Whizzbang, whizzbangPrefab, pos, rot);
+        go.GetComponent<Whizzbang>().damage = stats.Damage;
 
         await UseWhizzbang();
     }
@@ -47,14 +51,14 @@ public class TankShooting : MonoBehaviour
             await Reload();
         }
         
-        await UniTask.Delay(400);
+        await UniTask.Delay(ReloadTime);
     }
 
     async UniTask Reload()
     {
         for(int i = 0; i < PlayerStats.Instance.MaxWhizzbangCount; i++)
         {
-            await UniTask.Delay(500);
+            await UniTask.Delay(ReloadTime);
             PlayerStats.Instance.WhizzbangCount += 1;
         }
     }

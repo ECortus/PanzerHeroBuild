@@ -10,20 +10,51 @@ public class PlayerStats : MonoBehaviour
     public static PlayerStats Instance { get; set; }
 
     [Header("Default stats(on start and handle set-s) ")]
-    public float MaxHP = 100f;
-    public int MaxWhizzbangCount = 3;
+    public float _DefaultHP = 100f;
+    public float _DefaultDamage = 5f;
+    public int _DefaultWhizzbangCount = 3;
+
+    public float MaxHP
+    {
+        get
+        {
+            return _DefaultHP/*  * Modifications.ArmorMod */;
+        }
+    }
+
+    public int MaxWhizzbangCount
+    {
+        get
+        {
+            return _DefaultWhizzbangCount;
+        }
+    }
+
+    public float Damage
+    {
+        get
+        {
+            return _DefaultDamage/*  * Modifications.DamageMod */;
+        }
+    }
+
+    [SerializeField] private UnityEvent DeathEvent;
 
     private bool _active;
     public bool Active { get { return _active; }}
     public void On()
     {
         _active = true;
+
         UI.Instance.On();
+        ChangePlayType.Instance.Ride();
     }
     public void Off()
     {
         _active = false;
+
         UI.Instance.Off();
+        ChangePlayType.Instance.Disable();
     }
     
     private float _HP;
@@ -96,6 +127,6 @@ public class PlayerStats : MonoBehaviour
 
     void Death()
     {
-        Off();
+        DeathEvent.Invoke();
     }
 }

@@ -12,6 +12,7 @@ public class Eventpoint : MonoBehaviour
         if(col.tag == "Player")
         {
             Event.Invoke();
+            gameObject.SetActive(false);
         }
     }
 }

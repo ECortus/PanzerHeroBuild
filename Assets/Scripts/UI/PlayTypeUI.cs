@@ -14,6 +14,10 @@ public class PlayTypeUI : MonoBehaviour
     {
         switch(PlayType.Get())
         {
+            case PlayState.Stoped:
+                rideButt.SetActive(false);
+                aimButt.SetActive(true);
+                break;
             case PlayState.Ride:
                 rideButt.SetActive(false);
                 aimButt.SetActive(true);

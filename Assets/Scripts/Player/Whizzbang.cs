@@ -5,6 +5,7 @@ using UnityEngine;
 public class Whizzbang : MonoBehaviour
 {
     [SerializeField] private float speed;
+    [HideInInspector] public float damage;
     
     private SphereCollider _sphere;
     private SphereCollider sphere

@@ -106,7 +106,7 @@ public class Way : MonoBehaviour
         }
 
         Points.Clear();
-        line.positionCount = Curves.Length * smoothSections - (dotsTransform.childCount + 1) - (smoothSections / 5);
+        line.positionCount = Curves.Length * smoothSections - (smoothSections / 5);
 
         for(int i = 0; i < line.positionCount; i++)
         {

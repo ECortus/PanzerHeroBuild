@@ -40,6 +40,9 @@ public class TankHeadController : MonoBehaviour
     [SerializeField] private float rotate;
     [SerializeField] private float sensivityVertical, sensivityHorizontal;
 
+    public void On() => this.enabled = true;
+    public void Off() => this.enabled = false;
+
     private void Awake()
     {
         Instance = this;

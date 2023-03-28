@@ -86,8 +86,8 @@ public class DestrictableObject : MonoBehaviour
         rb.constraints = RigidbodyConstraints.FreezeAll;
         rb.isKinematic = false;
         rb.useGravity = false;
-        rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
-        rb.interpolation = RigidbodyInterpolation.Interpolate;
+        rb.collisionDetectionMode = CollisionDetectionMode.Discrete;
+        rb.interpolation = RigidbodyInterpolation.None;
 
         col.convex = true;
         col.isTrigger = false;
@@ -98,7 +98,7 @@ public class DestrictableObject : MonoBehaviour
 
     void Update()
     {
-        /* if(building.CheckPhysicsAlready) CheckPhysicsDown(); */
+        if(building.CheckPhysicsAlready && building.destrictableObjects.Count < 11) CheckPhysicsDown();
     }
 
     /* public async void ProofPhysics()
@@ -110,22 +110,23 @@ public class DestrictableObject : MonoBehaviour
 
     public void CheckPhysicsDown()
     {
-        float distanceToDownObject = 2f;
+        float distanceToDownObject = 1f;
 
         RaycastHit hit;
+        Vector3 direction = Vector3.down;
 
-        Debug.DrawLine(center, center + Vector3.down * distanceToDownObject, Color.red);
+        Debug.DrawLine(center, center + direction * distanceToDownObject, Color.red);
 
-        if(Physics.Raycast(center, Vector3.down, out hit, distanceToDownObject, Layer))
+        if(Physics.Raycast(center, direction, out hit, distanceToDownObject))
         {
-            Debug.Log($"{hit.transform.name}: distance - {Vector3.Distance(center, hit.point)}, layer - {hit.transform.gameObject.layer}");
+            Debug.Log($"{gameObject.name} hit on {hit.transform.name}: distance - {Vector3.Distance(center, hit.point)}, layer - {hit.transform.gameObject.layer}");
             HasObject = true;
             return;
         }
 
         if(!HasObject) 
         {
-            /* Trigger(); */
+            Trigger();
             /* ForceRigidbody(building.destrictableForce / 1.5f, transform.forward); */
 
             return;

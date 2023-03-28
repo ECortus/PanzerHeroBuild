@@ -10,7 +10,7 @@ public class ObjectPool : MonoBehaviour
     private List<Whizzbang> WhizzbangPool = new List<Whizzbang>();
     private List<ParticleSystem> DestroyEffectPool = new List<ParticleSystem>();
 
-    public void Insert(ObjectType type, GameObject obj, Vector3 pos, Vector3 rot)
+    public GameObject Insert(ObjectType type, GameObject obj, Vector3 pos, Vector3 rot)
     {
         if(type == ObjectType.Whizzbang)
         {
@@ -22,12 +22,13 @@ public class ObjectPool : MonoBehaviour
                 {
                     wb.Reset(pos, rot);
                     wb.On();
-                    return;
+                    return wb.gameObject;
                 }
             }
 
             Whizzbang scr = Instantiate(obj, pos, Quaternion.Euler(rot)).GetComponent<Whizzbang>();
             WhizzbangPool.Add(scr);
+            return scr.gameObject;
         }
 
         if(type == ObjectType.DestroyEffect)
@@ -40,13 +41,16 @@ public class ObjectPool : MonoBehaviour
                 {
                     de.transform.position = pos;
                     de.Play();
-                    return;
+                    return de.gameObject;
                 }
             }
 
             ParticleSystem scr = Instantiate(obj, pos, Quaternion.Euler(rot)).GetComponent<ParticleSystem>();
             DestroyEffectPool.Add(scr);
+            return scr.gameObject;
         }
+
+        return null;
     }
 }
 

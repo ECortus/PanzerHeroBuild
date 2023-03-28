@@ -4,39 +4,57 @@ using UnityEngine;
 
 public class ChangePlayType : MonoBehaviour
 {
-    [SerializeField] private TankController carController;
-    [SerializeField] private TankHeadController tankShooting;
+    public static ChangePlayType Instance { get; set; }
+    [SerializeField] private TankController tankController;
+    [SerializeField] private TankHeadController tankHead;
+
+    void Awake() => Instance = this;
+
+    public void Disable()
+    {
+        PlayType.Set(PlayState.Disable);
+        tankController.Off();
+        tankHead.Off();
+
+        Transform camTarget = GameManager.Instance.rideCamRoot;
+        GameManager.Instance.SetFollowTarget(camTarget);
+        
+        if(TouchPad.Instance != null) TouchPad.Instance.Off();
+    }
 
     public void Stoped()
     {
         PlayType.Set(PlayState.Stoped);
-        carController.enabled = false;
-        tankShooting.enabled = false;
+        tankController.Off();
+        tankHead.Off();
+
+        Transform camTarget = GameManager.Instance.rideCamRoot;
+        GameManager.Instance.SetFollowTarget(camTarget);
         
-        TouchPad.Instance.Off();
+        if(TouchPad.Instance != null) TouchPad.Instance.Off();
     }
 
     public void Ride()
     {
         PlayType.Set(PlayState.Ride);
-        carController.enabled = true;
-        tankShooting.enabled = false;
+        tankController.On();
+        tankHead.Off();
 
         Transform camTarget = GameManager.Instance.rideCamRoot;
         GameManager.Instance.SetFollowTarget(camTarget);
 
-        TouchPad.Instance.On();
+        if(TouchPad.Instance != null) TouchPad.Instance.On();
     }
 
     public void Aim()
     {
         PlayType.Set(PlayState.Aim);
-        carController.enabled = false;
-        tankShooting.enabled = true;
+        tankController.Off();
+        tankHead.On();
 
         Transform camTarget = GameManager.Instance.prepareToAimCamRoot;
         GameManager.Instance.SetFollowTarget(camTarget);
 
-        TouchPad.Instance.Off();
+        if(TouchPad.Instance != null) TouchPad.Instance.Off();
     }
 }

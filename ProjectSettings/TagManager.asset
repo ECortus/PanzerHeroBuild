@@ -7,6 +7,9 @@ TagManager:
   - Ground
   - Building
   - Destrictable
+  - TankHitBox
+  - EnemyTank
+  - EnemyUnit
   layers:
   - Default
   - TransparentFX
@@ -21,7 +24,7 @@ TagManager:
   - Building
   - Destrictable
   - 
-  - 
+  - Enemy
   - 
   - 
   - 

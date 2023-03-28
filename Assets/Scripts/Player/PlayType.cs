@@ -10,12 +10,12 @@ public static class PlayType
     public static void Set(PlayState state)
     {
         State = state;
-        PlayTypeUI.Instance.UpdateButtons();
+        if(PlayTypeUI.Instance != null) PlayTypeUI.Instance.UpdateButtons();
     }
 }
 
 [System.Serializable]
 public enum PlayState
 {
-    Default, Ride, Aim, Stoped
+    Default, Ride, Aim, Stoped, Disable
 }

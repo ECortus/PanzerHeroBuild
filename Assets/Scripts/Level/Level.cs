@@ -12,4 +12,24 @@ public class Level : MonoBehaviour
     public void On() => gameObject.SetActive(true);
     public void Off() => gameObject.SetActive(false);
     public void Eliminate() => Destroy(gameObject);
+
+    public int moneyOnStart;
+
+    public void StartLevel()
+    {
+        DataManager.Load();
+        PrepareToStart();
+
+        moneyOnStart = Statistics.Money;
+    }
+
+    public void PrepareToStart()
+    {
+        GameManager.Instance.SetActive(false);
+
+        TankController.Instance.SpawnAtStart();
+        PlayerStats.Instance.Off();
+
+        UI.Instance.EnableStartUI();
+    }
 }

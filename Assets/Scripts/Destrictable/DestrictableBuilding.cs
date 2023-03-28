@@ -6,7 +6,9 @@ using System.Linq;
 [ExecuteInEditMode]
 public class DestrictableBuilding : MonoBehaviour
 {
-    /* public bool CheckPhysicsAlready = false; */
+    [SerializeField] private DestrictableObject floor;
+
+    public bool CheckPhysicsAlready = false;
     [SerializeField] private Transform destrictableParent;
 
     [Space]
@@ -14,7 +16,7 @@ public class DestrictableBuilding : MonoBehaviour
 
     [Header("Parameters: ")]
     public PhysicMaterial destrictableMaterial;
-    public LayerMask destrictableMask;
+    public LayerMask destrictableMask, enemyMask;
     public float destrictableForce;
     public float destrictableRadius;
 
@@ -47,14 +49,29 @@ public class DestrictableBuilding : MonoBehaviour
         destrictableObjects.Remove(obj);
     }
 
-    public void GetDestroyedByPlayer(TankController player)
+    public void GetDestroyedByTank(Transform tank)
     {
-        TriggerDestrictableObjects(destrictableObjects, player.Transform.forward);
+        TriggerDestrictableObjects(destrictableObjects, tank.forward);
     }
 
     public void GetDestroyedByWhizzbang(Whizzbang whizzbang)
     {
         TriggerDestrictableObjects(GetObjectsOnRadius(whizzbang.center), whizzbang.transform.forward);
+
+        Collider[] cols = Physics.OverlapSphere(whizzbang.center, destrictableRadius * 2f, enemyMask);
+
+        if(cols.Length > 0)
+        {
+            EnemyUnit unit;
+            foreach(Collider col in cols)
+            {
+                col.TryGetComponent<EnemyUnit>(out unit);
+                if(unit != null)
+                {
+                    unit.ForceAway(destrictableForce, whizzbang.transform.forward);
+                }
+            }
+        }
     }
 
     void TriggerDestrictableObjects(List<DestrictableObject> objects, Vector3 forward)
@@ -69,6 +86,9 @@ public class DestrictableBuilding : MonoBehaviour
 
             DestrictableObject destObj = list[i];
 
+            if(floor != null)
+                if(destObj == floor) continue;
+
             Vector3 direction = forward + new Vector3(
                 Random.Range(-1, 1),
                 Random.Range(0.2f, 1),
@@ -78,16 +98,6 @@ public class DestrictableBuilding : MonoBehaviour
             destObj.Trigger();
             destObj.ForceRigidbody(destrictableForce, direction);
         }
-
-        /* list = destrictableObjects;
-        count = list.Count;
-        for(int i = 0; i < count; i++)
-        {
-            if(i >= list.Count) return;
-
-            DestrictableObject destObj = list[i];
-            destObj.ProofPhysics();
-        } */
     }
 
     List<DestrictableObject> GetObjectsOnRadius(Vector3 center)
@@ -116,6 +126,7 @@ public class DestrictableBuilding : MonoBehaviour
                 if(Vector3.Distance(point1, center) <= radius * 1.2f)
                 {
                     point1.y = obj.transform.position.y;
+                    point2.y = center.y;
                     if(point1.y >= point2.y)
                     {
                         list.Add(obj);
