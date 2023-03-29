@@ -25,9 +25,9 @@ public class ModificationStore : MonoBehaviour
     {
         DataManager.Load();
 
-        SetupCell(damageCell, Statistics.DamageLVL, Modifications.GetDamagePlusMod(), CostFormula(Statistics.DamageLVL));
-        SetupCell(ArmorCell, Statistics.ArmorLVL, Modifications.GetArmorPlusMod(), CostFormula(Statistics.ArmorLVL));
-        SetupCell(timeReloadCell, Statistics.TimeReloadLVL, Modifications.GetTimeReloadPlusMod(), CostFormula(Statistics.TimeReloadLVL));
+        SetupCell(damageCell, CostFormula(Statistics.DamageLVL));
+        SetupCell(ArmorCell, CostFormula(Statistics.ArmorLVL));
+        SetupCell(timeReloadCell, CostFormula(Statistics.TimeReloadLVL));
 
         UpdateUpCells();
     }
@@ -36,45 +36,37 @@ public class ModificationStore : MonoBehaviour
     {
         int lvl = Statistics.DamageLVL;
         Upgrade up = Modifications.UpgradeDamage;
-        float cur = Modifications.ArmorMod;
-        float plus = Modifications.GetDamagePlusMod();
         ModificationCell cell = damageCell;
 
-        TryUp(lvl, up, cur, plus, cell);
+        TryUp(lvl, up, cell);
     }
 
     public void UpArmor()
     {
         int lvl = Statistics.ArmorLVL;
         Upgrade up = Modifications.UpgradeArmor;
-        float cur = Modifications.ArmorMod;
-        float plus = Modifications.GetArmorPlusMod();
         ModificationCell cell = ArmorCell;
 
-        TryUp(lvl, up, cur, plus, cell);
+        TryUp(lvl, up, cell);
     }
 
     public void UpTimeReload()
     {
         int lvl = Statistics.TimeReloadLVL;
         Upgrade up = Modifications.UpgradeTimeReload;
-        float cur = Modifications.ArmorMod;
-        float plus = Modifications.GetTimeReloadPlusMod();
         ModificationCell cell = timeReloadCell;
 
-        TryUp(lvl, up, cur, plus, cell);
+        TryUp(lvl, up, cell);
     }
 
-    void SetupCell(ModificationCell cell, int LVL, float plus, int cost)
+    void SetupCell(ModificationCell cell, int cost)
     {
-        cell.actualLVL = LVL;
-        cell.plus = plus;
         cell.cost = cost;
 
         cell.UpdateCell();
     }
 
-    void TryUp(int LVL, Upgrade UP, float current, float plus, ModificationCell cell)
+    void TryUp(int LVL, Upgrade UP, ModificationCell cell)
     {
         if(LVL >= Modifications.MaxLevel)
         {
@@ -90,9 +82,6 @@ public class ModificationStore : MonoBehaviour
             Money.Minus(cost);
             Money.Save();
 
-            cell.actualLVL = LVL + 1;
-            cell.currentChar = current;
-            cell.plus = plus;
             cell.cost = CostFormula(LVL + 1);
             cell.UpdateCell();
         }

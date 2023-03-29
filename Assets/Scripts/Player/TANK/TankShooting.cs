@@ -10,7 +10,7 @@ public class TankShooting : MonoBehaviour
     [SerializeField] private Transform muzzle;
     [SerializeField] private GameObject whizzbangPrefab;
 
-    private int ReloadTime => (int)(500f/*  / Modifications.TimeReloadMod */);
+    private int ReloadTime => (int)(stats.TimeReload * 1000);
 
     public async UniTask Shooting()
     {

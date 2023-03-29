@@ -9,6 +9,7 @@ public class EnemyUnit : MonoBehaviour
 
     [SerializeField] private Animator animator;
     [SerializeField] private Rigidbody rb;
+    [SerializeField] private Rigidbody[] ragdollRBs;
 
     [Space]
     [SerializeField] private float speed;
@@ -102,6 +103,15 @@ public class EnemyUnit : MonoBehaviour
 	{
 		return Vector3.Distance(center, point);
 	}
+
+    public void MakePhysical()
+    {
+        animator.enabled = false;
+        foreach(Rigidbody rb in ragdollRBs)
+        {
+            
+        }
+    }
 
     void OnDrawGizmos()
     {

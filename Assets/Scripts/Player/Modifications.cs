@@ -9,30 +9,42 @@ public static class Modifications
     public static int UpgradesInTier = 3;
     public static int MaxLevel = UpgradesInTier * (MaxTier - 1);
 
-    private static float baseValue = 1f;
+    private static float baseArmor => PlayerStats.Instance.DefaultHP;
+    private static float baseDamage => PlayerStats.Instance.DefaultDamage;
+    private static float baseTimeReload => PlayerStats.Instance.DefaultTimeReload;
 
-    static float Formula(int lvl, float step)
+    private static float DamageStep = 7;
+    private static float ArmorStep = 30f;
+    private static float TimeReloadStep = -0.04f;
+
+    delegate float Step(int lvl);
+
+    static float Formula(float baseValue, int lvl, Step step)
     {
-        return baseValue + (lvl * step);
+        float value = baseValue;
+
+        for(int i = 0; i < lvl; i++)
+        {
+            value += step(i);
+        }
+
+        return value;
     }
 
-    private static float DamageStep = 0.1f;
     private static int DamageLVL { get { return Statistics.DamageLVL; } set { Statistics.DamageLVL = value; } }
 
     public static float DamageMod
     {
         get
         {
-            int levelMod = DamageLVL;
-            float step = DamageStep;
-
-            return Formula(levelMod, step);
+            Step step = GetDamagePlusChar;
+            return Formula(baseDamage, DamageLVL, step);
         }
     }
 
-    public static float GetDamagePlusMod() 
+    public static float GetDamagePlusChar(int lvl) 
     {
-        return DamageStep * DamageLVL;
+        return System.MathF.Round(DamageStep + DamageStep / (lvl + 1), 0);
     }
 
     public static void UpgradeDamage()
@@ -40,23 +52,20 @@ public static class Modifications
         DamageLVL = DamageLVL + 1;
     }
 
-    private static float ArmorStep = 0.1f;
     private static int ArmorLVL { get { return Statistics.ArmorLVL; } set { Statistics.ArmorLVL = value; } }
 
     public static float ArmorMod
     {
         get
         {
-            int levelMod = ArmorLVL;
-            float step = ArmorStep;
-
-            return Formula(levelMod, step);
+            Step step = GetArmorPlusChar;
+            return Formula(baseArmor, ArmorLVL, step);
         }
     }
 
-    public static float GetArmorPlusMod() 
+    public static float GetArmorPlusChar(int lvl) 
     {
-        return ArmorStep * ArmorLVL;
+        return System.MathF.Round(ArmorStep + ArmorStep / (lvl + 1), 0);
     }
 
     public static void UpgradeArmor()
@@ -64,23 +73,20 @@ public static class Modifications
         ArmorLVL = ArmorLVL + 1;
     }
 
-    private static float TimeReloadStep = 0.1f;
     private static int TimeReloadLVL { get { return Statistics.TimeReloadLVL; } set { Statistics.TimeReloadLVL = value; } }
 
     public static float TimeReloadMod
     {
         get
         {
-            int levelMod = TimeReloadLVL;
-            float step = TimeReloadStep;
-
-            return Formula(levelMod, step);
+            Step step = GetTimeReloadPlusChar;
+            return Formula(baseTimeReload, TimeReloadLVL, step);
         }
     }
 
-    public static float GetTimeReloadPlusMod() 
+    public static float GetTimeReloadPlusChar(int lvl) 
     {
-        return TimeReloadStep * TimeReloadLVL;
+        return System.MathF.Round(TimeReloadStep + TimeReloadStep / (lvl + 1), 2);
     }
 
     public static void UpgradeTimeReload()

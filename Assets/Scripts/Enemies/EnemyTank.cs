@@ -22,7 +22,7 @@ public class EnemyTank : MonoBehaviour
 	{
 		get
 		{
-			return transform.position - transform.up * engine.colliderRadius * ((int)engine.colliderRadius / 1 + 1) / 10f;
+			return transform.position /* - transform.up * engine.colliderRadius * ((int)engine.colliderRadius / 1 + 1) / 10f */;
 		}
 	}
 
@@ -74,12 +74,12 @@ public class EnemyTank : MonoBehaviour
         else
         {
             shooting.Off();
-            engine.setMotor(2);
+            /* engine.setMotor(2);
 
             Vector3 tv = -(point - transform.position).normalized;
-            var rotation = Quaternion.LookRotation(tv);
+            Quaternion rotation = Quaternion.LookRotation(tv);
             rotation = Quaternion.Euler(0f, rotation.eulerAngles.y + 180f, 0f);
-            transform.localRotation = Quaternion.Slerp(transform.localRotation, rotation, rotateSpeed * Time.fixedDeltaTime);
+            transform.localRotation = Quaternion.Slerp(transform.localRotation, rotation, rotateSpeed * Time.fixedDeltaTime); */
         }
 
         RotateHead();
@@ -95,7 +95,7 @@ public class EnemyTank : MonoBehaviour
         Quaternion headRot = new Quaternion(0f, rotation.y - transform.rotation.y, 0f, rotation.w);
         Quaternion gunRot = new Quaternion(0f, 0f, -rotation.x, rotation.w);
 
-        head.localRotation = Quaternion.Slerp(head.localRotation, headRot, rotateSpeed * 1.5f * Time.deltaTime);
+        head.localRotation = Quaternion.Slerp(head.localRotation, headRot, rotateSpeed * 4f * Time.deltaTime);
         gun.localRotation = Quaternion.Slerp(gun.localRotation, gunRot, rotateSpeed * 4 * Time.deltaTime);
     }
 

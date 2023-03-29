@@ -12,7 +12,7 @@ public class TankController : MonoBehaviour
 	{
 		get
 		{
-			return transform.position - transform.up * engine.colliderRadius * ((int)engine.colliderRadius / 1 + 1) / 10f;
+			return transform.position - transform.up * engine.colliderRadius * ((int)engine.colliderRadius / 1 + 1) / 4f;
 		}
 	}
 
@@ -68,7 +68,7 @@ public class TankController : MonoBehaviour
 			GameManager.Instance.SetActive(false);
 		}
 
-		if(DistanceToPoint(point) < 2.5f)
+		if(DistanceToPoint(point) < 3f)
 		{
 			pointIndex++;
 		}

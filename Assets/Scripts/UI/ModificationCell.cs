@@ -7,9 +7,82 @@ using TMPro;
 
 public class ModificationCell : MonoBehaviour
 {
-    [HideInInspector] public int actualLVL = 0;
-    [HideInInspector] public float currentChar = 0;
-    [HideInInspector] public float plus = 0;
+    [SerializeField] private CellType type;
+
+    [HideInInspector] public int actualLVL
+    {
+        get
+        {
+            int value = -1;
+
+            switch(type)
+            {
+                case CellType.Damage:
+                    value = Statistics.DamageLVL;
+                    break;
+                case CellType.Armor:
+                    value = Statistics.ArmorLVL;
+                    break;
+                case CellType.Reload:
+                    value = Statistics.TimeReloadLVL;
+                    break;
+            }
+
+            return value;
+        }
+    }
+
+    public float currentChar
+    {
+        get
+        {
+            float value = -1f;
+
+            switch(type)
+            {
+                case CellType.Damage:
+                    value = Modifications.DamageMod;
+                    value = System.MathF.Round(value, 0);
+                    break;
+                case CellType.Armor:
+                    value = Modifications.ArmorMod;
+                    value = System.MathF.Round(value, 0);
+                    break;
+                case CellType.Reload:
+                    value = Modifications.TimeReloadMod;
+                    value = System.MathF.Round(value, 2);
+                    break;
+            }
+
+            return value;
+        }
+    }
+
+    public float plus
+    {
+        get
+        {
+            float value = -1f;
+
+            switch(type)
+            {
+                case CellType.Damage:
+                    value = Modifications.GetDamagePlusChar(Statistics.DamageLVL);
+                    value = System.MathF.Round(value, 0);
+                    break;
+                case CellType.Armor:
+                    value = Modifications.GetArmorPlusChar(Statistics.ArmorLVL);
+                    value = System.MathF.Round(value, 0);
+                    break;
+                case CellType.Reload:
+                    value = Modifications.GetTimeReloadPlusChar(Statistics.TimeReloadLVL);
+                    value = System.MathF.Round(value, 2);
+                    break;
+            }
+
+            return value;
+        }
+    }
     [HideInInspector] public int cost;
 
     [Header("Info: ")]
@@ -33,9 +106,9 @@ public class ModificationCell : MonoBehaviour
     void UpdateSlider()
     {
         int lvl = actualLVL;
-        int iter = actualLVL % Modifications.UpgradesInTier;
 
-        if(actualLVL >= Modifications.MaxLevel) iter = 99;
+        int iter = lvl % Modifications.UpgradesInTier;
+        if(lvl >= Modifications.MaxLevel) iter = 99;
 
         for(int i = 0; i < sliderImages.Length; i++)
         {
@@ -54,23 +127,26 @@ public class ModificationCell : MonoBehaviour
             currentLevel.text = $"{lvl  / Modifications.UpgradesInTier}";
             nextLevel.text = $"{lvl / Modifications.UpgradesInTier + 1}";
 
-            currentCharText.text = $"99";
-            plusCharText.text = $"+99";
+            currentCharText.text = $"{currentChar}";
+            if(plus > 0) plusCharText.text = $"+{plus}";
+            else plusCharText.text = $"{plus}";
         }
         else
         {
-            levelTitle.text = $"LEVEL {lvl}";
-            currentLevel.text = $"{actualLVL - 1}";
-            nextLevel.text = $"{actualLVL}";
+            levelTitle.text = $"LEVEL {lvl / Modifications.UpgradesInTier }";
+            currentLevel.text = $"{lvl / Modifications.UpgradesInTier - 1}";
+            nextLevel.text = $"{lvl / Modifications.UpgradesInTier }";
 
             currentCharText.text = $"{currentChar}";
-            plusCharText.text = $"+{plus}";
+            plusCharText.text = $"+--";
         }
     }
 
     void UpdateButton()
     {
-        if(actualLVL >= Modifications.MaxLevel)
+        int lvl = actualLVL;
+
+        if(lvl >= Modifications.MaxLevel)
         {
             image.sprite = ModificationStore.Instance.unavailableSpr;
             costText.text = "---";
@@ -91,4 +167,10 @@ public class ModificationCell : MonoBehaviour
 
         costText.text = $"{cost}";
     }
+}
+
+[System.Serializable]
+public enum CellType
+{
+    Damage, Armor, Reload
 }
