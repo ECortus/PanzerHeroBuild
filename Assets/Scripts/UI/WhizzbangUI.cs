@@ -2,10 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[ExecuteInEditMode]
-public class WhizzbangCounter : MonoBehaviour
+public class WhizzbangUI : ShowHideUI
 {
-    public static WhizzbangCounter Instance { get; set; }
+    public static WhizzbangUI Instance { get; set; }
 
     private int previousCount = 0;
     private int count => PlayerStats.Instance.WhizzbangCount;
@@ -17,6 +16,18 @@ public class WhizzbangCounter : MonoBehaviour
     void OnEnable()
     {
         UpdCount();
+    }
+
+    public void Open()
+    {
+        StopAllCoroutines();
+        StartCoroutine(ShowProcess());
+    }
+
+    public void Close()
+    {
+        StopAllCoroutines();
+        StartCoroutine(HideProcess());
     }
 
     public void UpdCount()

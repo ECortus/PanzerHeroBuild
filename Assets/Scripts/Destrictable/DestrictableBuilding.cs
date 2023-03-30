@@ -56,6 +56,8 @@ public class DestrictableBuilding : MonoBehaviour
 
     public void GetDestroyedByWhizzbang(Whizzbang whizzbang)
     {
+        if(whizzbang.damage < 1f) return;
+
         TriggerDestrictableObjects(GetObjectsOnRadius(whizzbang.center), whizzbang.transform.forward);
 
         Collider[] cols = Physics.OverlapSphere(whizzbang.center, destrictableRadius * 2f, enemyMask);
@@ -68,7 +70,7 @@ public class DestrictableBuilding : MonoBehaviour
                 col.TryGetComponent<EnemyUnit>(out unit);
                 if(unit != null)
                 {
-                    unit.ForceAway(destrictableForce, whizzbang.transform.forward);
+                    unit.stats.GetHit(999f);
                 }
             }
         }

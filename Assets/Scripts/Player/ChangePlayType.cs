@@ -8,6 +8,10 @@ public class ChangePlayType : MonoBehaviour
     [SerializeField] private TankController tankController;
     [SerializeField] private TankHeadController tankHead;
 
+    [Space]
+    [SerializeField] private HPBarObject hpInRide;
+    [SerializeField] private HPBarObject hpInAim;
+
     void Awake() => Instance = this;
 
     public void Disable()
@@ -15,6 +19,10 @@ public class ChangePlayType : MonoBehaviour
         PlayType.Set(PlayState.Disable);
         tankController.Off();
         tankHead.Off();
+
+        hpInRide.Off();
+        hpInAim.Off();
+        HealthUI.Instance.Reset();
 
         Transform camTarget = GameManager.Instance.rideCamRoot;
         GameManager.Instance.SetFollowTarget(camTarget);
@@ -28,6 +36,10 @@ public class ChangePlayType : MonoBehaviour
         tankController.Off();
         tankHead.Off();
 
+        hpInRide.Off();
+        hpInAim.Off();
+        HealthUI.Instance.Reset();
+
         Transform camTarget = GameManager.Instance.rideCamRoot;
         GameManager.Instance.SetFollowTarget(camTarget);
         
@@ -40,6 +52,10 @@ public class ChangePlayType : MonoBehaviour
         tankController.On();
         tankHead.Off();
 
+        hpInRide.On();
+        hpInAim.Off();
+        HealthUI.Instance.Reset();
+
         Transform camTarget = GameManager.Instance.rideCamRoot;
         GameManager.Instance.SetFollowTarget(camTarget);
 
@@ -51,6 +67,10 @@ public class ChangePlayType : MonoBehaviour
         PlayType.Set(PlayState.Aim);
         tankController.Off();
         tankHead.On();
+
+        hpInRide.Off();
+        hpInAim.On();
+        HealthUI.Instance.Reset();
 
         Transform camTarget = GameManager.Instance.prepareToAimCamRoot;
         GameManager.Instance.SetFollowTarget(camTarget);

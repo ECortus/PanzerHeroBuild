@@ -26,5 +26,7 @@ public class TankCollision : MonoBehaviour
             default:
                 break;
         }
+
+        /* Debug.Log($"{gameObject.name} collision: {go.tag}"); */
     }
 }

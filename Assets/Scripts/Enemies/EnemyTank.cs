@@ -2,9 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DavidJalbert;
+using System.Linq;
 
 public class EnemyTank : MonoBehaviour
 {
+    [SerializeField] private bool LockMovement = false;
+
 	[SerializeField] private float rotateSpeed;
     [SerializeField] private float maxShootDistance = 35f;
     [SerializeField] private float distanceToDetect = 15f;
@@ -18,6 +21,25 @@ public class EnemyTank : MonoBehaviour
     [SerializeField] private EnemyTankShooting shooting;
     [SerializeField] private EnemyStats stats;
 
+    [Space]
+    [SerializeField] private Transform patrolWayParent;
+    private List<Transform> patrolWay = new List<Transform>();
+    private int patrolIndex = 0;
+
+    private Vector3 target;
+    private Vector3 point
+    {
+        get
+        {
+            target = transform.position;
+
+            if(HaveDetectPlayer || patrolWay.Count == 0) target = TankController.Instance.center;
+            else target = patrolWay[patrolIndex].position;
+
+            return target;
+        }
+    }
+
     public Vector3 center
 	{
 		get
@@ -26,18 +48,16 @@ public class EnemyTank : MonoBehaviour
 		}
 	}
 
-    private Vector3 point
-    {
-        get
-        {
-            return TankController.Instance.center;
-        }
-    }
-
     [HideInInspector] public bool HaveDetectPlayer;
 
 	void Start()
 	{
+        if(patrolWayParent != null)
+        {
+            patrolWay = patrolWayParent.GetComponentsInChildren<Transform>().ToList();
+            patrolWay.RemoveAt(0);
+        }
+
         stats.Off();
 	}
 
@@ -51,11 +71,14 @@ public class EnemyTank : MonoBehaviour
                 return;
             }
 
-            if(DistanceToPoint(point) < distanceToDetect)
+            if(DistanceToPoint(TankController.Instance.center) < distanceToDetect)
             {
                 HaveDetectPlayer = true;
                 stats.On();
+                return;
             }
+
+            if(!LockMovement) Patrol();
             return;
         }
 
@@ -63,6 +86,8 @@ public class EnemyTank : MonoBehaviour
         {
             shooting.Off();
             engine.setMotor(0);
+
+            engine.getBody().velocity = Vector3.zero;
             return;
         }
 
@@ -74,29 +99,59 @@ public class EnemyTank : MonoBehaviour
         else
         {
             shooting.Off();
-            /* engine.setMotor(2);
+            if(!LockMovement) 
+            {
+                engine.setMotor(2);
+            }
+            else
+            {
+                engine.setMotor(0);
+            }
 
-            Vector3 tv = -(point - transform.position).normalized;
+            Vector3 tv = (point - transform.position).normalized;
             Quaternion rotation = Quaternion.LookRotation(tv);
-            rotation = Quaternion.Euler(0f, rotation.eulerAngles.y + 180f, 0f);
-            transform.localRotation = Quaternion.Slerp(transform.localRotation, rotation, rotateSpeed * Time.fixedDeltaTime); */
+            transform.localRotation = Quaternion.Slerp(transform.localRotation, rotation, rotateSpeed * Time.fixedDeltaTime);
         }
 
         RotateHead();
 	}
 
+    void Patrol()
+    {
+        if(patrolWay.Count == 0)
+        {
+            return;
+        }
+
+        if(DistanceToPoint(point) < 0.75f)
+        {
+            patrolIndex++;
+            if(patrolIndex > patrolWay.Count - 1) patrolIndex = 0;
+        }
+
+        if(!LockMovement) 
+        {
+            engine.setMotor(2);
+        }
+        else
+        {
+            engine.setMotor(0);
+        }
+    }
+
     void RotateHead()
     {
         Vector3 tv = (point - transform.position).normalized;
-        var rotation = Quaternion.LookRotation(tv);
+        Quaternion rotation = Quaternion.LookRotation(tv);
+        rotation = Quaternion.Euler(new Vector3(0f, rotation.eulerAngles.y, 0f) - transform.eulerAngles);
 
-        /* Debug.Log(rotation.eulerAngles); */
-
-        Quaternion headRot = new Quaternion(0f, rotation.y - transform.rotation.y, 0f, rotation.w);
-        Quaternion gunRot = new Quaternion(0f, 0f, -rotation.x, rotation.w);
+        /* Debug.Log(rotation.eulerAngles);
+ */
+        Quaternion headRot = new Quaternion(0f, rotation.y, 0f, rotation.w);
+        Quaternion gunRot = new Quaternion(0f, 0f, -rotation.z, rotation.w);
 
         head.localRotation = Quaternion.Slerp(head.localRotation, headRot, rotateSpeed * 4f * Time.deltaTime);
-        gun.localRotation = Quaternion.Slerp(gun.localRotation, gunRot, rotateSpeed * 4 * Time.deltaTime);
+        gun.localRotation = Quaternion.Slerp(gun.localRotation, gunRot, rotateSpeed * 4f * Time.deltaTime);
     }
 
 	float DistanceToPoint(Vector3 point)

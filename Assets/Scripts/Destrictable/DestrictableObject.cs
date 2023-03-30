@@ -147,6 +147,14 @@ public class DestrictableObject : MonoBehaviour
         building.RemoveDestrictableObject(this);
 
         this.enabled = false;
+
+        Deactive();
+    }
+
+    async void Deactive()
+    {
+        await UniTask.Delay(5000);
+        gameObject.SetActive(false);
     }
 
     public void ForceRigidbody(float force, Vector3 direction)

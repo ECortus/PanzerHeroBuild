@@ -7,28 +7,28 @@ public class TankAppearanceUpgrade : MonoBehaviour
 {
     public static TankAppearanceUpgrade Instance { get; set; }
 
-    [SerializeField] private int headState = -1;
+    private int headState = -1;
     public void SetHeadState(int state)
     {
         headState = state;
         UpdateAppearance(headState, 2 + ammoState);
     }
 
-    [SerializeField] private int gunState = -1;
+    private int gunState = -1;
     public void SetGunState(int state)
     {
         gunState = state;
         UpdateAppearance(gunState, 1);
     }
 
-    [SerializeField] private int bodyState = -1;
+    private int bodyState = -1;
     public void SetBodyState(int state)
     {
         bodyState = state;
         UpdateAppearance(bodyState, 0);
     }
 
-    [SerializeField] private int ammoState = -1;
+    private int ammoState = -1;
     public void SetAmmoState(int state)
     {
         ammoState = state;

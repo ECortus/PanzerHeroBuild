@@ -38,6 +38,11 @@ public class EnemyStats : MonoBehaviour
     {
         _active = false;
     }
+
+    public void OnGameObject()
+    {
+        gameObject.SetActive(true);
+    }
     
     private float _HP;
     public float HP 
@@ -49,7 +54,7 @@ public class EnemyStats : MonoBehaviour
         }
     }
 
-    void Start()
+    void OnEnable()
     {
         SetMaxStats();
     }

@@ -23,7 +23,7 @@ public class TankController : MonoBehaviour
 
 	private List<Vector3> points => LevelManager.Instance.ActualLevel.GetWayPoints();
 	int pointIndex = 0;
-	Vector3 point => points[pointIndex];
+	Vector3 point => pointIndex > points.Count - 1 ? points[points.Count - 1] : points[pointIndex];
 
 	public void On() => this.enabled = true;
     public void Off() => this.enabled = false;
@@ -51,6 +51,10 @@ public class TankController : MonoBehaviour
 		pos.y = transform.position.y;
 		transform.position = pos;
 
+		Vector3 tv = (points[pointIndex + 1] - point).normalized;
+		var rotation = Quaternion.LookRotation(tv);
+		transform.localRotation = rotation;
+
 		pointIndex = 1;
 	}
 
@@ -62,10 +66,13 @@ public class TankController : MonoBehaviour
 			return;
 		}
 
-		if(pointIndex + 1 == points.Count)
+		if(pointIndex == points.Count)
 		{
 			PlayerStats.Instance.Off();
-			GameManager.Instance.SetActive(false);
+			LevelManager.Instance.ActualLevel.EndLevel();
+
+			pointIndex = 0;
+			return;
 		}
 
 		if(DistanceToPoint(point) < 3f)
@@ -77,9 +84,9 @@ public class TankController : MonoBehaviour
 		{
 			engine.setMotor(2);
 
-			Vector3 tv = -(point - transform.position).normalized;
+			Vector3 tv = (point - transform.position).normalized;
 			var rotation = Quaternion.LookRotation(tv);
-			rotation = Quaternion.Euler(0f, rotation.eulerAngles.y + 180f, 0f);
+			rotation = Quaternion.Euler(0f, rotation.eulerAngles.y, 0f);
 
 			/* rb.MoveRotation(Quaternion.Slerp(transform.localRotation, rotation, rotateSpeed * Time.fixedDeltaTime)); */
 			transform.localRotation = Quaternion.Slerp(transform.localRotation, rotation, rotateSpeed * Time.fixedDeltaTime);

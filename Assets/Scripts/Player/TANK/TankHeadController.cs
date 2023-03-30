@@ -25,6 +25,7 @@ public class TankHeadController : MonoBehaviour
     [SerializeField] private TankShooting tankShooting;
 
     [Space]
+    [SerializeField] private GameObject aimUI;
     [SerializeField] private GameObject canvas;
     [SerializeField] private Transform head, gun, aimCamRoot;
 
@@ -50,11 +51,13 @@ public class TankHeadController : MonoBehaviour
 
     void OnEnable()
     {
+        aimUI.SetActive(true);
         gun.localEulerAngles = Vector3.zero;
     }
 
     void OnDisable()
     {
+        aimUI.SetActive(false);
         canvas.SetActive(false);
     }
 

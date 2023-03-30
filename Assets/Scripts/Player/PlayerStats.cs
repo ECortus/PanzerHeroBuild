@@ -74,6 +74,7 @@ public class PlayerStats : MonoBehaviour
         set
         {
             _HP = value;
+            if(HealthUI.Instance != null) HealthUI.Instance.UpdSlid();
         }
     }
 
@@ -84,15 +85,16 @@ public class PlayerStats : MonoBehaviour
         set
         {
             _WhizzbangCount = value;
-            if(WhizzbangCounter.Instance != null) WhizzbangCounter.Instance.UpdCount();
+            if(WhizzbangUI.Instance != null) WhizzbangUI.Instance.UpdCount();
         }
     }
 
     void Awake() => Instance = this;
 
-    void Start()
+    void OnEnable()
     {
         SetMaxStats();
+        if(HealthUI.Instance != null) HealthUI.Instance.Reset();
     }
 
     public void SetMaxStats()

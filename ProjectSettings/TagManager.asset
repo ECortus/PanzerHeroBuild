@@ -9,6 +9,7 @@ TagManager:
   - Destrictable
   - EnemyTank
   - EnemyUnit
+  - Whizzbang
   layers:
   - Default
   - TransparentFX

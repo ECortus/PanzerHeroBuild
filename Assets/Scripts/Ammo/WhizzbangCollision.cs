@@ -10,6 +10,7 @@ public class WhizzbangCollision : MonoBehaviour
     {
         GameObject go = col.gameObject;
 
+        main.rb.velocity = Vector3.zero;
         switch(go.tag)
         {
             case "Untagged":
@@ -24,7 +25,7 @@ public class WhizzbangCollision : MonoBehaviour
                 main.HitAboveSomething();
                 break;
             case "EnemyUnit":
-                col.gameObject.GetComponent<EnemyStats>().GetHit(main.damage);
+                col.gameObject.GetComponentInParent<EnemyStats>().GetHit(main.damage);
                 main.HitAboveSomething();
                 break;
             case "Building":
@@ -42,6 +43,6 @@ public class WhizzbangCollision : MonoBehaviour
                 break;
         }
 
-        Debug.Log(go.tag);
+        Debug.Log($"{gameObject.name} collision: {go.tag}");
     }
 }

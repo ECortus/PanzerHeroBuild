@@ -10,7 +10,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private List<Level> Levels = new List<Level>();
 
     private int _Index { get { return Statistics.LevelIndex; } set { Statistics.LevelIndex = value; } }
-    public int GetIndex() => _Index;
+    public int GetIndex() => _Index > (Levels.Count - 1) ? _Index % Levels.Count : _Index;
     public void SetIndex(int value) => _Index = value;
 
     public Level ActualLevel => Levels[GetIndex()];
@@ -50,6 +50,14 @@ public class LevelManager : MonoBehaviour
     public void NextLevel()
     {
         OffLevel(ActualLevel);
+
+        GameObject levelPref = GetBufferLevel(); 
+        GameObject go = Instantiate(levelPref, transform);
+        Level level = go.GetComponent<Level>();
+
+        Levels[GetIndex()] = level;
+
+        OffLevel(level);
 
         int index = GetIndex();
         index += 1;
@@ -100,7 +108,10 @@ public class LevelManager : MonoBehaviour
 
     void BufferingLevel()
     {
-        if(bufferForLevel.childCount > 0) Destroy(GetBufferLevel());
+        if(bufferForLevel.childCount > 0) 
+        {
+            Destroy(GetBufferLevel());
+        }
 
         Level level = ActualLevel;
         GameObject go = Instantiate(level.gameObject, bufferForLevel);

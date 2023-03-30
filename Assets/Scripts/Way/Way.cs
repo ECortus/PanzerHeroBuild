@@ -31,14 +31,15 @@ public class Way : MonoBehaviour
     [Range(0, 35)]
     [SerializeField] private int smoothSections = 10;
     [Range(0f, 15f)]
-    [SerializeField] private float smoothDistance = 5f;
-    private BezierCurve[] Curves;
+    /* [SerializeField] private float smoothDistance = 5f;
+    private BezierCurve[] Curves; */
 
     [Space]
     [SerializeField] private LineRenderer line;
 
     void Start()
     {
+        UpdateAlready = false;
         DrawLine();
     }
 
@@ -93,20 +94,22 @@ public class Way : MonoBehaviour
 
     void DrawSmoothLine()
     {
-        MatchCurvesToDots();
+        /* MatchCurvesToDots(); */
         List<Vector3> smoothedPoints = new List<Vector3>();
+        smoothedPoints = MakeSmoothCurve(Points.ToArray(), smoothSections);
         
-        for (int i = 0; i < Curves.Length; i++)
+        /* for (int i = 0; i < Curves.Length; i++)
         {
             Vector3[] segments = Curves[i].GetSegments(smoothSections);
             for (int j = 0; j < segments.Length; j++)
             {
                 smoothedPoints.Add(segments[j]);
             }
-        }
+        } */
 
         Points.Clear();
-        line.positionCount = Curves.Length * smoothSections - (smoothSections / 5);
+        /* line.positionCount = Curves.Length * smoothSections - (smoothSections / 5); */
+        line.positionCount = smoothedPoints.Count;
 
         for(int i = 0; i < line.positionCount; i++)
         {
@@ -116,7 +119,7 @@ public class Way : MonoBehaviour
         }
     }
 
-    private void MatchCurvesToDots()
+    /* private void MatchCurvesToDots()
     {
         EnsureCurvesMatchLineRendererPositions();
 
@@ -154,5 +157,40 @@ public class Way : MonoBehaviour
                 Curves[i] = new BezierCurve();
             }
         }
+    } */
+
+    private List<Vector3> MakeSmoothCurve(Vector3[] arrayToCurve, float smoothness)
+    {
+        List<Vector3> points;
+        List<Vector3> curvedPoints;
+        int pointsLength = 0;
+        int curvedLength = 0;
+
+        if (smoothness < 1.0f) smoothness = 1.0f;
+
+        pointsLength = arrayToCurve.Length;
+
+        curvedLength = (pointsLength * Mathf.RoundToInt(smoothness)) - 1;
+        curvedPoints = new List<Vector3>(curvedLength);
+
+        float t = 0.0f;
+        for (int pointInTimeOnCurve = 0; pointInTimeOnCurve < curvedLength + 1; pointInTimeOnCurve++)
+        {
+            t = Mathf.InverseLerp(0, curvedLength, pointInTimeOnCurve);
+
+            points = new List<Vector3>(arrayToCurve);
+
+            for (int j = pointsLength - 1; j > 0; j--)
+            {
+                for (int i = 0; i < j; i++)
+                {
+                    points[i] = (1 - t) * points[i] + t * points[i + 1];
+                }
+            }
+
+            curvedPoints.Add(points[0]);
+        }
+
+        return (curvedPoints);
     }
 }

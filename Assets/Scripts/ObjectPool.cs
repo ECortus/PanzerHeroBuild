@@ -8,7 +8,7 @@ public class ObjectPool : MonoBehaviour
     void Awake() => Instance = this;
 
     private List<Whizzbang> WhizzbangPool = new List<Whizzbang>();
-    private List<ParticleSystem> DestroyEffectPool = new List<ParticleSystem>();
+    private List<Bullet> BulletPool = new List<Bullet>();
 
     public GameObject Insert(ObjectType type, GameObject obj, Vector3 pos, Vector3 rot)
     {
@@ -31,22 +31,22 @@ public class ObjectPool : MonoBehaviour
             return scr.gameObject;
         }
 
-        if(type == ObjectType.DestroyEffect)
+        if(type == ObjectType.Bullet)
         {
-            foreach(ParticleSystem de in DestroyEffectPool)
+            foreach(Bullet bul in BulletPool)
             {
-                if(de == null) continue;
+                if(bul == null) continue;
 
-                if(!de.isPlaying) 
+                if(!bul.Active) 
                 {
-                    de.transform.position = pos;
-                    de.Play();
-                    return de.gameObject;
+                    bul.Reset(pos, rot);
+                    bul.On();
+                    return bul.gameObject;
                 }
             }
 
-            ParticleSystem scr = Instantiate(obj, pos, Quaternion.Euler(rot)).GetComponent<ParticleSystem>();
-            DestroyEffectPool.Add(scr);
+            Bullet scr = Instantiate(obj, pos, Quaternion.Euler(rot)).GetComponent<Bullet>();
+            BulletPool.Add(scr);
             return scr.gameObject;
         }
 
@@ -57,5 +57,5 @@ public class ObjectPool : MonoBehaviour
 [System.Serializable]
 public enum ObjectType
 {
-    Default, Whizzbang, DestroyEffect
+    Default, Whizzbang, Bullet
 }

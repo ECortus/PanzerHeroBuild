@@ -2,14 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.AI;
+using System.Linq;
 
 public class EnemyUnit : MonoBehaviour
 {
     private readonly static int _Speed = Animator.StringToHash("Speed");
+    private readonly static int _Shooting = Animator.StringToHash("Shooting");
 
+    [SerializeField] private bool LockMovement = false;
+
+    [Space]
+    [SerializeField] private EnemyUnitShooting shooting;
     [SerializeField] private Animator animator;
-    [SerializeField] private Rigidbody rb;
+    [SerializeField] private NavMeshAgent Agent;
     [SerializeField] private Rigidbody[] ragdollRBs;
+    [SerializeField] private Collider[] ragdollCols;
 
     [Space]
     [SerializeField] private float speed;
@@ -18,7 +26,7 @@ public class EnemyUnit : MonoBehaviour
     [SerializeField] private float distanceToDetect = 8f;
 
     [Space]
-    [SerializeField] private EnemyStats stats;
+    public EnemyStats stats;
 
     public Vector3 center
 	{
@@ -28,11 +36,22 @@ public class EnemyUnit : MonoBehaviour
 		}
 	}
 
+    [Space]
+    [SerializeField] private Transform patrolWayParent;
+    private List<Transform> patrolWay = new List<Transform>();
+    private int patrolIndex = 0;
+
+    private Vector3 target;
     private Vector3 point
     {
         get
         {
-            return TankController.Instance.center;
+            target = transform.position;
+
+            if(HaveDetectPlayer || patrolWay.Count == 0) target = TankController.Instance.center;
+            else target = patrolWay[patrolIndex].position;
+
+            return target;
         }
     }
 
@@ -40,6 +59,14 @@ public class EnemyUnit : MonoBehaviour
 
 	void Start()
 	{
+        if(patrolWayParent != null)
+        {
+            patrolWay = patrolWayParent.GetComponentsInChildren<Transform>().ToList();
+            patrolWay.RemoveAt(0);
+        }
+
+        MakeNoPhysical();
+        shooting.Off();
         stats.Off();
 	}
 
@@ -53,50 +80,85 @@ public class EnemyUnit : MonoBehaviour
                 return;
             }
 
-            if(DistanceToPoint(point) < distanceToDetect)
+            if(DistanceToPoint(TankController.Instance.center) < distanceToDetect)
             {
                 HaveDetectPlayer = true;
                 stats.On();
+                return;
             }
+
+            if(!LockMovement) Patrol();
             return;
         }
 
         if(!stats.Active || !GameManager.Instance.GetActive()) 
         {
+            shooting.Off();
+            Agent.velocity = Vector3.zero;
             return;
         }
 
-		if(DistanceToPoint(point) < maxShootDistance)
+		if(HaveDetectPlayer)
 		{
+            if(DistanceToPoint(point) < maxShootDistance)
+            {
+                shooting.On();
+                Agent.velocity = Vector3.zero;
 
+                RotateHandle();
+            }
+            else
+            {
+                shooting.Off();
+
+                if(!LockMovement) 
+                {
+                    Vector3 direction = (point - transform.position).normalized;
+                    Agent.velocity = direction * speed;
+                }
+            }
 		}
-        else
-        {
-            Vector3 direction = (point - transform.position).normalized;
-            rb.velocity = direction * speed;
-        }
 
-        Vector3 tv = -(point - transform.position).normalized;
-        var rotation = Quaternion.LookRotation(tv);
-        rotation = Quaternion.Euler(0f, rotation.eulerAngles.y + 180f, 0f);
-        transform.localRotation = Quaternion.Slerp(transform.localRotation, rotation, rotateSpeed * Time.fixedDeltaTime);
+        if(LockMovement)
+        {
+            RotateHandle();
+        }
 
         UpdateAnimator();
 	}
 
+    void Patrol()
+    {
+        if(patrolWay.Count == 0)
+        {
+            return;
+        }
+
+        if(DistanceToPoint(point) < 0.75f)
+        {
+            patrolIndex++;
+            if(patrolIndex > patrolWay.Count - 1) patrolIndex = 0;
+        }
+
+        if(!LockMovement) 
+        {
+            Vector3 direction = (point - transform.position).normalized;
+            Agent.velocity = direction * speed / 2f;
+            UpdateAnimator();
+        }
+    }
+
     void UpdateAnimator()
     {
-        animator.SetFloat(_Speed, rb.velocity.magnitude);
+        animator.SetFloat(_Speed, Agent.velocity.magnitude);
+        animator.SetBool(_Shooting, shooting.enabled);
     }
 
-    public void ForceOnDeath()
+    void RotateHandle()
     {
-        rb.AddForce(500 * Vector3.up);
-    }
-
-    public void ForceAway(float force, Vector3 direction)
-    {
-        rb.AddForce(force * direction);
+        Vector3 tv = (point - transform.position).normalized;
+        var rotation = Quaternion.LookRotation(tv);
+        transform.localRotation = Quaternion.Slerp(transform.localRotation, rotation, rotateSpeed * Time.fixedDeltaTime);
     }
 
 	float DistanceToPoint(Vector3 point)
@@ -104,12 +166,30 @@ public class EnemyUnit : MonoBehaviour
 		return Vector3.Distance(center, point);
 	}
 
-    public void MakePhysical()
+    public void MakeNoPhysical()
+    {
+        foreach(Rigidbody rigid in ragdollRBs)
+        {
+            rigid.isKinematic = true;
+        }
+
+        animator.enabled = true;
+    }
+
+    public void MakePhysical(float force = 0f)
     {
         animator.enabled = false;
-        foreach(Rigidbody rb in ragdollRBs)
+
+        Vector3 direction = Vector3.up + new Vector3(
+            Random.Range(-1, 1),
+            Random.Range(0.2f, 1),
+            Random.Range(-1, 1)
+        );
+
+        foreach(Rigidbody rigid in ragdollRBs)
         {
-            
+            rigid.isKinematic = false;
+            rigid.AddForce(direction * force);
         }
     }
 

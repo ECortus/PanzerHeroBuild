@@ -13,14 +13,30 @@ public class Level : MonoBehaviour
     public void Off() => gameObject.SetActive(false);
     public void Eliminate() => Destroy(gameObject);
 
-    public int moneyOnStart;
+    /* [SerializeField] private EnemyStats[] Enemies; */
+
+    [HideInInspector] public int moneyOnStart;
 
     public void StartLevel()
     {
         DataManager.Load();
         PrepareToStart();
 
-        moneyOnStart = Statistics.Money;
+        /* foreach(EnemyStats go in Enemies)
+        {
+            go.OnGameObject();
+        } */
+    }
+
+    public void EndLevel()
+    {
+		GameManager.Instance.SetActive(false);
+
+        Money.Plus(500);
+        MoneyUI.Instance.ResetMoney();
+        Money.Save();
+
+        UI.Instance.EndLevel();
     }
 
     public void PrepareToStart()

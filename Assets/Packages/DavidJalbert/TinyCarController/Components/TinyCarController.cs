@@ -128,8 +128,8 @@ namespace DavidJalbert
             sphereCollider.hideFlags = HideFlags.NotEditable; */
 
             body.mass = bodyMass * (adjustToScale ? cubicScale : 1);
-            body.drag = 0;
-            body.angularDrag = 1f;
+            /* body.drag = 0; */
+            /* body.angularDrag = 1f; */
             /* body.constraints = RigidbodyConstraints.None; */
             body.useGravity = false;
             body.isKinematic = false;
@@ -161,7 +161,8 @@ namespace DavidJalbert
             onGround = false;
             crossUp = transform.up;
             RaycastHit hitSphere;
-            if (Physics.SphereCast(sphereCollider.bounds.center, realColliderRadius - groundCheckSkinWidth, Vector3.down, out hitSphere, groundCheckDistance + groundCheckSkinWidth, collidableLayers, QueryTriggerInteraction.Ignore))
+            if (Physics.SphereCast(sphereCollider.bounds.center, realColliderRadius - groundCheckSkinWidth, 
+            Vector3.down, out hitSphere, groundCheckDistance + groundCheckSkinWidth, collidableLayers, QueryTriggerInteraction.Ignore))
             {
                 crossUp = hitSphere.normal;
                 if (Vector3.Angle(crossUp, Vector3.up) <= maxSlopeAngle)

@@ -123,19 +123,19 @@ public class ModificationCell : MonoBehaviour
 
         if(lvl < Modifications.MaxLevel)   
         {  
-            levelTitle.text = $"LEVEL {lvl / Modifications.UpgradesInTier}";
-            currentLevel.text = $"{lvl  / Modifications.UpgradesInTier}";
-            nextLevel.text = $"{lvl / Modifications.UpgradesInTier + 1}";
+            levelTitle.text = $"LEVEL {lvl / Modifications.UpgradesInTier + 1}";
+            currentLevel.text = $"{lvl  / Modifications.UpgradesInTier + 1}";
+            nextLevel.text = $"{lvl / Modifications.UpgradesInTier + 2}";
 
             currentCharText.text = $"{currentChar}";
-            if(plus > 0) plusCharText.text = $"+{plus}";
-            else plusCharText.text = $"{plus}";
+            if(plus > 0) plusCharText.text = $"+({plus})";
+            else plusCharText.text = $"({plus})";
         }
         else
         {
-            levelTitle.text = $"LEVEL {lvl / Modifications.UpgradesInTier }";
-            currentLevel.text = $"{lvl / Modifications.UpgradesInTier - 1}";
-            nextLevel.text = $"{lvl / Modifications.UpgradesInTier }";
+            levelTitle.text = $"LEVEL {lvl / Modifications.UpgradesInTier + 1}";
+            currentLevel.text = $"{lvl / Modifications.UpgradesInTier}";
+            nextLevel.text = $"{lvl / Modifications.UpgradesInTier + 1}";
 
             currentCharText.text = $"{currentChar}";
             plusCharText.text = $"+--";

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Whizzbang : MonoBehaviour
+public class Bullet : MonoBehaviour
 {
     [SerializeField] private float speed;
     [HideInInspector] public float damage;
@@ -44,7 +44,7 @@ public class Whizzbang : MonoBehaviour
     }
 
     private Rigidbody _rb;
-    private Rigidbody rb
+    public Rigidbody rb
     {
         get
         {
@@ -93,6 +93,7 @@ public class Whizzbang : MonoBehaviour
 
     void OnEnable()
     {
+        rb.drag = 0f;
         rb.velocity = transform.forward * speed;
     }
 
@@ -105,6 +106,6 @@ public class Whizzbang : MonoBehaviour
     {
         Off();
         if(destroyEffect != null) 
-            ObjectPool.Instance.Insert(ObjectType.DestroyEffect, destroyEffect, transform.position, Vector3.zero);
+            ParticlePool.Instance.Insert(ParticleType.BulletEffect, destroyEffect, transform.position, Vector3.zero);
     }
 }

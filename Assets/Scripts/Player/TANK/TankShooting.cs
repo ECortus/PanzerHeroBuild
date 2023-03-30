@@ -56,10 +56,6 @@ public class TankShooting : MonoBehaviour
 
     async UniTask Reload()
     {
-        for(int i = 0; i < PlayerStats.Instance.MaxWhizzbangCount; i++)
-        {
-            await UniTask.Delay(ReloadTime);
-            PlayerStats.Instance.WhizzbangCount += 1;
-        }
+        await UI.Instance.Reload(ReloadTime);
     }
 }
