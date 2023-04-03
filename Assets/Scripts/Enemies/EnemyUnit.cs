@@ -24,6 +24,8 @@ public class EnemyUnit : MonoBehaviour
     [SerializeField] private float rotateSpeed;
     [SerializeField] private float maxShootDistance = 35f;
     [SerializeField] private float distanceToDetect = 8f;
+    [SerializeField] private LayerMask wallMasks;
+    [SerializeField] private LayerMask windowMask;
 
     [Space]
     public EnemyStats stats;
@@ -35,6 +37,14 @@ public class EnemyUnit : MonoBehaviour
 			return transform.position;
 		}
 	}
+
+    public Vector3 direction
+    {
+        get
+        {
+            return (point - center).normalized;
+        }
+    }
 
     [Space]
     [SerializeField] private Transform patrolWayParent;
@@ -55,7 +65,7 @@ public class EnemyUnit : MonoBehaviour
         }
     }
 
-    [HideInInspector] public bool HaveDetectPlayer;
+    public static bool HaveDetectPlayer;
 
 	void Start()
 	{
@@ -63,6 +73,11 @@ public class EnemyUnit : MonoBehaviour
         {
             patrolWay = patrolWayParent.GetComponentsInChildren<Transform>().ToList();
             patrolWay.RemoveAt(0);
+        }
+
+        if(LockMovement)
+        {
+            Agent.enabled = false;
         }
 
         MakeNoPhysical();
@@ -102,10 +117,28 @@ public class EnemyUnit : MonoBehaviour
 		{
             if(DistanceToPoint(point) < maxShootDistance)
             {
-                shooting.On();
                 Agent.velocity = Vector3.zero;
-
                 RotateHandle();
+
+                Ray ray = new Ray(center, direction);
+                
+                bool wall = Physics.Raycast(ray, maxShootDistance, wallMasks);
+                if(!wall)
+                {
+                    shooting.On();
+                }
+                else
+                {
+                    bool window = Physics.Raycast(ray, maxShootDistance, windowMask);
+                    if(window)
+                    {
+                        shooting.On();
+                    }
+                    else
+                    {
+                        shooting.Off();
+                    }
+                }
             }
             else
             {
@@ -113,7 +146,6 @@ public class EnemyUnit : MonoBehaviour
 
                 if(!LockMovement) 
                 {
-                    Vector3 direction = (point - transform.position).normalized;
                     Agent.velocity = direction * speed;
                 }
             }

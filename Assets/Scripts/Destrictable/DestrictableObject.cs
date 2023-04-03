@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 
-[ExecuteInEditMode]
 public class DestrictableObject : MonoBehaviour
 {
     private int Layer => (int)Mathf.Log(building.destrictableMask.value, 2);
@@ -98,7 +97,7 @@ public class DestrictableObject : MonoBehaviour
 
     void Update()
     {
-        if(building.CheckPhysicsAlready && building.destrictableObjects.Count < 11) CheckPhysicsDown();
+        if(building.CheckPhysicsAlready && building.destrictableObjects.Count < 20) CheckPhysicsDown();
     }
 
     /* public async void ProofPhysics()

@@ -14,12 +14,14 @@ public class EnemyTank : MonoBehaviour
 
     [Space]
     [SerializeField] private Transform head;
+    [SerializeField] private Rigidbody brokenHead;
     [SerializeField] private Transform gun;
 
     [Space]
 	[SerializeField] private TinyCarController engine;
     [SerializeField] private EnemyTankShooting shooting;
     [SerializeField] private EnemyStats stats;
+    [SerializeField] private TankTouching touching;
 
     [Space]
     [SerializeField] private Transform patrolWayParent;
@@ -110,6 +112,7 @@ public class EnemyTank : MonoBehaviour
 
             Vector3 tv = (point - transform.position).normalized;
             Quaternion rotation = Quaternion.LookRotation(tv);
+            if(!touching.isTouching) rotation = Quaternion.Euler(0f, rotation.eulerAngles.y, 0f);
             transform.localRotation = Quaternion.Slerp(transform.localRotation, rotation, rotateSpeed * Time.fixedDeltaTime);
         }
 
@@ -131,12 +134,22 @@ public class EnemyTank : MonoBehaviour
 
         if(!LockMovement) 
         {
-            engine.setMotor(2);
+            Drive();
         }
         else
         {
             engine.setMotor(0);
         }
+    }
+
+    void Drive()
+    {
+        engine.setMotor(2);
+
+        Vector3 tv = (point - transform.position).normalized;
+        Quaternion rotation = Quaternion.LookRotation(tv);
+        rotation = Quaternion.Euler(0f, rotation.eulerAngles.y, 0f);
+        transform.localRotation = Quaternion.Slerp(transform.localRotation, rotation, rotateSpeed * Time.fixedDeltaTime);
     }
 
     void RotateHead()
@@ -158,6 +171,24 @@ public class EnemyTank : MonoBehaviour
 	{
 		return Vector3.Distance(center, point);
 	}
+
+    public void ForceHeadUp()
+    {
+        Rigidbody rigid = brokenHead;
+        rigid.useGravity = true;
+
+        rigid.AddForce(1000f * transform.up);
+        rigid.angularVelocity = new Vector3(
+            Random.Range(-10f, 10f),
+            Random.Range(-10f, 10f),
+            Random.Range(-10f, 10f)
+        );
+    }
+
+    public void SpawnEffectOnCenter(GameObject effect)
+    {
+        if(effect != null) ParticlePool.Instance.Insert(ParticleType.TankDestroyedEffect, effect, center);
+    }
 
     void OnDrawGizmos()
     {

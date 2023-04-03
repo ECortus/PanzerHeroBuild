@@ -14,6 +14,8 @@ namespace DavidJalbert
         private static float GroundCheckDistanceDelta = 0.1f;
         private static float GroundCheckSkinWidthDelta = 0.05f;
 
+        [SerializeField] private bool RotateBody = false;
+
         public enum GRAVITY_MODE
         {
             AlwaysDown, TowardsGround
@@ -99,6 +101,16 @@ namespace DavidJalbert
         private float scaleAdjustment = 1;
         private float cubicScale = 1;
         private float inverseScaleAdjustment = 1;
+
+        void OnEnable()
+        {
+            if(sphereCollider != null) sphereCollider.enabled = true;
+        }
+
+        void OnDisable()
+        {
+            if(sphereCollider != null) sphereCollider.enabled = false;
+        }
 
         virtual protected void Start()
         {
@@ -242,7 +254,7 @@ namespace DavidJalbert
             
             // steering
             float steeringForce = (onGround ? 1 : steeringMultiplierInAir) * (forwardVelocity < 0 ? -1 : 1) * steeringBySpeed.Evaluate(getForwardVelocityDelta()) * surfaceParameters.steeringMultiplier;
-            /* body.MoveRotation(Quaternion.Euler(groundXAngle, transform.rotation.eulerAngles.y + steering * deltaTime * steeringForce, groundZAngle)); */
+            if(RotateBody) body.MoveRotation(Quaternion.Euler(groundXAngle, transform.rotation.eulerAngles.y + steering * deltaTime * steeringForce, groundZAngle));
             // ---
 
             // gravity

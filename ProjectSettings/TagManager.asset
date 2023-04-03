@@ -10,6 +10,7 @@ TagManager:
   - EnemyTank
   - EnemyUnit
   - Whizzbang
+  - Bullet
   layers:
   - Default
   - TransparentFX
@@ -20,14 +21,14 @@ TagManager:
   - 
   - Ground
   - 
-  - 
+  - Window
   - Building
   - Destrictable
   - 
   - Enemy
   - 
   - Whizzbang
-  - 
+  - Bullet
   - 
   - 
   - 

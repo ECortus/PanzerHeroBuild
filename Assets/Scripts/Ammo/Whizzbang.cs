@@ -106,6 +106,6 @@ public class Whizzbang : MonoBehaviour
     {
         Off();
         if(destroyEffect != null) 
-            ParticlePool.Instance.Insert(ParticleType.WhizzbangEffect, destroyEffect, transform.position, Vector3.zero);
+            ParticlePool.Instance.Insert(ParticleType.WhizzbangEffect, destroyEffect, transform.position);
     }
 }

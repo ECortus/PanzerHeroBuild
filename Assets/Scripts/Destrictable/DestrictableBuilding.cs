@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-[ExecuteInEditMode]
 public class DestrictableBuilding : MonoBehaviour
 {
     [SerializeField] private DestrictableObject floor;
@@ -60,14 +59,14 @@ public class DestrictableBuilding : MonoBehaviour
 
         TriggerDestrictableObjects(GetObjectsOnRadius(whizzbang.center), whizzbang.transform.forward);
 
-        Collider[] cols = Physics.OverlapSphere(whizzbang.center, destrictableRadius * 2f, enemyMask);
+        Collider[] cols = Physics.OverlapSphere(whizzbang.center, destrictableRadius * 1.75f, enemyMask);
 
         if(cols.Length > 0)
         {
             EnemyUnit unit;
             foreach(Collider col in cols)
             {
-                col.TryGetComponent<EnemyUnit>(out unit);
+                unit = col.GetComponentInParent<EnemyUnit>();
                 if(unit != null)
                 {
                     unit.stats.GetHit(999f);
@@ -92,9 +91,9 @@ public class DestrictableBuilding : MonoBehaviour
                 if(destObj == floor) continue;
 
             Vector3 direction = forward + new Vector3(
-                Random.Range(-1, 1),
-                Random.Range(0.2f, 1),
-                Random.Range(-1, 1)
+                Random.Range(-1f, 1f),
+                Random.Range(0.2f, 1f),
+                Random.Range(-1f, 1f)
             );
 
             destObj.Trigger();

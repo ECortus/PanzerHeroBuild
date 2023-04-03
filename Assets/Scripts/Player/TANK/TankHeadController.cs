@@ -41,18 +41,48 @@ public class TankHeadController : MonoBehaviour
     [SerializeField] private float rotate;
     [SerializeField] private float sensivityVertical, sensivityHorizontal;
 
-    public void On() => this.enabled = true;
-    public void Off() => this.enabled = false;
+    public void On(float rotateY = 0f)
+    {
+        this.enabled = true;
+
+        StopAllCoroutines();
+        StartCoroutine(RotateOnOn(rotateY));
+    }
+    public void Off()
+    {
+        this.enabled = false;
+    }
 
     private void Awake()
     {
         Instance = this;
     }
 
+    IEnumerator RotateOnOn(float y)
+    {
+        Quaternion headRot = Quaternion.Euler(0f, y, 0f);
+
+        while(true)
+        {
+            head.localRotation = Quaternion.Slerp(head.localRotation, headRot, rotate / 3f * Time.deltaTime);
+
+            yield return null;
+
+            if(Input.GetMouseButtonDown(0))
+            {
+                break;
+            }
+        }
+
+        yield return null;
+    }
+
     void OnEnable()
     {
         aimUI.SetActive(true);
         gun.localEulerAngles = Vector3.zero;
+
+        transform.parent.eulerAngles = new Vector3(0f, transform.parent.eulerAngles.y, 0f);
     }
 
     void OnDisable()
@@ -75,7 +105,7 @@ public class TankHeadController : MonoBehaviour
             Down();
         }
 
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton(0) && Aiming)
         {
             Rotate();
         }

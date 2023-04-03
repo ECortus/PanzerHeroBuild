@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.Events;
 using Cysharp.Threading.Tasks;
 
-[ExecuteInEditMode]
 public class PlayerStats : MonoBehaviour
 {
     public static PlayerStats Instance { get; set; }
@@ -94,12 +93,13 @@ public class PlayerStats : MonoBehaviour
     void OnEnable()
     {
         SetMaxStats();
-        if(HealthUI.Instance != null) HealthUI.Instance.Reset();
     }
 
     public void SetMaxStats()
     {
         HP = MaxHP;
+        if(HealthUI.Instance != null) HealthUI.Instance.Reset();
+        
         WhizzbangCount = MaxWhizzbangCount;
     }
 

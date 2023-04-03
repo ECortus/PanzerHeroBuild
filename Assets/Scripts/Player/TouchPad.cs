@@ -7,6 +7,8 @@ public class TouchPad : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     public static TouchPad Instance { get; set; }
 
+    [SerializeField] private TankTouching tankTouching;
+
     public bool HaveTouch = false;
 
     public void On() => gameObject.SetActive(true);
@@ -27,11 +29,13 @@ public class TouchPad : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     public void OnPointerDown(PointerEventData eventData)
     {
         HaveTouch = true;
+        if(tankTouching != null)  tankTouching.Acceleration();
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
         HaveTouch = false;
+        if(tankTouching != null)  tankTouching.Steering();
     }
 
     public bool IsPointerOverUIObject() 

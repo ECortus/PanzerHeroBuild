@@ -106,6 +106,6 @@ public class Bullet : MonoBehaviour
     {
         Off();
         if(destroyEffect != null) 
-            ParticlePool.Instance.Insert(ParticleType.BulletEffect, destroyEffect, transform.position, Vector3.zero);
+            ParticlePool.Instance.Insert(ParticleType.BulletEffect, destroyEffect, transform.position);
     }
 }

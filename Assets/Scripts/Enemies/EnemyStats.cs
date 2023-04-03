@@ -5,6 +5,8 @@ using UnityEngine.Events;
 
 public class EnemyStats : MonoBehaviour
 {
+    [SerializeField] private EnemyHealthUI healthUI;
+
     [Header("Default stats(on start and handle set-s) ")]
     public float _DefaultHP = 100f;
     public float _DefaultDamage = 5f;
@@ -51,6 +53,7 @@ public class EnemyStats : MonoBehaviour
         set
         {
             _HP = value;
+            if(healthUI != null) healthUI.UpdSlid();
         }
     }
 

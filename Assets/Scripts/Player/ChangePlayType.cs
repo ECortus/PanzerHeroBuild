@@ -62,11 +62,11 @@ public class ChangePlayType : MonoBehaviour
         if(TouchPad.Instance != null) TouchPad.Instance.On();
     }
 
-    public void Aim()
+    public void Aim(float aimOnY = 0f)
     {
         PlayType.Set(PlayState.Aim);
         tankController.Off();
-        tankHead.On();
+        tankHead.On(aimOnY);
 
         hpInRide.Off();
         hpInAim.On();

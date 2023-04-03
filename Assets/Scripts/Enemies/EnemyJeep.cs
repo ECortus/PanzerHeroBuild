@@ -13,6 +13,7 @@ public class EnemyJeep : MonoBehaviour
     [SerializeField] private float distanceToDetect = 15f;
 
     [Space]
+    [SerializeField] private Rigidbody rb;
 	[SerializeField] private TinyCarController engine;
     [SerializeField] private EnemyStats stats;
 
@@ -43,7 +44,7 @@ public class EnemyJeep : MonoBehaviour
 		}
 	}
 
-    [HideInInspector] public bool HaveDetectPlayer;
+    public static bool HaveDetectPlayer;
 
 	void Start()
 	{
@@ -81,7 +82,7 @@ public class EnemyJeep : MonoBehaviour
         {
             engine.setMotor(0);
 
-            engine.getBody().velocity = Vector3.zero;
+            rb.velocity = Vector3.zero;
             return;
         }
 
@@ -102,6 +103,7 @@ public class EnemyJeep : MonoBehaviour
 
             Vector3 tv = (point - transform.position).normalized;
             Quaternion rotation = Quaternion.LookRotation(tv);
+            rotation = Quaternion.Euler(0f, rotation.eulerAngles.y, 0f);
             transform.localRotation = Quaternion.Slerp(transform.localRotation, rotation, rotateSpeed * Time.fixedDeltaTime);
         }
 	}
@@ -126,12 +128,18 @@ public class EnemyJeep : MonoBehaviour
 
             Vector3 tv = (point - transform.position).normalized;
             Quaternion rotation = Quaternion.LookRotation(tv);
+            rotation = Quaternion.Euler(0f, rotation.eulerAngles.y, 0f);
             transform.localRotation = Quaternion.Slerp(transform.localRotation, rotation, rotateSpeed * Time.fixedDeltaTime);
         }
         else
         {
             engine.setMotor(0);
         }
+    }
+
+    public void SpawnEffectOnCenter(GameObject effect)
+    {
+        if(effect != null) ParticlePool.Instance.Insert(ParticleType.TankDestroyedEffect, effect, center);
     }
 
 	float DistanceToPoint(Vector3 point)

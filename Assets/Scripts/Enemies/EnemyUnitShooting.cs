@@ -4,16 +4,17 @@ using UnityEngine;
 
 public class EnemyUnitShooting : MonoBehaviour
 {
+    [SerializeField] private EnemyUnit unit;
     [SerializeField] private EnemyStats stats;
     [SerializeField] private Transform pivot, muzzle;
     [SerializeField] private GameObject bulletPrefab;
     
-    private float ReloadTime => 0.1f;
+    private float ReloadTime => 0.3f;
 
     public void On()
     {
         this.enabled = true;
-        pivot.transform.up = transform.forward;
+        pivot.transform.up = unit.direction;
 
         if(coroutine == null) coroutine = StartCoroutine(Shooting());
     }

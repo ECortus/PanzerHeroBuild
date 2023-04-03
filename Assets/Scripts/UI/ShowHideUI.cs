@@ -5,7 +5,7 @@ using UnityEngine;
 public class ShowHideUI : MonoBehaviour
 {
     private float showSpeed = 3f;
-    private bool isShown;
+    [HideInInspector] public bool isShown;
 
     void Start()
     {
@@ -27,11 +27,14 @@ public class ShowHideUI : MonoBehaviour
             transform.localScale += new Vector3(
                 showSpeed * Time.deltaTime, showSpeed * Time.deltaTime, showSpeed * Time.deltaTime
             );
+
             yield return null;
         }
 
         isShown = true;
         transform.localScale = Vector3.one;
+
+        yield return null;
     }
 
     public IEnumerator HideProcess() 
@@ -47,10 +50,13 @@ public class ShowHideUI : MonoBehaviour
             transform.localScale -= new Vector3(
                 showSpeed * Time.deltaTime, showSpeed * Time.deltaTime, showSpeed * Time.deltaTime
             );
+
             yield return null;
         }
 
         isShown = false;
         transform.localScale = Vector3.zero;
+
+        yield return null;
     }
 }

@@ -22,6 +22,8 @@ public class Level : MonoBehaviour
         DataManager.Load();
         PrepareToStart();
 
+        PlayerStats.Instance.SetMaxStats();
+
         /* foreach(EnemyStats go in Enemies)
         {
             go.OnGameObject();

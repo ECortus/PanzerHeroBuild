@@ -35,10 +35,21 @@ public class ReloadingUI : ShowHideUI
 
         PlayerStats.Instance.WhizzbangCount = PlayerStats.Instance.MaxWhizzbangCount;
 
-        StopAllCoroutines();
-        StartCoroutine(HideProcess());
+        if(!Input.GetMouseButton(0) && !TouchPad.Instance.IsPointerOverUIObject())
+        {
+            transform.localScale = Vector3.zero;
+            isShown = false;
 
-        WhizzbangUI.Instance.Open();
+            WhizzbangUI.Instance.transform.localScale = Vector3.one;
+            WhizzbangUI.Instance.isShown = true;
+        }
+        else
+        {
+            StopAllCoroutines();
+            StartCoroutine(HideProcess());
+
+            WhizzbangUI.Instance.Open();
+        }
 
         /* whizzbangs.SetActive(true); */
         /* slider.gameObject.SetActive(false); */

@@ -17,9 +17,11 @@ public class TankController : MonoBehaviour
 	}
 
 	public Rigidbody rb;
+	[SerializeField] private Transform head;
 	[SerializeField] private float rotateSpeed;
 
 	[SerializeField] private TinyCarController engine;
+	[SerializeField] private TankTouching touching;
 
 	private List<Vector3> points => LevelManager.Instance.ActualLevel.GetWayPoints();
 	int pointIndex = 0;
@@ -53,6 +55,7 @@ public class TankController : MonoBehaviour
 
 		Vector3 tv = (points[pointIndex + 1] - point).normalized;
 		var rotation = Quaternion.LookRotation(tv);
+		rotation = Quaternion.Euler(0f, rotation.eulerAngles.y, 0f);
 		transform.localRotation = rotation;
 
 		pointIndex = 1;
@@ -83,18 +86,22 @@ public class TankController : MonoBehaviour
 		if(TouchPad.Instance.HaveTouch)
 		{
 			engine.setMotor(2);
-
-			Vector3 tv = (point - transform.position).normalized;
-			var rotation = Quaternion.LookRotation(tv);
-			rotation = Quaternion.Euler(0f, rotation.eulerAngles.y, 0f);
-
-			/* rb.MoveRotation(Quaternion.Slerp(transform.localRotation, rotation, rotateSpeed * Time.fixedDeltaTime)); */
-			transform.localRotation = Quaternion.Slerp(transform.localRotation, rotation, rotateSpeed * Time.fixedDeltaTime);
 		}
 		else
         {
 			engine.setMotor(0);
 		}
+
+		Vector3 tv = (point - transform.position).normalized;
+		var rotation = Quaternion.LookRotation(tv);
+
+		if(!touching.isTouching) rotation = Quaternion.Euler(0f, rotation.eulerAngles.y, 0f);
+
+		/* rb.MoveRotation(Quaternion.Slerp(transform.localRotation, rotation, rotateSpeed * Time.fixedDeltaTime)); */
+		transform.localRotation = Quaternion.Slerp(transform.localRotation, rotation, rotateSpeed * Time.fixedDeltaTime);
+
+		Quaternion headRot = Quaternion.Euler(Vector3.zero);
+        head.localRotation = Quaternion.Slerp(head.localRotation, headRot, rotateSpeed / 4f * Time.deltaTime);
 	}
 
 	public void ForceRigidbody(float force)

@@ -9,53 +9,63 @@ public class ParticlePool : MonoBehaviour
 
     private List<ParticleSystem> WhizzbangEffectPool = new List<ParticleSystem>();
     private List<ParticleSystem> BulletEffectPool = new List<ParticleSystem>();
+    private List<ParticleSystem> TankDestroyedEffectPool = new List<ParticleSystem>();
 
-    public GameObject Insert(ParticleType type, GameObject obj, Vector3 pos, Vector3 rot)
+    public GameObject Insert(ParticleType type, GameObject obj, Vector3 pos)
     {
-        if(type == ParticleType.WhizzbangEffect)
+        List<ParticleSystem> list = new List<ParticleSystem>();
+
+        switch(type)
         {
-            foreach(ParticleSystem de in WhizzbangEffectPool)
-            {
-                if(de == null) continue;
-
-                if(!de.isPlaying) 
-                {
-                    de.transform.position = pos;
-                    de.Play();
-                    return de.gameObject;
-                }
-            }
-
-            ParticleSystem scr = Instantiate(obj, pos, Quaternion.Euler(rot)).GetComponent<ParticleSystem>();
-            WhizzbangEffectPool.Add(scr);
-            return scr.gameObject;
+            case ParticleType.WhizzbangEffect:
+                list = WhizzbangEffectPool;
+                break;
+            case ParticleType.BulletEffect:
+                list = BulletEffectPool;
+                break;
+            case ParticleType.TankDestroyedEffect:
+                list = TankDestroyedEffectPool;
+                break;
+            default:
+                return null;
         }
 
-        if(type == ParticleType.BulletEffect)
+        foreach(ParticleSystem ps in list)
         {
-            foreach(ParticleSystem de in BulletEffectPool)
+            if(ps == null) continue;
+
+            if(!ps.isPlaying) 
             {
-                if(de == null) continue;
-
-                if(!de.isPlaying) 
-                {
-                    de.transform.position = pos;
-                    de.Play();
-                    return de.gameObject;
-                }
+                ps.transform.position = pos;
+                ps.Play();
+                return ps.gameObject;
             }
-
-            ParticleSystem scr = Instantiate(obj, pos, Quaternion.Euler(rot)).GetComponent<ParticleSystem>();
-            BulletEffectPool.Add(scr);
-            return scr.gameObject;
         }
 
-        return null;
+        ParticleSystem scr = Instantiate(obj, pos, Quaternion.Euler(Vector3.zero)).GetComponent<ParticleSystem>();
+        list.Add(scr);
+
+        switch(type)
+        {
+            case ParticleType.WhizzbangEffect:
+                WhizzbangEffectPool = list;
+                break;
+            case ParticleType.BulletEffect:
+                BulletEffectPool = list;
+                break;
+            case ParticleType.TankDestroyedEffect:
+                TankDestroyedEffectPool = list;
+                break;
+            default:
+                return null;
+        }
+
+        return scr.gameObject;
     }
 }
 
 [System.Serializable]
 public enum ParticleType
 {
-    Default, WhizzbangEffect, BulletEffect
+    Default, WhizzbangEffect, BulletEffect, TankDestroyedEffect
 }

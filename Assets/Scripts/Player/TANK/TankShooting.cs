@@ -4,13 +4,16 @@ using UnityEngine;
 using Cysharp.Threading.Tasks;
 public class TankShooting : MonoBehaviour
 {
-    [SerializeField] private PlayerStats stats;
     [HideInInspector] public bool IsShooting = false;
 
     [SerializeField] private Transform muzzle;
+    [SerializeField] private Transform inertiaPivot;
     [SerializeField] private GameObject whizzbangPrefab;
 
-    private int ReloadTime => (int)(stats.TimeReload * 1000);
+    [Space]
+    [SerializeField] private float inertiaForce;
+
+    private int ReloadTime => (int)(PlayerStats.Instance.TimeReload * 1000);
 
     public async UniTask Shooting()
     {
@@ -37,7 +40,7 @@ public class TankShooting : MonoBehaviour
         Vector3 pos = muzzle.position;
         Vector3 rot = muzzle.eulerAngles;
         GameObject go = ObjectPool.Instance.Insert(ObjectType.Whizzbang, whizzbangPrefab, pos, rot);
-        go.GetComponent<Whizzbang>().damage = stats.Damage;
+        go.GetComponent<Whizzbang>().damage = PlayerStats.Instance.Damage;
 
         await UseWhizzbang();
     }
@@ -45,17 +48,65 @@ public class TankShooting : MonoBehaviour
     public async UniTask UseWhizzbang()
     {
         PlayerStats.Instance.WhizzbangCount -= 1;
+
+        Inertia();
         
         if(PlayerStats.Instance.WhizzbangCount == 0)
         {
             await Reload();
         }
-        
-        await UniTask.Delay(ReloadTime);
+        else
+        {
+            await UniTask.Delay(ReloadTime);
+        }
     }
 
     async UniTask Reload()
     {
         await UI.Instance.Reload(ReloadTime);
+    }
+
+    float duration;
+    float time = 0f;
+    float originalZ;
+
+    void Inertia()
+    {
+        duration = (ReloadTime / 1000f) / 1.5f;
+
+        MoveBack();
+        CameraShake.Instance.On(duration);
+    }
+
+    void MoveBack()
+    {
+        StopAllCoroutines();
+        StartCoroutine(Backward());
+    }
+
+    IEnumerator Backward()
+    {
+        time = duration;
+
+        while(time > 0f)
+        {
+            inertiaPivot.localPosition = new Vector3(
+                inertiaPivot.localPosition.x,
+                inertiaPivot.localPosition.y,
+                originalZ - (time / duration) * inertiaForce
+            );
+			time -= Time.deltaTime;
+
+            yield return null;
+        }
+
+        time = 0f;
+		inertiaPivot.localPosition = new Vector3(
+            inertiaPivot.localPosition.x,
+            inertiaPivot.localPosition.y,
+            originalZ
+        );
+
+        yield return null;
     }
 }

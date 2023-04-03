@@ -9,8 +9,10 @@ public class WhizzbangCollision : MonoBehaviour
     void OnCollisionEnter(Collision col)
     {
         GameObject go = col.gameObject;
+        Debug.Log($"{gameObject.name} collision: {go.tag}");
 
-        main.rb.velocity = Vector3.zero;
+        EnemyStats stats;
+
         switch(go.tag)
         {
             case "Untagged":
@@ -21,11 +23,13 @@ public class WhizzbangCollision : MonoBehaviour
                 main.HitAboveSomething();
                 break;
             case "EnemyTank":
-                col.gameObject.GetComponent<EnemyStats>().GetHit(main.damage);
+                stats = col.gameObject.GetComponent<EnemyStats>();
+                if(stats != null) stats.GetHit(main.damage);
                 main.HitAboveSomething();
                 break;
             case "EnemyUnit":
-                col.gameObject.GetComponentInParent<EnemyStats>().GetHit(main.damage);
+                stats = col.gameObject.GetComponent<EnemyStats>();
+                if(stats != null) stats.GetHit(main.damage);
                 main.HitAboveSomething();
                 break;
             case "Building":
@@ -42,7 +46,5 @@ public class WhizzbangCollision : MonoBehaviour
             default:
                 break;
         }
-
-        Debug.Log($"{gameObject.name} collision: {go.tag}");
     }
 }
