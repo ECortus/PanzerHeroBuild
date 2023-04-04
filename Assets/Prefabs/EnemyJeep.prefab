@@ -16194,7 +16194,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LockMovement: 0
   rotateSpeed: 2
-  stopDistance: 35
+  stopDistance: 45
   distanceToDetect: 15
   rb: {fileID: 8599675064202914694}
   engine: {fileID: 8599675064202913917}

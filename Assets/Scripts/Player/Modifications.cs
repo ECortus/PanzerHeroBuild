@@ -71,6 +71,7 @@ public static class Modifications
     public static void UpgradeArmor()
     {
         ArmorLVL = ArmorLVL + 1;
+        PlayerStats.Instance.SetMaxStats();
     }
 
     private static int TimeReloadLVL { get { return Statistics.TimeReloadLVL; } set { Statistics.TimeReloadLVL = value; } }
