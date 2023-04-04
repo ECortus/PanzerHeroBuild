@@ -9,7 +9,7 @@ public class EnemyJeep : MonoBehaviour
     [SerializeField] private bool LockMovement = false;
 
 	[SerializeField] private float rotateSpeed;
-    [SerializeField] private float maxShootDistance = 35f;
+    [SerializeField] private float stopDistance = 35f;
     [SerializeField] private float distanceToDetect = 15f;
 
     [Space]
@@ -44,7 +44,7 @@ public class EnemyJeep : MonoBehaviour
 		}
 	}
 
-    public static bool HaveDetectPlayer;
+    [HideInInspector] public bool HaveDetectPlayer;
 
 	void Start()
 	{
@@ -86,7 +86,7 @@ public class EnemyJeep : MonoBehaviour
             return;
         }
 
-		if(DistanceToPoint(point) < maxShootDistance)
+		if(DistanceToPoint(point) < stopDistance)
 		{
 			engine.setMotor(0);
 		}
@@ -150,7 +150,7 @@ public class EnemyJeep : MonoBehaviour
     void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(center, maxShootDistance);
+        Gizmos.DrawWireSphere(center, stopDistance);
 
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(center, distanceToDetect);

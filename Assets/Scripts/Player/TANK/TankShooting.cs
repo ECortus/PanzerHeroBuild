@@ -6,6 +6,9 @@ public class TankShooting : MonoBehaviour
 {
     [HideInInspector] public bool IsShooting = false;
 
+    [SerializeField] private TankHeadController headController;
+
+    [Space]
     [SerializeField] private Transform muzzle;
     [SerializeField] private Transform inertiaPivot;
     [SerializeField] private GameObject whizzbangPrefab;
@@ -21,7 +24,8 @@ public class TankShooting : MonoBehaviour
 
         while(true)
         {
-            await Shoot();
+            if(await Shoot()) break;
+
             if(Input.GetMouseButton(0))
             {
                 await UniTask.WaitUntil(() => Input.GetMouseButtonUp(0));
@@ -35,34 +39,42 @@ public class TankShooting : MonoBehaviour
         IsShooting = false;
     }
 
-    public async UniTask Shoot()
+    public async UniTask<bool> Shoot()
     {
         Vector3 pos = muzzle.position;
         Vector3 rot = muzzle.eulerAngles;
         GameObject go = ObjectPool.Instance.Insert(ObjectType.Whizzbang, whizzbangPrefab, pos, rot);
         go.GetComponent<Whizzbang>().damage = PlayerStats.Instance.Damage;
 
-        await UseWhizzbang();
+        return await UseWhizzbang();
     }
 
-    public async UniTask UseWhizzbang()
+    public async UniTask<bool> UseWhizzbang()
     {
+        bool reload = false;
+
         PlayerStats.Instance.WhizzbangCount -= 1;
 
         Inertia();
         
         if(PlayerStats.Instance.WhizzbangCount == 0)
         {
+            headController.Up();
             await Reload();
+
+            reload = true;
         }
         else
         {
             await UniTask.Delay(ReloadTime);
         }
+
+        return reload;
     }
 
     async UniTask Reload()
     {
+        await UniTask.Delay(50);
         await UI.Instance.Reload(ReloadTime);
     }
 

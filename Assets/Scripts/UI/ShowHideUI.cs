@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ShowHideUI : MonoBehaviour
 {
-    private float showSpeed = 3f;
+    private float showSpeed = 4f;
     [HideInInspector] public bool isShown;
 
     void Start()
@@ -28,6 +28,13 @@ public class ShowHideUI : MonoBehaviour
                 showSpeed * Time.deltaTime, showSpeed * Time.deltaTime, showSpeed * Time.deltaTime
             );
 
+            if(!gameObject.activeInHierarchy)
+            {
+                isShown = true;
+                transform.localScale = Vector3.one;
+                break;
+            }
+        
             yield return null;
         }
 
@@ -50,6 +57,13 @@ public class ShowHideUI : MonoBehaviour
             transform.localScale -= new Vector3(
                 showSpeed * Time.deltaTime, showSpeed * Time.deltaTime, showSpeed * Time.deltaTime
             );
+
+            if(!gameObject.activeInHierarchy)
+            {
+                isShown = false;
+                transform.localScale = Vector3.zero;
+                break;
+            }
 
             yield return null;
         }

@@ -6,6 +6,7 @@ using UnityEngine.Events;
 public class EnemyStats : MonoBehaviour
 {
     [SerializeField] private EnemyHealthUI healthUI;
+    [SerializeField] private EnemyAgrrAll aggrAll;
 
     [Header("Default stats(on start and handle set-s) ")]
     public float _DefaultHP = 100f;
@@ -87,10 +88,13 @@ public class EnemyStats : MonoBehaviour
             {
                 HP = 0;
                 Death();
+
+                if(aggrAll != null) aggrAll.On();
                 return;
             }
             
             On();
+            if(aggrAll != null) aggrAll.On();
         }
 
         if(dmg >= HP)

@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayTypeUI : MonoBehaviour
 {
     public static PlayTypeUI Instance;
 
-    [SerializeField] private GameObject rideButt, aimButt;
+    [SerializeField] private PlayTypeButton rideButt, aimButt;
 
     void Awake() => Instance = this;
 
@@ -15,22 +16,28 @@ public class PlayTypeUI : MonoBehaviour
         switch(PlayType.Get())
         {
             case PlayState.Stoped:
-                rideButt.SetActive(false);
-                aimButt.SetActive(true);
+                /* rideButt.gameObject.SetActive(false);
+                aimButt.gameObject.SetActive(true); */
+                rideButt.Close();
+                aimButt.Open();
                 break;
             case PlayState.Ride:
-                rideButt.SetActive(false);
-                aimButt.SetActive(true);
+                /* rideButt.gameObject.SetActive(false);
+                aimButt.gameObject.SetActive(true); */
+                rideButt.Close();
+                aimButt.Open();
                 break;
             case PlayState.Aim:
-                if(TankHeadController.Instance.Aiming) rideButt.SetActive(false);
-                else rideButt.SetActive(true);
+                if(TankHeadController.Instance.Aiming) rideButt.Close();
+                else rideButt.Open();
 
-                aimButt.SetActive(false);
+                aimButt.Close();
                 break;
             default:
-                rideButt.SetActive(false);
-                aimButt.SetActive(false);
+                /* rideButt.gameObject.SetActive(false);
+                aimButt.gameObject.SetActive(false); */
+                rideButt.Close();
+                aimButt.Close();
                 break;
         }
     }

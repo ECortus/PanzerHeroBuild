@@ -791,9 +791,9 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2565387704080939458, guid: 850d0945f97533e46837d5ef5a933ad2, type: 3}
-  - {fileID: -4973734387028869240, guid: 850d0945f97533e46837d5ef5a933ad2, type: 3}
-  - {fileID: 915396251693871426, guid: 850d0945f97533e46837d5ef5a933ad2, type: 3}
+  - {fileID: 2100000, guid: 3c223ae5262fa114a8f8371fff23db18, type: 2}
+  - {fileID: 2100000, guid: 3596c5d26ed25f342a5dbdf30a84c0fd, type: 2}
+  - {fileID: 2100000, guid: 3596c5d26ed25f342a5dbdf30a84c0fd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -10961,15 +10961,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LockMovement: 0
   rotateSpeed: 2
-  maxShootDistance: 50
-  distanceToDetect: 25
+  maxShootDistance: 75
+  distanceToDetect: 30
   head: {fileID: 7297753019748933188}
   brokenHead: {fileID: 4006969547230084747}
   gun: {fileID: 7297753020225443330}
   engine: {fileID: 7297753018944548639}
   shooting: {fileID: 7297753018944548633}
   stats: {fileID: 7906411429777596847}
-  touching: {fileID: 0}
   patrolWayParent: {fileID: 0}
   HaveDetectPlayer: 0
 --- !u!114 &7297753018944548633
@@ -11155,6 +11154,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthUI: {fileID: 1981380627}
+  aggrAll: {fileID: 0}
   _DefaultHP: 5
   _DefaultDamage: 5
   DeathEvent:
@@ -11292,6 +11292,18 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 7297753018944548638}
+        m_TargetAssemblyTypeName: UnityEngine.Collider, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
         m_CallState: 2
 --- !u!1 &7297753019124215572
 GameObject:
@@ -12155,7 +12167,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: -4973734387028869240, guid: 850d0945f97533e46837d5ef5a933ad2, type: 3}
-  - {fileID: 2565387704080939458, guid: 850d0945f97533e46837d5ef5a933ad2, type: 3}
+  - {fileID: 2100000, guid: 3596c5d26ed25f342a5dbdf30a84c0fd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

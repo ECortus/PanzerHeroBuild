@@ -95,7 +95,7 @@ public class TankController : MonoBehaviour
 		Vector3 tv = (point - transform.position).normalized;
 		var rotation = Quaternion.LookRotation(tv);
 
-		if(!touching.isTouching) rotation = Quaternion.Euler(0f, rotation.eulerAngles.y, 0f);
+		/* if(!touching.isTouching)  */rotation = Quaternion.Euler(transform.localEulerAngles.x, rotation.eulerAngles.y, 0f);
 
 		/* rb.MoveRotation(Quaternion.Slerp(transform.localRotation, rotation, rotateSpeed * Time.fixedDeltaTime)); */
 		transform.localRotation = Quaternion.Slerp(transform.localRotation, rotation, rotateSpeed * Time.fixedDeltaTime);

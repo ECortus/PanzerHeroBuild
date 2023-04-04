@@ -6,7 +6,6 @@ using Cysharp.Threading.Tasks;
 
 public class ReloadingUI : ShowHideUI
 {
-    [SerializeField] private GameObject whizzbangs;
     [SerializeField] private Slider slider;
     
     public async UniTask StartReloading(int tim)
@@ -14,7 +13,7 @@ public class ReloadingUI : ShowHideUI
         /* slider.gameObject.SetActive(true); */
         /* whizzbangs.SetActive(false); */
 
-        WhizzbangUI.Instance.Close();
+        /* WhizzbangUI.Instance.Close(); */
 
         StopAllCoroutines();
         StartCoroutine(ShowProcess());
@@ -35,7 +34,10 @@ public class ReloadingUI : ShowHideUI
 
         PlayerStats.Instance.WhizzbangCount = PlayerStats.Instance.MaxWhizzbangCount;
 
-        if(!Input.GetMouseButton(0) && !TouchPad.Instance.IsPointerOverUIObject())
+        StopAllCoroutines();
+        StartCoroutine(HideProcess());
+
+        /* if(!Input.GetMouseButton(0) && !TouchPad.Instance.IsPointerOverUIObject())
         {
             transform.localScale = Vector3.zero;
             isShown = false;
@@ -49,7 +51,7 @@ public class ReloadingUI : ShowHideUI
             StartCoroutine(HideProcess());
 
             WhizzbangUI.Instance.Open();
-        }
+        } */
 
         /* whizzbangs.SetActive(true); */
         /* slider.gameObject.SetActive(false); */

@@ -102,7 +102,7 @@ namespace DavidJalbert
         private float cubicScale = 1;
         private float inverseScaleAdjustment = 1;
 
-        void OnEnable()
+        /* void OnEnable()
         {
             if(sphereCollider != null) sphereCollider.enabled = true;
         }
@@ -110,7 +110,7 @@ namespace DavidJalbert
         void OnDisable()
         {
             if(sphereCollider != null) sphereCollider.enabled = false;
-        }
+        } */
 
         virtual protected void Start()
         {

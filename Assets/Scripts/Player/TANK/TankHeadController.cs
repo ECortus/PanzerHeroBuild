@@ -26,8 +26,12 @@ public class TankHeadController : MonoBehaviour
 
     [Space]
     [SerializeField] private GameObject aimUI;
-    [SerializeField] private GameObject canvas;
-    [SerializeField] private Transform head, gun, aimCamRoot;
+    [SerializeField] private GameObject prepareAimCanvas;
+    [SerializeField] private GameObject aimCanvas;
+
+    [Space]
+    [SerializeField] private Transform head;
+    [SerializeField] private Transform gun, aimCamRoot;
 
     [Space]
     [SerializeField] private float limitAngleHorizontal;
@@ -41,12 +45,17 @@ public class TankHeadController : MonoBehaviour
     [SerializeField] private float rotate;
     [SerializeField] private float sensivityVertical, sensivityHorizontal;
 
+    bool rotating = false;
+
     public void On(float rotateY = 0f)
     {
         this.enabled = true;
 
-        StopAllCoroutines();
-        StartCoroutine(RotateOnOn(rotateY));
+        if(rotateY != 0f)
+        {
+            StopAllCoroutines();
+            StartCoroutine(RotateOnOn(rotateY));
+        }
     }
     public void Off()
     {
@@ -80,15 +89,19 @@ public class TankHeadController : MonoBehaviour
     void OnEnable()
     {
         aimUI.SetActive(true);
+        prepareAimCanvas.SetActive(true);
+        aimCanvas.SetActive(false);
+
         gun.localEulerAngles = Vector3.zero;
 
         transform.parent.eulerAngles = new Vector3(0f, transform.parent.eulerAngles.y, 0f);
+
+        rotating = false;
     }
 
     void OnDisable()
     {
         aimUI.SetActive(false);
-        canvas.SetActive(false);
     }
 
     void Update()
@@ -98,21 +111,39 @@ public class TankHeadController : MonoBehaviour
 			return;
 		}
 
-        if(TouchPad.Instance.IsPointerOverUIObject()) return;
+        if(TankShootPad.Instance.HaveTouch)
+        {
+            Down();
+
+            rotating = true;
+        }
+
+        if(TankShootPad.Instance.IsPointerOverUIObject()) return;
 
         if (Input.GetMouseButtonDown(0))
         {
-            Down();
+            PrepareRotate();
+
+            rotating = true;
         }
 
-        if (Input.GetMouseButton(0) && Aiming)
+        if (Input.GetMouseButton(0) && rotating)
         {
-            Rotate();
+            if(Aiming)
+            {
+                Rotate();
+            }
+            else
+            {
+                Rotate();
+            }
         }
 
-        if(Input.GetMouseButtonUp(0) && Aiming && !tankShooting.IsShooting)
+        if(Input.GetMouseButtonUp(0))
         {
-            Up();
+            if(Aiming && !tankShooting.IsShooting && rotating) Shot();
+
+            rotating = false;
         }
     }
 
@@ -123,18 +154,29 @@ public class TankHeadController : MonoBehaviour
         if(Aiming || tankShooting.IsShooting) return;
 
         Aiming = true;
-        canvas.SetActive(true);
+
+        prepareAimCanvas.SetActive(false);
+        aimCanvas.SetActive(true);
 
         Transform root = aimCamRoot;
         GameManager.Instance.SetFollowTarget(root);
+
+        TankShootPad.Instance.Off();
     }
 
-    async void Up()
+    async void Shot()
     {
         await tankShooting.Shooting();
+        Up();
 
+        TankShootPad.Instance.On();
         Aiming = false;
-        canvas.SetActive(false);
+    }
+
+    public void Up()
+    {
+        prepareAimCanvas.SetActive(true);
+        aimCanvas.SetActive(false);
 
         Transform root = GameManager.Instance.prepareToAimCamRoot;
         GameManager.Instance.SetFollowTarget(root);

@@ -21,7 +21,6 @@ public class EnemyTank : MonoBehaviour
 	[SerializeField] private TinyCarController engine;
     [SerializeField] private EnemyTankShooting shooting;
     [SerializeField] private EnemyStats stats;
-    [SerializeField] private TankTouching touching;
 
     [Space]
     [SerializeField] private Transform patrolWayParent;
@@ -112,7 +111,7 @@ public class EnemyTank : MonoBehaviour
 
             Vector3 tv = (point - transform.position).normalized;
             Quaternion rotation = Quaternion.LookRotation(tv);
-            if(!touching.isTouching) rotation = Quaternion.Euler(0f, rotation.eulerAngles.y, 0f);
+            rotation = Quaternion.Euler(0f, rotation.eulerAngles.y, 0f);
             transform.localRotation = Quaternion.Slerp(transform.localRotation, rotation, rotateSpeed * Time.fixedDeltaTime);
         }
 

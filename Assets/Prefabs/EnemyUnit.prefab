@@ -1681,7 +1681,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &7316472439417734208
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -1698,7 +1698,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!1 &4045465153954273421
 GameObject:
   m_ObjectHideFlags: 0
@@ -3123,7 +3123,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &6716060069427798909
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -3140,7 +3140,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!1 &5737241882756322763
 GameObject:
   m_ObjectHideFlags: 0
@@ -3966,7 +3966,7 @@ GameObject:
   - component: {fileID: 7137096387757684837}
   - component: {fileID: 7137096387757684838}
   - component: {fileID: 490755175583046983}
-  - component: {fileID: 7137096388676381494}
+  - component: {fileID: 7855443591248669775}
   m_Layer: 13
   m_Name: EnemyUnit
   m_TagString: EnemyUnit
@@ -4053,8 +4053,8 @@ MonoBehaviour:
   - {fileID: 4087566851725995290}
   speed: 5
   rotateSpeed: 5
-  maxShootDistance: 70
-  distanceToDetect: 70
+  maxShootDistance: 75
+  distanceToDetect: 35
   wallMasks:
     serializedVersion: 2
     m_Bits: 3072
@@ -4063,6 +4063,7 @@ MonoBehaviour:
     m_Bits: 512
   stats: {fileID: 7137096387757684838}
   patrolWayParent: {fileID: 0}
+  HaveDetectPlayer: 0
 --- !u!114 &7137096387757684838
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4076,12 +4077,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthUI: {fileID: 0}
+  aggrAll: {fileID: 0}
   _DefaultHP: 1
   _DefaultDamage: 0.2
   DeathEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7137096388676381494}
+      - m_Target: {fileID: 7855443591248669775}
         m_TargetAssemblyTypeName: UnityEngine.Collider, UnityEngine
         m_MethodName: set_enabled
         m_Mode: 6
@@ -4171,8 +4173,8 @@ MonoBehaviour:
   muzzle: {fileID: 6997382423686303658}
   bulletPrefab: {fileID: 1101043062399094408, guid: dfb41940c493da54aa69c7410e1c5fdf,
     type: 3}
---- !u!135 &7137096388676381494
-SphereCollider:
+--- !u!136 &7855443591248669775
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -4181,8 +4183,9 @@ SphereCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 1
+  m_Radius: 0.3
+  m_Height: 2
+  m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &7266013987303739623
 GameObject:

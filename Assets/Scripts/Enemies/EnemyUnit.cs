@@ -65,7 +65,7 @@ public class EnemyUnit : MonoBehaviour
         }
     }
 
-    public static bool HaveDetectPlayer;
+    [HideInInspector] public bool HaveDetectPlayer;
 
 	void Start()
 	{
