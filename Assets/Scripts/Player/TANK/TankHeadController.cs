@@ -30,6 +30,7 @@ public class TankHeadController : MonoBehaviour
     [SerializeField] private GameObject aimCanvas;
 
     [Space]
+    [SerializeField] private Transform tank;
     [SerializeField] private Transform head;
     [SerializeField] private Transform gun, aimCamRoot;
 
@@ -50,6 +51,8 @@ public class TankHeadController : MonoBehaviour
     public void On(float rotateY = 0f)
     {
         this.enabled = true;
+
+        tank.localEulerAngles = new Vector3(0f, tank.localEulerAngles.y, 0f);
 
         if(rotateY != 0f)
         {
@@ -118,7 +121,7 @@ public class TankHeadController : MonoBehaviour
             rotating = true;
         }
 
-        if(TankShootPad.Instance.IsPointerOverUIObject()) return;
+        if(TankShootPad.Instance.IsPointerOverUIObject() && !Aiming && !rotating) return;
 
         if (Input.GetMouseButtonDown(0))
         {

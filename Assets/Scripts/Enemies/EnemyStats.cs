@@ -111,5 +111,6 @@ public class EnemyStats : MonoBehaviour
     void Death()
     {
         DeathEvent.Invoke();
+        aggrAll.Upd(this);
     }
 }

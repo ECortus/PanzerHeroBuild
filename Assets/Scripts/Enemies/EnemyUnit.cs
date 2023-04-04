@@ -16,6 +16,7 @@ public class EnemyUnit : MonoBehaviour
     [SerializeField] private EnemyUnitShooting shooting;
     [SerializeField] private Animator animator;
     [SerializeField] private NavMeshAgent Agent;
+    [SerializeField] private Collider collid;
     [SerializeField] private Rigidbody[] ragdollRBs;
     [SerializeField] private Collider[] ragdollCols;
 
@@ -78,6 +79,7 @@ public class EnemyUnit : MonoBehaviour
         if(LockMovement)
         {
             Agent.enabled = false;
+            /* collid.enabled = false; */
         }
 
         MakeNoPhysical();

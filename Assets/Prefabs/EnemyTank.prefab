@@ -10962,7 +10962,7 @@ MonoBehaviour:
   LockMovement: 0
   rotateSpeed: 2
   maxShootDistance: 75
-  distanceToDetect: 30
+  distanceToDetect: 15
   head: {fileID: 7297753019748933188}
   brokenHead: {fileID: 4006969547230084747}
   gun: {fileID: 7297753020225443330}
@@ -11155,8 +11155,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthUI: {fileID: 1981380627}
   aggrAll: {fileID: 0}
-  _DefaultHP: 5
-  _DefaultDamage: 5
+  _DefaultHP: 15
+  _DefaultDamage: 3
   DeathEvent:
     m_PersistentCalls:
       m_Calls:

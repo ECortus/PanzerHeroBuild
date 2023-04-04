@@ -19,7 +19,7 @@ public class EnemyWheelsForceAway : MonoBehaviour
     {
         foreach(Rigidbody wheel in wheels)
         {
-            wheel.gameObject.SetActive(false);
+            if(wheel != null) wheel.gameObject.SetActive(false);
         }
     }
 }

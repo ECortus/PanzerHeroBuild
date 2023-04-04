@@ -4000,7 +4000,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 7137096387757684828}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 0.1
   m_Speed: 1
   m_Acceleration: 8
   avoidancePriority: 50
@@ -4029,6 +4029,7 @@ MonoBehaviour:
   shooting: {fileID: 490755175583046983}
   animator: {fileID: 6716060069427798909}
   Agent: {fileID: 349097549632749347}
+  collid: {fileID: 7855443591248669775}
   ragdollRBs:
   - {fileID: 3047951606594347306}
   - {fileID: 6974545913090698472}
@@ -4054,7 +4055,7 @@ MonoBehaviour:
   speed: 5
   rotateSpeed: 5
   maxShootDistance: 75
-  distanceToDetect: 35
+  distanceToDetect: 20
   wallMasks:
     serializedVersion: 2
     m_Bits: 3072
@@ -4079,7 +4080,7 @@ MonoBehaviour:
   healthUI: {fileID: 0}
   aggrAll: {fileID: 0}
   _DefaultHP: 1
-  _DefaultDamage: 0.2
+  _DefaultDamage: 0.1
   DeathEvent:
     m_PersistentCalls:
       m_Calls:
