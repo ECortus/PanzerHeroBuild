@@ -11,7 +11,15 @@ public class EnemyWheelsForceAway : MonoBehaviour
         foreach(Rigidbody wheel in wheels)
         {
             wheel.transform.parent = null;
-            wheel.AddForce(-wheel.transform.up * 500f);
+            wheel.AddForce(-wheel.transform.up * 1500f);
+        }
+    }
+
+    void OnDisable()
+    {
+        foreach(Rigidbody wheel in wheels)
+        {
+            wheel.gameObject.SetActive(false);
         }
     }
 }
