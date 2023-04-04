@@ -353,10 +353,10 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 4564843287338978409, guid: 65edcb78cb38a124597bd0440c95f33e, type: 3}
-  - {fileID: 1505331415460948997, guid: 65edcb78cb38a124597bd0440c95f33e, type: 3}
-  - {fileID: 9171952328373019990, guid: 65edcb78cb38a124597bd0440c95f33e, type: 3}
-  - {fileID: 1280446133571650962, guid: 65edcb78cb38a124597bd0440c95f33e, type: 3}
+  - {fileID: 2100000, guid: e21323ae8d25c594ea1fe8ad98588b13, type: 2}
+  - {fileID: 2100000, guid: c98958260403f4948aa200e33c7172a0, type: 2}
+  - {fileID: 2100000, guid: de2f469b198f9cf45a4d5ec7cf887206, type: 2}
+  - {fileID: 2100000, guid: e1a9defaff14a144ba90dffa4250dfdb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1681,7 +1681,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &7316472439417734208
 Animator:
-  serializedVersion: 5
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -1698,7 +1698,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &4045465153954273421
 GameObject:
   m_ObjectHideFlags: 0
@@ -1760,7 +1760,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 7576386722563338562, guid: e7edc7ff5df8a094c93721ea3bedb36d, type: 3}
+  - {fileID: 2100000, guid: 54d74b60acb571e47ae4fb21e1cd3f35, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3123,7 +3123,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &6716060069427798909
 Animator:
-  serializedVersion: 5
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -3140,7 +3140,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &5737241882756322763
 GameObject:
   m_ObjectHideFlags: 0
@@ -3717,8 +3717,8 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -8896051167825165466, guid: e7edc7ff5df8a094c93721ea3bedb36d, type: 3}
-  - {fileID: 7576386722563338562, guid: e7edc7ff5df8a094c93721ea3bedb36d, type: 3}
+  - {fileID: 2100000, guid: 792cb100e1fcd0a44b52a841560f1829, type: 2}
+  - {fileID: 2100000, guid: 54d74b60acb571e47ae4fb21e1cd3f35, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
