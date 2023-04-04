@@ -9,7 +9,7 @@ public class UI : MonoBehaviour
     public static UI Instance { get; set; }
 
     [SerializeField] private GameObject infoUI, inputUI, startUI;
-    [SerializeField] private EndGameUI endGameUI;
+    [SerializeField] private EndGameUI endGameUI, loseGameUI;
 
     [Space]
     [SerializeField] private LevelTitleUI levelTitleUI;
@@ -53,6 +53,7 @@ public class UI : MonoBehaviour
 
     public void Restart()
     {   
+        loseGameUI.Close();
         LevelManager.Instance.RestartLevel();
     }
 
@@ -75,7 +76,7 @@ public class UI : MonoBehaviour
 
     public void LoseLevel()
     {
-
+        loseGameUI.Open();
     }
 
     public async UniTask Reload(int time)

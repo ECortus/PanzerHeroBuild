@@ -14,7 +14,7 @@ public class EndGameUI : ShowHideUI
         StopAllCoroutines();
         StartCoroutine(ShowProcess());
 
-        moneyText.text = $"+{Statistics.Money - LevelManager.Instance.ActualLevel.moneyOnStart}";
+        if(moneyText != null) moneyText.text = $"+{Statistics.Money - LevelManager.Instance.ActualLevel.moneyOnStart}";
     }
 
     public void Close()

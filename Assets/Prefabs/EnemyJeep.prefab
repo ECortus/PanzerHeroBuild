@@ -3292,7 +3292,7 @@ MonoBehaviour:
   speed: 5
   rotateSpeed: 5
   maxShootDistance: 75
-  distanceToDetect: 20
+  distanceToDetect: 45
   wallMasks:
     serializedVersion: 2
     m_Bits: 3072

@@ -10962,7 +10962,7 @@ MonoBehaviour:
   LockMovement: 0
   rotateSpeed: 2
   maxShootDistance: 75
-  distanceToDetect: 15
+  distanceToDetect: 50
   head: {fileID: 7297753019748933188}
   brokenHead: {fileID: 4006969547230084747}
   gun: {fileID: 7297753020225443330}
