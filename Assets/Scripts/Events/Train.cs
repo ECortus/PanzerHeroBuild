@@ -14,12 +14,14 @@ public class Train : MonoBehaviour
     [SerializeField] private int delayToDisappear = 10000;
     [SerializeField] private float speed = 5f;
 
-    public void On()
+    void On()
     {
         transform.position = spawnDot.position;
+        transform.eulerAngles = new Vector3(0f, spawnDot.eulerAngles.y, 0f);
+
         gameObject.SetActive(true);
     }
-    public void Off() => gameObject.SetActive(false);
+    void Off() => gameObject.SetActive(false);
 
     void Start()
     {

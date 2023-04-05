@@ -14,21 +14,27 @@ public class TankTouching : MonoBehaviour
     [SerializeField] private float topX;
     [Range(0f, 15f)]
     [SerializeField] private float bottomX;
-    [SerializeField] private float duration;
+    [SerializeField] private float durationTouching, durationBack;
 
     private float time;
-    private float rotationX;
+    private Quaternion rotation;
+    private float angleX;
 
     public void Acceleration()
     {
-        StopAllCoroutines();
+        StopTouching();
         StartCoroutine(TouchingAcceleration());
     }
 
     public void Steering()
     {
-        StopAllCoroutines();
+        StopTouching();
         StartCoroutine(TouchingSteering());
+    }
+
+    public void StopTouching()
+    {
+        StopAllCoroutines();
     }
 
     IEnumerator TouchingAcceleration()
@@ -36,12 +42,12 @@ public class TankTouching : MonoBehaviour
         isTouching = true;
         time = 0f;
 
-        rotationX = 0f;
+        angleX = tank.localEulerAngles.x;
 
-        while(time < duration)
+        while(time < durationTouching)
         {
-            rb.MoveRotation(Quaternion.Euler(rotationX - topX * time, tank.localEulerAngles.y, 0f));
-            /* tank.localRotation = Quaternion.Euler(rotationX - topX * time, tank.localEulerAngles.y, 0f); */
+            rotation = Quaternion.Euler(angleX - (topX - angleX) * time, tank.localEulerAngles.y, 0f);
+            rb.MoveRotation(rotation);
 			time += Time.deltaTime;
 
             if(PlayType.Get() != PlayState.Ride) break;
@@ -49,8 +55,22 @@ public class TankTouching : MonoBehaviour
             yield return null;
         }
 
-        time = duration;
+        time = durationTouching;
         isTouching = false;
+
+        angleX = 360f - tank.localEulerAngles.x;
+        time = 0f;
+
+        while(time < durationBack)
+        {
+            rotation = Quaternion.Euler(angleX * time / durationBack - angleX, tank.localEulerAngles.y, 0f);
+            rb.MoveRotation(rotation);
+			time += Time.deltaTime;
+
+            if(PlayType.Get() != PlayState.Ride) break;
+
+            yield return null;
+        }
 
         yield return null;
     }
@@ -60,12 +80,12 @@ public class TankTouching : MonoBehaviour
         isTouching = true;
         time = 0f;
 
-        rotationX = 0f;
+        angleX = tank.localEulerAngles.x - 360f;
 
-        while(time < duration / 1.2f)
+        while(time < durationTouching / 1.2f)
         {
-            rb.MoveRotation(Quaternion.Euler(rotationX + bottomX * time, tank.localEulerAngles.y, 0f));
-            /* tank.localRotation = Quaternion.Euler(rotationX + bottomX * time, tank.localEulerAngles.y, 0f); */
+            rotation = Quaternion.Euler(angleX + (bottomX - angleX) * time, tank.localEulerAngles.y, 0f);
+            rb.MoveRotation(rotation);
 			time += Time.deltaTime;
 
             if(PlayType.Get() != PlayState.Ride) break;
@@ -73,15 +93,16 @@ public class TankTouching : MonoBehaviour
             yield return null;
         }
 
-        time = duration;
+        time = durationTouching;
         isTouching = false;
 
+        angleX = tank.localEulerAngles.x;
         time = 0f;
 
-        while(time < 0.3f)
+        while(time < durationBack)
         {
-            rb.MoveRotation(Quaternion.Euler(bottomX - bottomX * time / 0.3f, tank.localEulerAngles.y, 0f));
-            /* tank.localRotation = Quaternion.Euler(rotationX + bottomX * time, tank.localEulerAngles.y, 0f); */
+            rotation = Quaternion.Euler(angleX - angleX * time / durationBack, tank.localEulerAngles.y, 0f);
+            rb.MoveRotation(rotation);
 			time += Time.deltaTime;
 
             if(PlayType.Get() != PlayState.Ride) break;

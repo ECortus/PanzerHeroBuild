@@ -335,6 +335,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   main: {fileID: -9106010015709203310}
+  enemyMask:
+    serializedVersion: 2
+    m_Bits: 8192
 --- !u!1 &2855300084505448382
 GameObject:
   m_ObjectHideFlags: 0

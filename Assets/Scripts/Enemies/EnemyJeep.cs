@@ -14,6 +14,7 @@ public class EnemyJeep : MonoBehaviour
 
     [Space]
     [SerializeField] private Rigidbody rb;
+    [SerializeField] private Rigidbody bodyRB;
 	[SerializeField] private TinyCarController engine;
     [SerializeField] private EnemyStats stats;
 
@@ -22,7 +23,7 @@ public class EnemyJeep : MonoBehaviour
     private List<Transform> patrolWay = new List<Transform>();
     private int patrolIndex = 0;
 
-    private Vector3 target;
+    public Vector3 target;
     private Vector3 point
     {
         get
@@ -110,7 +111,6 @@ public class EnemyJeep : MonoBehaviour
 
     void Patrol()
     {
-        Debug.Log("patrol");
         if(patrolWay.Count == 0)
         {
             return;
@@ -135,6 +135,19 @@ public class EnemyJeep : MonoBehaviour
         {
             engine.setMotor(0);
         }
+    }
+
+    public void ForceBodyUp()
+    {
+        Rigidbody rigid = bodyRB;
+        rigid.useGravity = true;
+
+        rigid.AddForce(100000f * transform.up);
+        rigid.angularVelocity = new Vector3(
+            Random.Range(-10f, 10f),
+            Random.Range(-10f, 10f),
+            Random.Range(-10f, 10f)
+        );
     }
 
     public void SpawnEffectOnCenter(GameObject effect)

@@ -826,6 +826,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 8599675064202913794}
+        m_TargetAssemblyTypeName: EnemyJeep, Assembly-CSharp
+        m_MethodName: ForceBodyUp
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!1 &1184669794609328740
 GameObject:
   m_ObjectHideFlags: 0
@@ -2617,7 +2629,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3386795676748109965}
   serializedVersion: 2
-  m_Mass: 1000
+  m_Mass: 100
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -16197,9 +16209,11 @@ MonoBehaviour:
   stopDistance: 45
   distanceToDetect: 15
   rb: {fileID: 8599675064202914694}
+  bodyRB: {fileID: 4684426984316806036}
   engine: {fileID: 8599675064202913917}
   stats: {fileID: 1184669793841856327}
   patrolWayParent: {fileID: 0}
+  target: {x: 0, y: 0, z: 0}
   HaveDetectPlayer: 0
 --- !u!1 &8615482148488883728
 GameObject:

@@ -21,7 +21,7 @@ public class TankController : MonoBehaviour
 	[SerializeField] private float rotateSpeed;
 
 	[SerializeField] private TinyCarController engine;
-	[SerializeField] private TankTouching touching;
+	public TankTouching Touching;
 
 	private List<Vector3> points => LevelManager.Instance.ActualLevel.GetWayPoints();
 	int pointIndex = 0;
@@ -95,8 +95,8 @@ public class TankController : MonoBehaviour
 		Vector3 tv = (point - transform.position).normalized;
 		var rotation = Quaternion.LookRotation(tv);
 
-		if(!touching.isTouching) rotation = Quaternion.Euler(transform.localEulerAngles.x, rotation.eulerAngles.y, 0f);
-		else rotation = Quaternion.Euler(0f, rotation.eulerAngles.y, 0f);
+		/* if(!touching.isTouching)  */rotation = Quaternion.Euler(transform.localEulerAngles.x, rotation.eulerAngles.y, 0f);
+		/* else rotation = Quaternion.Euler(0f, rotation.eulerAngles.y, 0f); */
 
 		/* rb.MoveRotation(Quaternion.Slerp(transform.localRotation, rotation, rotateSpeed * Time.fixedDeltaTime)); */
 		transform.localRotation = Quaternion.Slerp(transform.localRotation, rotation, rotateSpeed * Time.fixedDeltaTime);

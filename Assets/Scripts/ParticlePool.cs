@@ -10,6 +10,7 @@ public class ParticlePool : MonoBehaviour
     private List<ParticleSystem> WhizzbangEffectPool = new List<ParticleSystem>();
     private List<ParticleSystem> BulletEffectPool = new List<ParticleSystem>();
     private List<ParticleSystem> TankDestroyedEffectPool = new List<ParticleSystem>();
+    private List<ParticleSystem> BarrelBoomEffectPool = new List<ParticleSystem>();
 
     public GameObject Insert(ParticleType type, GameObject obj, Vector3 pos)
     {
@@ -25,6 +26,9 @@ public class ParticlePool : MonoBehaviour
                 break;
             case ParticleType.TankDestroyedEffect:
                 list = TankDestroyedEffectPool;
+                break;
+            case ParticleType.BarrelBoomEffect:
+                list = BarrelBoomEffectPool;
                 break;
             default:
                 return null;
@@ -56,6 +60,9 @@ public class ParticlePool : MonoBehaviour
             case ParticleType.TankDestroyedEffect:
                 TankDestroyedEffectPool = list;
                 break;
+            case ParticleType.BarrelBoomEffect:
+                BarrelBoomEffectPool = list;
+                break;
             default:
                 return null;
         }
@@ -67,5 +74,5 @@ public class ParticlePool : MonoBehaviour
 [System.Serializable]
 public enum ParticleType
 {
-    Default, WhizzbangEffect, BulletEffect, TankDestroyedEffect
+    Default, WhizzbangEffect, BulletEffect, TankDestroyedEffect, BarrelBoomEffect
 }

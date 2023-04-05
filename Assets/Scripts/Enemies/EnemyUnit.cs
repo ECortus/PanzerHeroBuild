@@ -192,7 +192,7 @@ public class EnemyUnit : MonoBehaviour
     {
         Vector3 tv = (point - transform.position).normalized;
         var rotation = Quaternion.LookRotation(tv);
-        transform.localRotation = Quaternion.Slerp(transform.localRotation, rotation, rotateSpeed * Time.fixedDeltaTime);
+        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, rotateSpeed * Time.fixedDeltaTime);
     }
 
 	float DistanceToPoint(Vector3 point)

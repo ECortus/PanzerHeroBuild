@@ -114,11 +114,11 @@ public class DestrictableObject : MonoBehaviour
         RaycastHit hit;
         Vector3 direction = Vector3.down;
 
-        Debug.DrawLine(center, center + direction * distanceToDownObject, Color.red);
+        /* Debug.DrawLine(center, center + direction * distanceToDownObject, Color.red); */
 
         if(Physics.Raycast(center, direction, out hit, distanceToDownObject))
         {
-            Debug.Log($"{gameObject.name} hit on {hit.transform.name}: distance - {Vector3.Distance(center, hit.point)}, layer - {hit.transform.gameObject.layer}");
+            /* Debug.Log($"{gameObject.name} hit on {hit.transform.name}: distance - {Vector3.Distance(center, hit.point)}, layer - {hit.transform.gameObject.layer}"); */
             HasObject = true;
             return;
         }

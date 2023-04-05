@@ -32,6 +32,7 @@ public class EnemyStats : MonoBehaviour
 
     private bool _active;
     public bool Active { get { return _active; }}
+    [HideInInspector] public bool isDead = false;
 
     public void On()
     {
@@ -110,7 +111,9 @@ public class EnemyStats : MonoBehaviour
 
     void Death()
     {
+        isDead = true;
+
         DeathEvent.Invoke();
-        aggrAll.Upd(this);
+        if(aggrAll != null) aggrAll.Upd(this);
     }
 }

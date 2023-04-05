@@ -43,6 +43,27 @@ public class DestrictableBuilding : MonoBehaviour
         }
     }
 
+    public void GetDestroyedByBarrel(Barrel barrel)
+    {
+        Vector3 direction = (transform.position - barrel.center).normalized;
+        TriggerDestrictableObjects(GetObjectsOnRadius(barrel.center, barrel.radius), direction);
+
+        Collider[] cols = Physics.OverlapSphere(barrel.center, barrel.radius * 1.2f, enemyMask);
+
+        if(cols.Length > 0)
+        {
+            EnemyUnit unit;
+            foreach(Collider col in cols)
+            {
+                unit = col.GetComponentInParent<EnemyUnit>();
+                if(unit != null)
+                {
+                    unit.stats.GetHit(999f);
+                }
+            }
+        }
+    }
+
     public void RemoveDestrictableObject(DestrictableObject obj)
     {
         destrictableObjects.Remove(obj);
@@ -57,7 +78,7 @@ public class DestrictableBuilding : MonoBehaviour
     {
         if(whizzbang.damage < 1f) return;
 
-        TriggerDestrictableObjects(GetObjectsOnRadius(whizzbang.center), whizzbang.transform.forward);
+        TriggerDestrictableObjects(GetObjectsOnRadius(whizzbang.center, destrictableRadius), whizzbang.transform.forward);
 
         Collider[] cols = Physics.OverlapSphere(whizzbang.center, destrictableRadius * 1.75f, enemyMask);
 
@@ -101,7 +122,7 @@ public class DestrictableBuilding : MonoBehaviour
         }
     }
 
-    List<DestrictableObject> GetObjectsOnRadius(Vector3 center)
+    List<DestrictableObject> GetObjectsOnRadius(Vector3 center, float radius)
     {
         List<DestrictableObject> list = new List<DestrictableObject>();
 
@@ -110,7 +131,6 @@ public class DestrictableBuilding : MonoBehaviour
             if(list.Contains(destObj)) continue;
 
             float distance = Vector3.Distance(center, destObj.center);
-            float radius = destrictableRadius;
 
             if(distance <= radius) list.Add(destObj);
 

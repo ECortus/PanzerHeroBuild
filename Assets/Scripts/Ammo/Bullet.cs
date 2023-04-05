@@ -105,7 +105,7 @@ public class Bullet : MonoBehaviour
     public void HitAboveSomething()
     {
         Off();
-        if(destroyEffect != null) 
-            ParticlePool.Instance.Insert(ParticleType.BulletEffect, destroyEffect, transform.position);
+        /* if(destroyEffect != null) 
+            ParticlePool.Instance.Insert(ParticleType.BulletEffect, destroyEffect, transform.position); */
     }
 }
