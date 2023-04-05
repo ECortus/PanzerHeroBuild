@@ -64,8 +64,6 @@ public class ChangePlayType : MonoBehaviour
 
     public void Aim(float aimOnY = 0f)
     {
-        TankController.Instance.Touching.StopTouching();
-
         PlayType.Set(PlayState.Aim);
         tankController.Off();
         tankHead.On(aimOnY);

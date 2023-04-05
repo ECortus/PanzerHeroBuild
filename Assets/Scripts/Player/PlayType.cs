@@ -10,7 +10,9 @@ public static class PlayType
     public static void Set(PlayState state)
     {
         State = state;
+
         if(PlayTypeUI.Instance != null) PlayTypeUI.Instance.UpdateButtons();
+        TankController.Instance.Touching.StopTouching();
     }
 }
 

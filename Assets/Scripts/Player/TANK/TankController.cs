@@ -58,6 +58,8 @@ public class TankController : MonoBehaviour
 		rotation = Quaternion.Euler(0f, rotation.eulerAngles.y, 0f);
 		transform.localRotation = rotation;
 
+		head.localEulerAngles = Vector3.zero;
+
 		pointIndex = 1;
 	}
 

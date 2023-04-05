@@ -692,8 +692,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 6, y: 2, z: 7}
-  m_Center: {x: 0, y: 0.5, z: 0.3}
+  m_Size: {x: 6, y: 3.5, z: 7}
+  m_Center: {x: 0, y: 1.25, z: 0.3}
 --- !u!54 &1184669793841856326
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -838,6 +838,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+  isDead: 0
 --- !u!1 &1184669794609328740
 GameObject:
   m_ObjectHideFlags: 0
@@ -3231,7 +3232,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4859052934574233461}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.1, y: 0.29, z: -2.78}
+  m_LocalPosition: {x: -0.1, y: 0.05, z: -2.78}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -3405,6 +3406,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  isDead: 0
 --- !u!114 &2786987669439591022
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16113,7 +16115,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13eb19281dc5d514782f46c6e58033b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RotateBody: 0
+  touching: {fileID: 0}
   colliderRadius: 1
   bodyMass: 100
   gravityMode: 1
