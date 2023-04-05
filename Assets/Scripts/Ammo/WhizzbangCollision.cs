@@ -13,6 +13,7 @@ public class WhizzbangCollision : MonoBehaviour
         Debug.Log($"{gameObject.name} collision: {go.tag}");
 
         EnemyStats stats;
+        DestrictableBuilding building;
 
         switch(go.tag)
         {
@@ -34,10 +35,12 @@ public class WhizzbangCollision : MonoBehaviour
                 main.HitAboveSomething();
                 break;
             case "Building":
+                /* building = col.gameObject.GetComponent<DestrictableBuilding>();
+                building.GetDestroyedByWhizzbang(main); */
                 main.HitAboveSomething();
                 break;
             case "Destrictable":
-                DestrictableBuilding building = col.gameObject.GetComponent<DestrictableObject>().building;
+                building = col.gameObject.GetComponent<DestrictableObject>().building;
                 building.GetDestroyedByWhizzbang(main);
                 main.HitAboveSomething();
                 break;

@@ -21012,18 +21012,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 421405951}
   m_PrefabAsset: {fileID: 0}
---- !u!134 &424477344
-PhysicMaterial:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: DynamicMaterial
-  dynamicFriction: 0
-  staticFriction: 0
-  bounciness: 0
-  frictionCombine: 1
-  bounceCombine: 1
 --- !u!114 &426736345 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6565477441083423513, guid: 3f12b0c193dc65a4098f9e6b5c7428e4,
@@ -69575,6 +69563,18 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1460665809}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!134 &1461028249
+PhysicMaterial:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: DynamicMaterial
+  dynamicFriction: 0
+  staticFriction: 0
+  bounciness: 0
+  frictionCombine: 1
+  bounceCombine: 1
 --- !u!1001 &1462810272
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -108976,7 +108976,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Material
       value: 
-      objectReference: {fileID: 424477344}
+      objectReference: {fileID: 1461028249}
     - target: {fileID: 6570520319913287094, guid: 8c2c8f80a6ed09a4c8f4a78b26b94aa5,
         type: 3}
       propertyPath: m_Name

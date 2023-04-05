@@ -14,7 +14,8 @@ namespace DavidJalbert
         private static float GroundCheckDistanceDelta = 0.1f;
         private static float GroundCheckSkinWidthDelta = 0.05f;
 
-        [SerializeField] private bool RotateBody = false;
+        [SerializeField] private TankTouching touching;
+        private bool RotateBody = false;
 
         public enum GRAVITY_MODE
         {
@@ -385,6 +386,18 @@ namespace DavidJalbert
 
         public void setMotor(float value)
         {
+            if(touching != null && inputMotor != value)
+            {
+                if(inputMotor > value)
+                {
+                    touching.Steering();
+                }
+                else
+                {
+                    touching.Acceleration();
+                }
+            }
+
             inputMotor = value;
         }
 

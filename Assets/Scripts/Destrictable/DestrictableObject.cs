@@ -83,7 +83,7 @@ public class DestrictableObject : MonoBehaviour
         gameObject.layer = Layer;
 
         rb.constraints = RigidbodyConstraints.FreezeAll;
-        rb.isKinematic = false;
+        rb.isKinematic = true;
         rb.useGravity = false;
         rb.collisionDetectionMode = CollisionDetectionMode.Discrete;
         rb.interpolation = RigidbodyInterpolation.None;
@@ -97,15 +97,8 @@ public class DestrictableObject : MonoBehaviour
 
     void Update()
     {
-        if(building.CheckPhysicsAlready && building.destrictableObjects.Count < 20) CheckPhysicsDown();
+        if(building.CheckPhysicsAlready && building.destrictableObjects.Count < 11) CheckPhysicsDown();
     }
-
-    /* public async void ProofPhysics()
-    {
-        CheckPhysicsDown();
-        await UniTask.Delay(10);
-        CheckPhysicsDown();
-    } */
 
     public void CheckPhysicsDown()
     {
@@ -138,6 +131,7 @@ public class DestrictableObject : MonoBehaviour
 
         rb.constraints = RigidbodyConstraints.None;
         rb.useGravity = true;
+        rb.isKinematic = false;
 
         rb.WakeUp();
 
@@ -152,8 +146,13 @@ public class DestrictableObject : MonoBehaviour
 
     async void Deactive()
     {
-        await UniTask.Delay(5000);
-        gameObject.SetActive(false);
+        await UniTask.Delay(1000);
+        await UniTask.WaitUntil(() => rb.velocity.magnitude < 0.1f);
+
+        rb.isKinematic = true;
+        col.enabled = false;
+
+        /* gameObject.SetActive(false); */
     }
 
     public void ForceRigidbody(float force, Vector3 direction)

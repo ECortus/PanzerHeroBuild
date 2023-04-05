@@ -102,10 +102,7 @@ public class EnemyJeep : MonoBehaviour
                 engine.setMotor(0);
             }
 
-            Vector3 tv = (point - transform.position).normalized;
-            Quaternion rotation = Quaternion.LookRotation(tv);
-            rotation = Quaternion.Euler(0f, rotation.eulerAngles.y, 0f);
-            transform.localRotation = Quaternion.Slerp(transform.localRotation, rotation, rotateSpeed * Time.fixedDeltaTime);
+            Rotate();
         }
 	}
 
@@ -125,16 +122,20 @@ public class EnemyJeep : MonoBehaviour
         if(!LockMovement) 
         {
             engine.setMotor(2);
-
-            Vector3 tv = (point - transform.position).normalized;
-            Quaternion rotation = Quaternion.LookRotation(tv);
-            rotation = Quaternion.Euler(0f, rotation.eulerAngles.y, 0f);
-            transform.localRotation = Quaternion.Slerp(transform.localRotation, rotation, rotateSpeed * Time.fixedDeltaTime);
+            Rotate();
         }
         else
         {
             engine.setMotor(0);
         }
+    }
+
+    void Rotate()
+    {
+        Vector3 tv = (point - transform.position).normalized;
+        Quaternion rotation = Quaternion.LookRotation(tv);
+        rotation = Quaternion.Euler(0f, rotation.eulerAngles.y, 0f);
+        transform.localRotation = Quaternion.Slerp(transform.localRotation, rotation, rotateSpeed * Time.fixedDeltaTime);
     }
 
     public void ForceBodyUp()

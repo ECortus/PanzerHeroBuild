@@ -109,10 +109,7 @@ public class EnemyTank : MonoBehaviour
                 engine.setMotor(0);
             }
 
-            Vector3 tv = (point - transform.position).normalized;
-            Quaternion rotation = Quaternion.LookRotation(tv);
-            rotation = Quaternion.Euler(0f, rotation.eulerAngles.y, 0f);
-            transform.localRotation = Quaternion.Slerp(transform.localRotation, rotation, rotateSpeed * Time.fixedDeltaTime);
+            Rotate();
         }
 
         RotateHead();
@@ -144,10 +141,14 @@ public class EnemyTank : MonoBehaviour
     void Drive()
     {
         engine.setMotor(2);
+        Rotate();
+    }
 
+    void Rotate()
+    {
         Vector3 tv = (point - transform.position).normalized;
         Quaternion rotation = Quaternion.LookRotation(tv);
-        rotation = Quaternion.Euler(0f, rotation.eulerAngles.y, 0f);
+        rotation = Quaternion.Euler(transform.localEulerAngles.x, rotation.eulerAngles.y, 0f);
         transform.localRotation = Quaternion.Slerp(transform.localRotation, rotation, rotateSpeed * Time.fixedDeltaTime);
     }
 

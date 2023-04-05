@@ -859,7 +859,7 @@ MonoBehaviour:
   topX: 7
   bottomX: 8
   durationTouching: 0.6
-  durationBack: 0.25
+  durationBack: 0.15
 --- !u!1 &2718598156885846042
 GameObject:
   m_ObjectHideFlags: 0
@@ -2749,7 +2749,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13eb19281dc5d514782f46c6e58033b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RotateBody: 0
+  touching: {fileID: 729922726197258150}
   colliderRadius: 1
   bodyMass: 1000
   gravityMode: 1
