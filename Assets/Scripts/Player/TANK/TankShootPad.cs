@@ -11,20 +11,20 @@ public class TankShootPad : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
     public bool HaveTouch = false;
     [SerializeField] private TankShotButtonUI button;
 
-    public async void On()
+    public void On()
     {
-        if(button.gameObject.activeInHierarchy)
+        /* if(button.gameObject.activeInHierarchy)
         {
             button.Open();
             await UniTask.Delay(200);
         }
-        else button.Reset();
+        else button.Reset(); */
 
         this.enabled = true;
     }
     public void Off()
     {
-        button.Close();
+        /* button.Close(); */
         this.enabled = false;
     }
 

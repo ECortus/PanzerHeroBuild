@@ -22,7 +22,9 @@ public class TankShooting : MonoBehaviour
     {
         IsShooting = true;
 
-        while(true)
+        await Shoot();
+
+        /* while(true)
         {
             if(!PlayerStats.Instance.Active) break;
 
@@ -36,7 +38,7 @@ public class TankShooting : MonoBehaviour
             {
                 break;
             }
-        }
+        } */
 
         IsShooting = false;
     }
@@ -68,7 +70,8 @@ public class TankShooting : MonoBehaviour
         }
         else
         {
-            await UniTask.Delay(ReloadTime);
+            /* await UniTask.Delay(ReloadTime); */
+            await UniTask.Delay(10);
         }
 
         return reload;

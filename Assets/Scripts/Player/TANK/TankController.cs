@@ -12,7 +12,7 @@ public class TankController : MonoBehaviour
 	{
 		get
 		{
-			return transform.position - transform.up * engine.colliderRadius * ((int)engine.colliderRadius / 1 + 1) / 4f;
+			return transform.position + transform.up * 1.5f;
 		}
 	}
 
@@ -82,7 +82,7 @@ public class TankController : MonoBehaviour
 			return;
 		}
 
-		if(DistanceToPoint(point) < 3f)
+		if(DistanceToPoint(point) < 4f)
 		{
 			pointIndex++;
 		}
@@ -123,4 +123,10 @@ public class TankController : MonoBehaviour
 	{
 		return Vector3.Distance(center, point);
 	}
+
+	/* void OnDrawGizmos()
+	{
+		Gizmos.color = Color.black;
+        Gizmos.DrawSphere(center, 0.5f);
+	} */
 }

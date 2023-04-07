@@ -5261,7 +5261,6 @@ GameObject:
   - component: {fileID: 3887583123555288156}
   - component: {fileID: 3952957237173450342}
   - component: {fileID: 3008031233385218360}
-  - component: {fileID: 1311798803572074005}
   m_Layer: 11
   m_Name: Floor
   m_TagString: Destrictable
@@ -5363,18 +5362,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &1311798803572074005
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7268997023002543643}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 839d8efdc20c93b4f9e36616e73eef39, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &7472832919859940558
 GameObject:
   m_ObjectHideFlags: 0
@@ -6957,7 +6944,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7e0b035a96940848bf48ce0eb63e91f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  floor: {fileID: 1311798803572074005}
+  floor: {fileID: 0}
   CheckPhysicsAlready: 1
   destrictableParent: {fileID: 8660934833301892190}
   destrictableObjects:

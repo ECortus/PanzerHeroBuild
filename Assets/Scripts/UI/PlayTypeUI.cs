@@ -28,7 +28,7 @@ public class PlayTypeUI : MonoBehaviour
                 aimButt.Open();
                 break;
             case PlayState.Aim:
-                if(TankHeadController.Instance.Aiming) rideButt.Close();
+                if(TankHeadController.Instance.Aiming) rideButt.Open();
                 else rideButt.Open();
 
                 aimButt.Close();

@@ -13,7 +13,7 @@ public class ReloadingUI : ShowHideUI
         /* slider.gameObject.SetActive(true); */
         /* whizzbangs.SetActive(false); */
 
-        /* WhizzbangUI.Instance.Close(); */
+        WhizzbangUI.Instance.Close();
 
         StopAllCoroutines();
         StartCoroutine(ShowProcess());
@@ -39,10 +39,6 @@ public class ReloadingUI : ShowHideUI
             isShown = false;
             transform.localScale = Vector3.zero;
         }
-        {
-            StopAllCoroutines();
-            StartCoroutine(HideProcess());
-        }
 
         /* if(!Input.GetMouseButton(0) && !TouchPad.Instance.IsPointerOverUIObject())
         {
@@ -53,12 +49,12 @@ public class ReloadingUI : ShowHideUI
             WhizzbangUI.Instance.isShown = true;
         }
         else
-        {
+        { */
             StopAllCoroutines();
             StartCoroutine(HideProcess());
 
             WhizzbangUI.Instance.Open();
-        } */
+        /* } */
 
         /* whizzbangs.SetActive(true); */
         /* slider.gameObject.SetActive(false); */

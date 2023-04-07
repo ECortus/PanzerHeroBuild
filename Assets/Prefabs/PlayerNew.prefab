@@ -633,6 +633,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d691843319b72e468219dc5b3008acc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _aiming: 0
   tankShooting: {fileID: 2655547955882685606}
   shotButton: {fileID: 0}
   aimUI: {fileID: 0}
@@ -648,6 +649,7 @@ MonoBehaviour:
   rotate: 6.5
   sensivityVertical: 70
   sensivityHorizontal: 80
+  boundForShot: 0
 --- !u!114 &2655547955882685606
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -713,8 +715,8 @@ MonoBehaviour:
   isTouching: 0
   tank: {fileID: 6570520319913287095}
   rb: {fileID: 6570520319913287081}
-  topX: 7
-  bottomX: 8
+  topX: 4
+  bottomX: 5
   durationTouching: 0.6
   durationBack: 0.15
 --- !u!1 &2718598156885846042

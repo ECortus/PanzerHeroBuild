@@ -8,7 +8,7 @@ public class TankHeadController : MonoBehaviour
 {
     public static TankHeadController Instance;
 
-    bool _aiming = false;
+    public bool _aiming = false;
     public bool Aiming
     {
         get 
@@ -46,6 +46,9 @@ public class TankHeadController : MonoBehaviour
     [Space]
     [SerializeField] private float rotate;
     [SerializeField] private float sensivityVertical, sensivityHorizontal;
+
+    [Space]
+    [SerializeField] private float boundForShot;
 
     bool rotating = false;
 
@@ -126,29 +129,32 @@ public class TankHeadController : MonoBehaviour
 
         if(TankShootPad.Instance.IsPointerOverUIObject() && !Aiming && !rotating) return;
 
-        if (Input.GetMouseButtonDown(0))
+        /* if (Input.GetMouseButtonDown(0))
         {
             PrepareRotate();
 
             rotating = true;
-        }
+        } */
 
         if (Input.GetMouseButton(0) && rotating)
         {
-            if(Aiming)
-            {
-                Rotate();
-            }
-            else
-            {
-                Rotate();
-            }
+            Rotate();
         }
 
         if(Input.GetMouseButtonUp(0))
         {
-            if(Aiming && !tankShooting.IsShooting && rotating) Shot();
+            /* if(Aiming && !tankShooting.IsShooting && rotating) Shot(); */
 
+            if(new Vector2(diffMouseX, diffMouseY).magnitude < boundForShot &&
+                Aiming && !tankShooting.IsShooting && rotating)
+            {
+                Shot();
+            }
+            else
+            {
+                Up();
+            }
+            
             rotating = false;
         }
     }
@@ -157,15 +163,15 @@ public class TankHeadController : MonoBehaviour
     {
         PrepareRotate();
 
-        if(Aiming || tankShooting.IsShooting) return;
+        if(Aiming/*  || tankShooting.IsShooting */) return;
 
         Aiming = true;
 
-        prepareAimCanvas.SetActive(false);
+        /* prepareAimCanvas.SetActive(false);
         aimCanvas.SetActive(true);
 
         Transform root = aimCamRoot;
-        GameManager.Instance.SetFollowTarget(root);
+        GameManager.Instance.SetFollowTarget(root); */
 
         TankShootPad.Instance.Off();
     }
@@ -181,19 +187,14 @@ public class TankHeadController : MonoBehaviour
 
     public void Up()
     {
-        prepareAimCanvas.SetActive(true);
+        /* prepareAimCanvas.SetActive(true);
         aimCanvas.SetActive(false);
 
-        if(PlayerStats.Instance.Active)
-        {
-            Transform root = GameManager.Instance.prepareToAimCamRoot;
-            GameManager.Instance.SetFollowTarget(root);
-        }
-        else
-        {
-            TankShootPad.Instance.On();
-            Aiming = false;
-        }
+        Transform root = GameManager.Instance.prepareToAimCamRoot;
+        GameManager.Instance.SetFollowTarget(root); */
+        
+        TankShootPad.Instance.On();
+        Aiming = false;
     }
 
     void PrepareRotate()
@@ -208,6 +209,9 @@ public class TankHeadController : MonoBehaviour
         );
 
         lastCamPos = last;
+
+        diffMouseX = 0f;
+        diffMouseY = 0f;
     }
 
     void Rotate()

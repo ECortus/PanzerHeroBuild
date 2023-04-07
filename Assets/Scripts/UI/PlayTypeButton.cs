@@ -6,29 +6,29 @@ public class PlayTypeButton : ShowHideUI
 {
     public void Open()
     {
-        if(gameObject.activeInHierarchy)
+        /* if(gameObject.activeInHierarchy)
         {
             StopAllCoroutines();
             StartCoroutine(ShowProcess());
         }
         else
-        {
+        { */
             isShown = true;
             transform.localScale = Vector3.one;
-        }
+        /* } */
     }
 
     public void Close()
     {
-        if(gameObject.activeInHierarchy)
+        /* if(gameObject.activeInHierarchy)
         {
             StopAllCoroutines();
             StartCoroutine(HideProcess());
         }
         else
-        {
+        { */
             isShown = false;
             transform.localScale = Vector3.zero;
-        }
+        /* } */
     }
 }

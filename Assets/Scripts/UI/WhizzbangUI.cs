@@ -20,14 +20,30 @@ public class WhizzbangUI : ShowHideUI
 
     public void Open()
     {
-        StopAllCoroutines();
-        StartCoroutine(ShowProcess());
+        if(gameObject.activeInHierarchy)
+        {
+            StopAllCoroutines();
+            StartCoroutine(ShowProcess());
+        }
+        else
+        {
+            isShown = true;
+            transform.localScale = Vector3.one;
+        }
     }
 
     public void Close()
     {
-        StopAllCoroutines();
-        StartCoroutine(HideProcess());
+        if(gameObject.activeInHierarchy)
+        {
+            StopAllCoroutines();
+            StartCoroutine(HideProcess());
+        }
+        else
+        {
+            isShown = false;
+            transform.localScale = Vector3.zero;
+        }
     }
 
     public void UpdCount()
