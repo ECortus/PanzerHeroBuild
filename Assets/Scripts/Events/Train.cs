@@ -36,5 +36,19 @@ public class Train : MonoBehaviour
         await UniTask.Delay(delayToDisappear);
         Off();
     }
+
+    void OnTriggerEnter(Collider col)
+    {
+        GameObject go = col.gameObject;
+
+        switch(go.tag)
+        {
+            case "Player":
+                PlayerStats.Instance.GetHit(9999f);
+                break;
+            default:
+                break;
+        }
+    }
 }
 

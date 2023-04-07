@@ -47,6 +47,8 @@ public class TankController : MonoBehaviour
 
 	public void SpawnAtStart()
 	{
+		PlayerStats.Instance.ResetBody();
+
 		pointIndex = 0;
 		
 		Vector3 pos = point;
@@ -106,6 +108,11 @@ public class TankController : MonoBehaviour
 		Quaternion headRot = Quaternion.Euler(Vector3.zero);
         head.localRotation = Quaternion.Slerp(head.localRotation, headRot, rotateSpeed / 4f * Time.deltaTime);
 	}
+
+	public void SpawnEffectOnCenter(GameObject effect)
+    {
+        if(effect != null) ParticlePool.Instance.Insert(ParticleType.TankDestroyedEffect, effect, center);
+    }
 
 	public void ForceRigidbody(float force)
 	{

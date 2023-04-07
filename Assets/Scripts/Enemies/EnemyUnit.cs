@@ -35,7 +35,7 @@ public class EnemyUnit : MonoBehaviour
 	{
 		get
 		{
-			return transform.position;
+			return transform.position + new Vector3(0f, Agent.height * 1.1f, 0f);
 		}
 	}
 
@@ -229,6 +229,9 @@ public class EnemyUnit : MonoBehaviour
 
     void OnDrawGizmos()
     {
+        Gizmos.color = Color.black;
+        Gizmos.DrawSphere(center, 0.5f);
+
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(center, maxShootDistance);
 

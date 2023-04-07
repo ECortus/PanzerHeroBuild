@@ -14,6 +14,7 @@ public class EnemyJeep : MonoBehaviour
 
     [Space]
     [SerializeField] private Rigidbody rb;
+    [SerializeField] private EnemyStats bodyStats;
     [SerializeField] private Rigidbody bodyRB;
 	[SerializeField] private TinyCarController engine;
     [SerializeField] private EnemyStats stats;
@@ -23,7 +24,7 @@ public class EnemyJeep : MonoBehaviour
     private List<Transform> patrolWay = new List<Transform>();
     private int patrolIndex = 0;
 
-    public Vector3 target;
+    private Vector3 target;
     private Vector3 point
     {
         get
@@ -140,6 +141,8 @@ public class EnemyJeep : MonoBehaviour
 
     public void ForceBodyUp()
     {
+        if(bodyStats.isDead) return;
+
         Rigidbody rigid = bodyRB;
         rigid.useGravity = true;
 

@@ -172,19 +172,6 @@ public class EnemyTank : MonoBehaviour
 		return Vector3.Distance(center, point);
 	}
 
-    public void ForceHeadUp()
-    {
-        Rigidbody rigid = brokenHead;
-        rigid.useGravity = true;
-
-        rigid.AddForce(1000f * transform.up);
-        rigid.angularVelocity = new Vector3(
-            Random.Range(-10f, 10f),
-            Random.Range(-10f, 10f),
-            Random.Range(-10f, 10f)
-        );
-    }
-
     public void SpawnEffectOnCenter(GameObject effect)
     {
         if(effect != null) ParticlePool.Instance.Insert(ParticleType.TankDestroyedEffect, effect, center);

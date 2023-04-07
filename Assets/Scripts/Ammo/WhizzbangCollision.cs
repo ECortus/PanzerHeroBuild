@@ -5,7 +5,7 @@ using UnityEngine;
 public class WhizzbangCollision : MonoBehaviour
 {
     [SerializeField] private Whizzbang main;
-    /* [SerializeField] private LayerMask enemyMask; */
+    [SerializeField] private LayerMask unitMask;
 
     void OnCollisionEnter(Collision col)
     {
@@ -45,23 +45,29 @@ public class WhizzbangCollision : MonoBehaviour
                 main.HitAboveSomething();
                 break;
             case "Ground":
-                /* Collider[] cols = Physics.OverlapSphere(main.center, 2f, enemyMask);
-                if(cols.Length > 0)
-                {
-                    EnemyStats unit;
-                    foreach(Collider coll in cols)
-                    {
-                        unit = coll.GetComponentInParent<EnemyStats>();
-                        if(unit != null && !unit.isDead)
-                        {
-                            unit.GetHit(999f);
-                        }
-                    }
-                } */
                 main.HitAboveSomething();
                 break;
             default:
                 break;
+        }
+
+        CheckEnemyUnitNear();
+    }
+
+    void CheckEnemyUnitNear()
+    {
+        Collider[] cols = Physics.OverlapSphere(main.center, 1.75f, unitMask);
+        if(cols.Length > 0)
+        {
+            EnemyStats unit;
+            foreach(Collider coll in cols)
+            {
+                unit = coll.GetComponent<EnemyStats>();
+                if(unit != null && !unit.isDead)
+                {
+                    unit.GetHit(999f);
+                }
+            }
         }
     }
 }

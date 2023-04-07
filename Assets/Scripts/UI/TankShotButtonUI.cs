@@ -4,13 +4,16 @@ using UnityEngine;
 
 public class TankShotButtonUI : ShowHideUI
 {
+    public void Reset()
+    {
+        isShown = true;
+        transform.localScale = Vector3.one;
+    }
+
     public void Open()
     {
         StopAllCoroutines();
         StartCoroutine(ShowProcess());
-
-        /* isShown = true;
-        transform.localScale = Vector3.one; */
     }
 
     public void Close()

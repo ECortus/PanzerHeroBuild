@@ -3966,6 +3966,7 @@ GameObject:
   - component: {fileID: 7137096387757684837}
   - component: {fileID: 7137096387757684838}
   - component: {fileID: 490755175583046983}
+  - component: {fileID: 2997040656933616952}
   m_Layer: 13
   m_Name: EnemyUnit
   m_TagString: EnemyUnit
@@ -4083,6 +4084,18 @@ MonoBehaviour:
   DeathEvent:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 2997040656933616952}
+        m_TargetAssemblyTypeName: UnityEngine.Collider, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 7137096387757684838}
         m_TargetAssemblyTypeName: EnemyStats, Assembly-CSharp
         m_MethodName: Off
@@ -4162,6 +4175,19 @@ MonoBehaviour:
   muzzle: {fileID: 6997382423686303658}
   bulletPrefab: {fileID: 1101043062399094408, guid: dfb41940c493da54aa69c7410e1c5fdf,
     type: 3}
+--- !u!135 &2997040656933616952
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7137096387757684828}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &7266013987303739623
 GameObject:
   m_ObjectHideFlags: 0

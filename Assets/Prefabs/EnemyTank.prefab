@@ -11177,7 +11177,7 @@ MonoBehaviour:
         m_MethodName: SpawnEffectOnCenter
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 9212506714050349952, guid: 748bda0de7c42e84ebcd9e744d5d53f9,
+          m_ObjectArgument: {fileID: 3353988502539593603, guid: c83f8e4446b99eb47b9d34c32c72db07,
             type: 3}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0
@@ -11213,18 +11213,6 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 7297753018944548634}
-        m_TargetAssemblyTypeName: EnemyTank, Assembly-CSharp
-        m_MethodName: ForceHeadUp
-        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -11461,6 +11449,13 @@ MonoBehaviour:
   - {fileID: 4123646372461323414}
   - {fileID: 3772574345263648451}
   - {fileID: 3616531302620858226}
+  cols:
+  - {fileID: 4397129626339607427}
+  - {fileID: 4444266003434987872}
+  - {fileID: 3591303353600853261}
+  - {fileID: 4123646372461323415}
+  - {fileID: 3772574345263648460}
+  - {fileID: 3616531302620858227}
 --- !u!1 &7297753019748933189
 GameObject:
   m_ObjectHideFlags: 0
@@ -12137,6 +12132,7 @@ GameObject:
   - component: {fileID: 5129185625781062531}
   - component: {fileID: 4006969547230084747}
   - component: {fileID: 4847383064041532487}
+  - component: {fileID: 5914285365203281873}
   m_Layer: 0
   m_Name: Head
   m_TagString: Untagged
@@ -12240,3 +12236,16 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -8839368762345780380, guid: 850d0945f97533e46837d5ef5a933ad2, type: 3}
+--- !u!114 &5914285365203281873
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9009277729791854580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fbea1a5b391e7848a6fb8c8d9376243, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  head: {fileID: 4006969547230084747}

@@ -13,8 +13,12 @@ public class TankShootPad : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
 
     public async void On()
     {
-        button.Open();
-        await UniTask.Delay(200);
+        if(button.gameObject.activeInHierarchy)
+        {
+            button.Open();
+            await UniTask.Delay(200);
+        }
+        else button.Reset();
 
         this.enabled = true;
     }

@@ -10,10 +10,10 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private List<Level> Levels = new List<Level>();
 
     private int _Index { get { return Statistics.LevelIndex; } set { Statistics.LevelIndex = value; } }
-    public int GetIndex() => _Index > (Levels.Count - 1) ? _Index % Levels.Count : _Index;
+    public int GetIndex() => _Index;
     public void SetIndex(int value) => _Index = value;
 
-    public Level ActualLevel => Levels[GetIndex()];
+    public Level ActualLevel => Levels[GetIndex() > (Levels.Count - 1) ? GetIndex() % Levels.Count : GetIndex()];
 
     [SerializeField] private Transform bufferForLevel;
 

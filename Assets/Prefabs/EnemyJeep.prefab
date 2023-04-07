@@ -692,8 +692,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 6, y: 3.5, z: 7}
-  m_Center: {x: 0, y: 1.25, z: 0.3}
+  m_Size: {x: 4, y: 2, z: 7}
+  m_Center: {x: 0, y: 0.6, z: 0}
 --- !u!54 &1184669793841856326
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3216,7 +3216,6 @@ GameObject:
   - component: {fileID: 4859052934574233420}
   - component: {fileID: 4859052934574233423}
   - component: {fileID: 2786987669439591022}
-  - component: {fileID: 5577419980810879846}
   m_Layer: 13
   m_Name: EnemyUnit
   m_TagString: EnemyUnit
@@ -3250,7 +3249,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 4859052934574233461}
   m_Enabled: 0
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 0.1
   m_Speed: 1
   m_Acceleration: 8
   avoidancePriority: 50
@@ -3279,7 +3278,7 @@ MonoBehaviour:
   shooting: {fileID: 2786987669439591022}
   animator: {fileID: 9031653163458169940}
   Agent: {fileID: 2646678285127864330}
-  collid: {fileID: 5577419980810879846}
+  collid: {fileID: 0}
   ragdollRBs:
   - {fileID: 733702365017525763}
   - {fileID: 4659058690139390913}
@@ -3334,7 +3333,7 @@ MonoBehaviour:
   DeathEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5577419980810879846}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: UnityEngine.Collider, UnityEngine
         m_MethodName: set_enabled
         m_Mode: 6
@@ -3425,20 +3424,6 @@ MonoBehaviour:
   muzzle: {fileID: 4717924689311867011}
   bulletPrefab: {fileID: 1101043062399094408, guid: dfb41940c493da54aa69c7410e1c5fdf,
     type: 3}
---- !u!136 &5577419980810879846
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4859052934574233461}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  m_Radius: 0.3
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &4950806770317180878
 GameObject:
   m_ObjectHideFlags: 0
@@ -16035,6 +16020,11 @@ MonoBehaviour:
   - {fileID: 7509928595146776282}
   - {fileID: 6661519274119202066}
   - {fileID: 7069386267269006656}
+  cols:
+  - {fileID: 7372733870532677266}
+  - {fileID: 7509928595146776283}
+  - {fileID: 6661519274119202067}
+  - {fileID: 7069386267269006657}
 --- !u!1 &8599675064202914688
 GameObject:
   m_ObjectHideFlags: 0
@@ -16209,13 +16199,13 @@ MonoBehaviour:
   LockMovement: 0
   rotateSpeed: 2
   stopDistance: 45
-  distanceToDetect: 15
+  distanceToDetect: 25
   rb: {fileID: 8599675064202914694}
+  bodyStats: {fileID: 4859052934574233423}
   bodyRB: {fileID: 4684426984316806036}
   engine: {fileID: 8599675064202913917}
   stats: {fileID: 1184669793841856327}
   patrolWayParent: {fileID: 0}
-  target: {x: 0, y: 0, z: 0}
   HaveDetectPlayer: 0
 --- !u!1 &8615482148488883728
 GameObject:

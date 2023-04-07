@@ -24,6 +24,8 @@ public class TankShooting : MonoBehaviour
 
         while(true)
         {
+            if(!PlayerStats.Instance.Active) break;
+
             if(await Shoot()) break;
 
             if(Input.GetMouseButton(0))
@@ -75,7 +77,7 @@ public class TankShooting : MonoBehaviour
     async UniTask Reload()
     {
         await UniTask.Delay(50);
-        await UI.Instance.Reload(ReloadTime);
+        await UI.Instance.Reload((int)(ReloadTime * (5f/6f)));
     }
 
     float duration;

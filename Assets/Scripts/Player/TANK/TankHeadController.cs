@@ -23,6 +23,7 @@ public class TankHeadController : MonoBehaviour
     }
 
     [SerializeField] private TankShooting tankShooting;
+    [SerializeField] private TankShotButtonUI shotButton;
 
     [Space]
     [SerializeField] private GameObject aimUI;
@@ -94,6 +95,8 @@ public class TankHeadController : MonoBehaviour
         aimUI.SetActive(true);
         prepareAimCanvas.SetActive(true);
         aimCanvas.SetActive(false);
+
+        shotButton.Reset();
 
         gun.localEulerAngles = Vector3.zero;
 
@@ -181,8 +184,16 @@ public class TankHeadController : MonoBehaviour
         prepareAimCanvas.SetActive(true);
         aimCanvas.SetActive(false);
 
-        Transform root = GameManager.Instance.prepareToAimCamRoot;
-        GameManager.Instance.SetFollowTarget(root);
+        if(PlayerStats.Instance.Active)
+        {
+            Transform root = GameManager.Instance.prepareToAimCamRoot;
+            GameManager.Instance.SetFollowTarget(root);
+        }
+        else
+        {
+            TankShootPad.Instance.On();
+            Aiming = false;
+        }
     }
 
     void PrepareRotate()

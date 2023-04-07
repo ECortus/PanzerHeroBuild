@@ -82,6 +82,7 @@ public class TankTouching : MonoBehaviour
         time = 0f;
 
         angleX = tank.localEulerAngles.x - 360f;
+        angleX = Mathf.Abs(angleX) == 360f ? 0f : angleX;
 
         while(time < durationTouching / 1.2f)
         {

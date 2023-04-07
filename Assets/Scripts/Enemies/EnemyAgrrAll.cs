@@ -1,11 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class EnemyAgrrAll : MonoBehaviour
 {
     [SerializeField] private GameObject eventPoint;
-    [SerializeField] private List<EnemyStats> stats;
+    [SerializeField] private List<EnemyStats> stats = new List<EnemyStats>();
+
+    void Start()
+    {
+        stats.Clear();
+        stats = transform.GetComponentsInChildren<EnemyStats>().ToList();
+    }
 
     public void On()
     {

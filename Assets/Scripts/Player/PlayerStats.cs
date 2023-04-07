@@ -14,6 +14,12 @@ public class PlayerStats : MonoBehaviour
     public float DefaultTimeReload = 0.5f;
     public int DefaultWhizzbangCount = 3;
 
+    [Space]
+    [SerializeField] private GameObject hitBox;
+    [SerializeField] private GameObject unharmedBody;
+    [SerializeField] private GameObject harmedBodyPrefab;
+    [SerializeField] private Transform harmedParent;
+
     public float MaxHP
     {
         get
@@ -140,5 +146,27 @@ public class PlayerStats : MonoBehaviour
     void Death()
     {
         DeathEvent.Invoke();
+    }
+
+    public void ResetBody()
+    {
+        if(harmed != null)
+        {
+            harmed.SetActive(false);
+            harmed = null;
+        }
+
+        unharmedBody.SetActive(true);
+        hitBox.SetActive(true);
+    }
+
+    GameObject harmed;
+
+    public void InsertDeadBody()
+    {
+        unharmedBody.SetActive(false);
+        hitBox.SetActive(false);
+
+        harmed = Instantiate(harmedBodyPrefab, harmedParent);
     }
 }
