@@ -12,7 +12,7 @@ public static class PlayType
         State = state;
 
         if(PlayTypeUI.Instance != null) PlayTypeUI.Instance.UpdateButtons();
-        TankController.Instance.Touching.StopTouching();
+        TankController.Instance.Touching.StopTouching(true);
     }
 }
 

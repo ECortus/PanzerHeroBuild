@@ -32,10 +32,10 @@ public class TankTouching : MonoBehaviour
         StartCoroutine(TouchingSteering());
     }
 
-    public void StopTouching()
+    public void StopTouching(bool defautlt = false)
     {
         StopAllCoroutines();
-        tank.localEulerAngles = new Vector3(0f, tank.localEulerAngles.y, 0f);
+        if(defautlt) tank.localEulerAngles = new Vector3(0f, tank.localEulerAngles.y, 0f);
     }
 
     IEnumerator TouchingAcceleration()

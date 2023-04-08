@@ -11538,10 +11538,10 @@ MonoBehaviour:
   isTouching: 0
   tank: {fileID: 7297753018944548635}
   rb: {fileID: 7297753018944548068}
-  topX: 4
-  bottomX: 5
+  topX: 5
+  bottomX: 4
   durationTouching: 0.6
-  durationBack: 0.15
+  durationBack: 0.2
 --- !u!1 &7297753020225443331
 GameObject:
   m_ObjectHideFlags: 0

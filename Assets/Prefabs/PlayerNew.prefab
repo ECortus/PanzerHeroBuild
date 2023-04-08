@@ -649,7 +649,7 @@ MonoBehaviour:
   rotate: 6.5
   sensivityVertical: 70
   sensivityHorizontal: 80
-  boundForShot: 0
+  boundForShot: 1
 --- !u!114 &2655547955882685606
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -715,10 +715,10 @@ MonoBehaviour:
   isTouching: 0
   tank: {fileID: 6570520319913287095}
   rb: {fileID: 6570520319913287081}
-  topX: 4
-  bottomX: 5
+  topX: 5
+  bottomX: 4
   durationTouching: 0.6
-  durationBack: 0.15
+  durationBack: 0.2
 --- !u!1 &2718598156885846042
 GameObject:
   m_ObjectHideFlags: 0
