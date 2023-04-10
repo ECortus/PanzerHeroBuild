@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 
+[ExecuteInEditMode]
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; set; }

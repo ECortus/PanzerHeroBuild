@@ -33,9 +33,9 @@ public class Barrel : MonoBehaviour
             case "Player":
                 BOOM();
                 break;
-            case "Bullet":
+            /* case "Bullet":
                 BOOM();
-                break;
+                break; */
             case "Whizzbang":
                 BOOM();
                 break;

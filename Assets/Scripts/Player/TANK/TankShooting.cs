@@ -126,4 +126,10 @@ public class TankShooting : MonoBehaviour
 
         yield return null;
     }
+
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.magenta;
+        Gizmos.DrawRay(muzzle.position, muzzle.forward * 200f);
+    }
 }

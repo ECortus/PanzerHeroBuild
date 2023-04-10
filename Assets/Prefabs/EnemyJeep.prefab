@@ -3302,7 +3302,7 @@ MonoBehaviour:
   - {fileID: 3488494310029091525}
   - {fileID: 1791071295619908147}
   speed: 5
-  rotateSpeed: 5
+  rotateSpeed: 25
   maxShootDistance: 75
   distanceToDetect: 45
   wallMasks:
@@ -16092,7 +16092,7 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0.3, z: 0}
 --- !u!114 &8599675064202913917
 MonoBehaviour:
   m_ObjectHideFlags: 0

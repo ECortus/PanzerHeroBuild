@@ -15,7 +15,7 @@ namespace DavidJalbert
         private static float GroundCheckSkinWidthDelta = 0.05f;
 
         [SerializeField] private TankTouching touching;
-        private bool RotateBody = false;
+        [SerializeField] private bool RotateBody = true;
 
         public enum GRAVITY_MODE
         {
@@ -141,16 +141,16 @@ namespace DavidJalbert
             sphereCollider.hideFlags = HideFlags.NotEditable; */
 
             body.mass = bodyMass * (adjustToScale ? cubicScale : 1);
-            /* body.drag = 0; */
-            /* body.angularDrag = 1f; */
-            /* body.constraints = RigidbodyConstraints.None; */
+            body.drag = 0;
+            body.angularDrag = 0f;
+            body.constraints = RigidbodyConstraints.None;
             body.useGravity = false;
             body.isKinematic = false;
             body.interpolation = RigidbodyInterpolation.Extrapolate;
             body.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
 
             sphereCollider.radius = colliderRadius;
-            /* sphereCollider.isTrigger = false; */
+            sphereCollider.isTrigger = false;
             sphereCollider.material = customPhysicMaterial;
         }
 
@@ -255,7 +255,18 @@ namespace DavidJalbert
             
             // steering
             float steeringForce = (onGround ? 1 : steeringMultiplierInAir) * (forwardVelocity < 0 ? -1 : 1) * steeringBySpeed.Evaluate(getForwardVelocityDelta()) * surfaceParameters.steeringMultiplier;
-            if(RotateBody) body.MoveRotation(Quaternion.Euler(groundXAngle, transform.rotation.eulerAngles.y + steering * deltaTime * steeringForce, groundZAngle));
+            Vector3 rotation = new Vector3(
+                groundXAngle, 
+                transform.rotation.eulerAngles.y/*  + steering * deltaTime * steeringForce */, 
+                groundZAngle
+            );
+            Debug.Log(rotation);
+
+            if(RotateBody /* && !touching.isTouching */)
+            {
+                transform.localRotation = Quaternion.Slerp(transform.localRotation, Quaternion.Euler(rotation), 3f * deltaTime);
+                /* body.MoveRotation(Quaternion.Euler(rotation)); */
+            }
             // ---
 
             // gravity

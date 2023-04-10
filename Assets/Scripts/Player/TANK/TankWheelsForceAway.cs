@@ -18,7 +18,14 @@ public class TankWheelsForceAway : MonoBehaviour
         foreach(Rigidbody wheel in wheels)
         {
             /* wheel.transform.parent = null; */
+            
             wheel.AddForce(-wheel.transform.up * 1500f);
+
+            wheel.angularVelocity = new Vector3(
+            Random.Range(-10f, 10f),
+            Random.Range(-10f, 10f),
+            Random.Range(-10f, 10f)
+        );
         }
 
         await UniTask.Delay(5000);

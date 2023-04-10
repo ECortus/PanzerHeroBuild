@@ -99,7 +99,7 @@ public class Bullet : MonoBehaviour
 
     void Update()
     {
-        if(Vector3.Distance(TankController.Instance.Transform.position, transform.position) > 200f) Off();
+        if(Vector3.Distance(TankController.Instance.Transform.position, transform.position) > 100f) Off();
     }
 
     public void HitAboveSomething()

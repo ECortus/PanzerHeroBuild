@@ -48,6 +48,7 @@ public class TankController : MonoBehaviour
 	public void SpawnAtStart()
 	{
 		PlayerStats.Instance.ResetBody();
+		Touching.StopTouching();
 
 		pointIndex = 0;
 		

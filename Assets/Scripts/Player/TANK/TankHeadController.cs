@@ -271,4 +271,11 @@ public class TankHeadController : MonoBehaviour
 
         return rtrn;
     }
+
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.magenta;
+        if(GameManager.Instance != null) 
+            Gizmos.DrawRay(GameManager.Instance.prepareToAimCamRoot.position, GameManager.Instance.prepareToAimCamRoot.forward * 200f);
+    }
 }

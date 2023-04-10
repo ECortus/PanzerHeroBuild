@@ -146,10 +146,11 @@ public class DestrictableObject : MonoBehaviour
 
     async void Deactive()
     {
-        await UniTask.Delay(5000);
-        await UniTask.WaitUntil(() => rb.velocity.magnitude < 0.1f);
+        await UniTask.Delay(10000);
+        /* await UniTask.WaitUntil(() => rb.velocity.magnitude < 0.1f); */
 
         rb.isKinematic = true;
+        col.convex = false;
         col.enabled = false;
 
         /* gameObject.SetActive(false); */
