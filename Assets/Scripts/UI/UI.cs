@@ -41,6 +41,14 @@ public class UI : MonoBehaviour
         PlayerStats.Instance.On();
         startUI.SetActive(false);
         On();
+
+        if(Tutorial.Instance != null)
+        {
+            if(!Tutorial.Instance.Complete)
+            {
+                Tutorial.Instance.SetState(TutorialState.HOLD, true);
+            }
+        }
     }
 
     public void EnableStartUI()
@@ -72,6 +80,14 @@ public class UI : MonoBehaviour
     public void EndLevel()
     {
         endGameUI.Open();
+        
+        if(Tutorial.Instance != null)
+        {
+            if(!Tutorial.Instance.Complete)
+            {
+                Tutorial.Instance.SetState(TutorialState.NONE);
+            }
+        }
     }
 
     public void LoseLevel()

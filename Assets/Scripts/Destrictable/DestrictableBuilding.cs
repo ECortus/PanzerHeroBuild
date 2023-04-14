@@ -43,12 +43,12 @@ public class DestrictableBuilding : MonoBehaviour
         }
     }
 
-    public void GetDestroyedByBarrel(Barrel barrel)
+    public void GetDestroyedByBoom(IBoom boom)
     {
-        Vector3 direction = (transform.position - barrel.center).normalized;
-        TriggerDestrictableObjects(GetObjectsOnRadius(barrel.center, barrel.radius), direction);
+        Vector3 direction = (transform.position - boom.Center).normalized;
+        TriggerDestrictableObjects(GetObjectsOnRadius(boom.Center, boom.Radius), direction);
 
-        Collider[] cols = Physics.OverlapSphere(barrel.center, barrel.radius * 1.2f, enemyMask);
+        Collider[] cols = Physics.OverlapSphere(boom.Center, boom.Radius * 1.1f, enemyMask);
 
         if(cols.Length > 0)
         {

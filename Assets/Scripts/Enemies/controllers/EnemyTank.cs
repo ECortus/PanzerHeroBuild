@@ -122,7 +122,7 @@ public class EnemyTank : MonoBehaviour
             return;
         }
 
-        if(DistanceToPoint(point) < 0.75f)
+        if(DistanceToPoint(point) < 1.5f)
         {
             patrolIndex++;
             if(patrolIndex > patrolWay.Count - 1) patrolIndex = 0;

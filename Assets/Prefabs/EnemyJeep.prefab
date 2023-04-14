@@ -659,6 +659,7 @@ GameObject:
   - component: {fileID: 1184669793841856321}
   - component: {fileID: 1184669793841856326}
   - component: {fileID: 1184669793841856327}
+  - component: {fileID: 451894632177846309}
   m_Layer: 13
   m_Name: TankHitBox
   m_TagString: EnemyTank
@@ -706,7 +707,7 @@ Rigidbody:
   m_Drag: 100
   m_AngularDrag: 0.05
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
@@ -839,6 +840,19 @@ MonoBehaviour:
           m_BoolArgument: 1
         m_CallState: 2
   isDead: 0
+--- !u!65 &451894632177846309
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1184669793841856325}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3, y: 3, z: 2}
+  m_Center: {x: 0, y: 1.83, z: -2.79}
 --- !u!1 &1184669794609328740
 GameObject:
   m_ObjectHideFlags: 0
@@ -873,6 +887,51 @@ Transform:
   m_Father: {fileID: 8599675064202913913}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1295301008049280059
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1726876214904050879}
+  - component: {fileID: 9214645457040172723}
+  m_Layer: 9
+  m_Name: 1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1726876214904050879
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1295301008049280059}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 2, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 328709135194801014}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &9214645457040172723
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1295301008049280059}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3, y: 2, z: 2}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1638779759958209872
 GameObject:
   m_ObjectHideFlags: 0
@@ -2671,6 +2730,38 @@ Transform:
   m_Father: {fileID: 2508460966943668294}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3509586118168595806
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 328709135194801014}
+  m_Layer: 9
+  m_Name: windows
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &328709135194801014
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3509586118168595806}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children:
+  - {fileID: 1726876214904050879}
+  m_Father: {fileID: 8599675064202913913}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3870751545928114066
 GameObject:
   m_ObjectHideFlags: 0
@@ -3278,7 +3369,6 @@ MonoBehaviour:
   shooting: {fileID: 2786987669439591022}
   animator: {fileID: 9031653163458169940}
   Agent: {fileID: 2646678285127864330}
-  collid: {fileID: 0}
   ragdollRBs:
   - {fileID: 733702365017525763}
   - {fileID: 4659058690139390913}
@@ -3304,7 +3394,7 @@ MonoBehaviour:
   speed: 5
   rotateSpeed: 25
   maxShootDistance: 75
-  distanceToDetect: 45
+  distanceToDetect: 65
   wallMasks:
     serializedVersion: 2
     m_Bits: 3072
@@ -3401,7 +3491,7 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
-          m_FloatArgument: 4000
+          m_FloatArgument: 600
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
@@ -16025,6 +16115,7 @@ MonoBehaviour:
   - {fileID: 7509928595146776283}
   - {fileID: 6661519274119202067}
   - {fileID: 7069386267269006657}
+  force: 1500
 --- !u!1 &8599675064202914688
 GameObject:
   m_ObjectHideFlags: 0
@@ -16061,6 +16152,7 @@ Transform:
   - {fileID: 3568618395691439504}
   - {fileID: 1184669794609328743}
   - {fileID: 4859052934574233458}
+  - {fileID: 328709135194801014}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -16074,7 +16166,7 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 100
   m_Drag: 0
-  m_AngularDrag: 1
+  m_AngularDrag: 0
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 2
@@ -16092,7 +16184,7 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 1
-  m_Center: {x: 0, y: 0.3, z: 0}
+  m_Center: {x: 0, y: -0.2, z: 0}
 --- !u!114 &8599675064202913917
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16106,6 +16198,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   touching: {fileID: 0}
+  RotateBody: 1
   colliderRadius: 1
   bodyMass: 100
   gravityMode: 1
@@ -16115,7 +16208,7 @@ MonoBehaviour:
   sideFriction: 1
   collidableLayers:
     serializedVersion: 2
-    m_Bits: 2147483647
+    m_Bits: 128
   adjustToScale: 0
   accelerationCurve:
     serializedVersion: 2
@@ -16198,7 +16291,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LockMovement: 0
   rotateSpeed: 2
-  stopDistance: 45
+  stopDistance: 60
   distanceToDetect: 25
   rb: {fileID: 8599675064202914694}
   bodyStats: {fileID: 4859052934574233423}

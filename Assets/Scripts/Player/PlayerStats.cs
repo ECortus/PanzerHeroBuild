@@ -140,6 +140,14 @@ public class PlayerStats : MonoBehaviour
         else
         {
             HP -= dmg;
+
+            if(PlayType.Get() == PlayState.Ride && Tutorial.Instance != null)
+            {
+                if(!Tutorial.Instance.Complete)
+                {
+                    Tutorial.Instance.SetState(TutorialState.AIM, true);
+                }
+            }
         }
     }
 

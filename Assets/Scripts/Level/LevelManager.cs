@@ -10,10 +10,10 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private List<Level> Levels = new List<Level>();
 
     private int _Index { get { return Statistics.LevelIndex; } set { Statistics.LevelIndex = value; } }
-    public int GetIndex() => _Index;
+    public int GetIndex() => _Index > (Levels.Count - 1) ? _Index % Levels.Count : _Index;
     public void SetIndex(int value) => _Index = value;
 
-    public Level ActualLevel => Levels[GetIndex() > (Levels.Count - 1) ? GetIndex() % Levels.Count : GetIndex()];
+    public Level ActualLevel => Levels[GetIndex()];
 
     [SerializeField] private Transform bufferForLevel;
 
@@ -33,6 +33,23 @@ public class LevelManager : MonoBehaviour
     public void StartLevel()
     {
         ActualLevel.StartLevel();
+
+        if(Tutorial.Instance != null)
+        {
+            if(!Tutorial.Instance.Complete)
+            {
+                if(Statistics.LevelIndex == 1) 
+                {
+                    if(Statistics.ArmorLVL > 0 || Statistics.DamageLVL > 0 || Statistics.TimeReloadLVL > 0)
+                    {
+                        Tutorial.Instance.Complete = true;
+                        return;
+                    }
+
+                    Tutorial.Instance.SetState(TutorialState.UPGRADE, true);
+                }
+            }
+        }
     }
 
     public void EndLevel()
@@ -59,7 +76,7 @@ public class LevelManager : MonoBehaviour
 
         OffLevel(level);
 
-        int index = GetIndex();
+        int index = _Index;
         index += 1;
         SetIndex(index);
 
@@ -72,7 +89,7 @@ public class LevelManager : MonoBehaviour
     {
         OffLevel(ActualLevel);
 
-        int index = GetIndex();
+        int index = _Index;
         index -= 1;
         SetIndex(index);
 

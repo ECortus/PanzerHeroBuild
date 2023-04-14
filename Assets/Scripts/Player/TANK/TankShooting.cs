@@ -16,6 +16,9 @@ public class TankShooting : MonoBehaviour
     [Space]
     [SerializeField] private float inertiaForce;
 
+    [Space]
+    [SerializeField] private float ReloadDelta = 5f/6f;
+    [HideInInspector] public bool isReloading = false;
     private int ReloadTime => (int)(PlayerStats.Instance.TimeReload * 1000);
 
     public async UniTask Shooting()
@@ -40,6 +43,7 @@ public class TankShooting : MonoBehaviour
             }
         } */
 
+        isReloading = false;
         IsShooting = false;
     }
 
@@ -55,7 +59,7 @@ public class TankShooting : MonoBehaviour
 
     public async UniTask<bool> UseWhizzbang()
     {
-        bool reload = false;
+        isReloading = false;
 
         PlayerStats.Instance.WhizzbangCount -= 1;
 
@@ -63,10 +67,10 @@ public class TankShooting : MonoBehaviour
         
         if(PlayerStats.Instance.WhizzbangCount == 0)
         {
+            isReloading = true;
+
             headController.Up();
             await Reload();
-
-            reload = true;
         }
         else
         {
@@ -74,13 +78,13 @@ public class TankShooting : MonoBehaviour
             await UniTask.Delay(10);
         }
 
-        return reload;
+        return isReloading;
     }
 
     async UniTask Reload()
     {
         await UniTask.Delay(50);
-        await UI.Instance.Reload((int)(ReloadTime * (5f/6f)));
+        await UI.Instance.Reload((int)(ReloadTime * ReloadDelta));
     }
 
     float duration;

@@ -14,21 +14,12 @@ public class GameManager : MonoBehaviour
     [Header("Camera: ")]
     public PlayerCamera Camera;
     public Transform rideCamRoot;
-    public Transform prepareToAimCamRoot;
 
     void Awake() => Instance = this;
 
     void Start()
     {
         Application.targetFrameRate = 60;
-    }
-
-    void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.T))
-        {
-            Money.Plus(500);
-        }
     }
 
     public void SetFollowTarget(Transform tf)

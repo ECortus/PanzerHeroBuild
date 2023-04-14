@@ -22,7 +22,7 @@ public class TankHeadController : MonoBehaviour
         }
     }
 
-    [SerializeField] private TankShooting tankShooting;
+    public TankShooting tankShooting;
     [SerializeField] private TankShotButtonUI shotButton;
 
     [Space]
@@ -33,6 +33,7 @@ public class TankHeadController : MonoBehaviour
     [Space]
     [SerializeField] private Transform tank;
     [SerializeField] private Transform head;
+    public Transform prepareToAimRoot;
     [SerializeField] private Transform gun, aimCamRoot;
 
     [Space]
@@ -106,6 +107,14 @@ public class TankHeadController : MonoBehaviour
         transform.parent.eulerAngles = new Vector3(0f, transform.parent.eulerAngles.y, 0f);
 
         rotating = false;
+
+        if(Tutorial.Instance != null)
+        {
+            if(!Tutorial.Instance.Complete)
+            {
+                Tutorial.Instance.SetState(TutorialState.ROTATE, true);
+            }
+        }
     }
 
     void OnDisable()
@@ -146,7 +155,7 @@ public class TankHeadController : MonoBehaviour
             /* if(Aiming && !tankShooting.IsShooting && rotating) Shot(); */
 
             if(new Vector2(diffMouseX, diffMouseY).magnitude < boundForShot &&
-                Aiming && !tankShooting.IsShooting && rotating)
+                /* Aiming && */!tankShooting.IsShooting && rotating)
             {
                 Shot();
             }
@@ -165,7 +174,7 @@ public class TankHeadController : MonoBehaviour
 
         if(Aiming/*  || tankShooting.IsShooting */) return;
 
-        Aiming = true;
+        /* Aiming = true; */
 
         /* prepareAimCanvas.SetActive(false);
         aimCanvas.SetActive(true);
@@ -178,8 +187,18 @@ public class TankHeadController : MonoBehaviour
 
     async void Shot()
     {
+        Aiming = true;
+
         await tankShooting.Shooting();
         Up();
+
+        if(Tutorial.Instance != null)
+        {
+            if(!Tutorial.Instance.Complete)
+            {
+                if(Tutorial.Instance.SHOOT_isDone && !Tutorial.Instance.RIDE_isDone) Tutorial.Instance.SetState(TutorialState.NONE);
+            }
+        }
 
         TankShootPad.Instance.On();
         Aiming = false;
@@ -192,6 +211,14 @@ public class TankHeadController : MonoBehaviour
 
         Transform root = GameManager.Instance.prepareToAimCamRoot;
         GameManager.Instance.SetFollowTarget(root); */
+
+        if(Tutorial.Instance != null)
+        {
+            if(!Tutorial.Instance.Complete)
+            {
+                if(!Tutorial.Instance.SHOOT_isDone) Tutorial.Instance.SetState(TutorialState.SHOOT, true);
+            }
+        }
         
         TankShootPad.Instance.On();
         Aiming = false;
@@ -276,6 +303,6 @@ public class TankHeadController : MonoBehaviour
     {
         Gizmos.color = Color.magenta;
         if(GameManager.Instance != null) 
-            Gizmos.DrawRay(GameManager.Instance.prepareToAimCamRoot.position, GameManager.Instance.prepareToAimCamRoot.forward * 200f);
+            Gizmos.DrawRay(prepareToAimRoot.position, prepareToAimRoot.forward * 200f);
     }
 }

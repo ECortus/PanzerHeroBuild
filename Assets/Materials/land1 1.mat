@@ -11,6 +11,7 @@ Material:
   m_Shader: {fileID: 4800000, guid: 7cd5de0b884b14f88ab763ef465e1799, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords:
+  - _CLIPPED_ON
   - _SEGMENTED_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -62,7 +63,7 @@ Material:
     - _AmbientCol: 0
     - _BumpScale: 1
     - _CircleDensity: 1
-    - _Clipped: 0
+    - _Clipped: 1
     - _ColBright: 0
     - _ColIntense: 1
     - _Cutoff: 0.5
@@ -81,7 +82,7 @@ Material:
     - _MinLight: 0.7
     - _Mode: 0
     - _OcclusionStrength: 1
-    - _Offset: -0.18
+    - _Offset: 0
     - _Parallax: 0.02
     - _Rotation: 1
     - _Segmented: 1
@@ -97,7 +98,7 @@ Material:
     - _SpecularSoftness: 0
     - _SrcBlend: 1
     - _Steps: 1
-    - _StpSmooth: 0.666
+    - _StpSmooth: 0
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:

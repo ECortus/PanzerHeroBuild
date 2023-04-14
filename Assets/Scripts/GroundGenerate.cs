@@ -6,7 +6,8 @@ public class GroundGenerate : MonoBehaviour
 {
     [SerializeField] private GameObject plane;
     [SerializeField] private Vector2 size = new Vector2();
-    [SerializeField] private float offset = 50f;
+    [SerializeField] private float scale = 4f;
+    private float offset => scale * 10f;
 
     [ContextMenu("Generate")]
     void Generate()
@@ -29,6 +30,7 @@ public class GroundGenerate : MonoBehaviour
 
                 GameObject go = Instantiate(plane, transform);
                 go.transform.localPosition = pos;
+                go.transform.localScale = Vector3.one * scale;
             }
         }
     }

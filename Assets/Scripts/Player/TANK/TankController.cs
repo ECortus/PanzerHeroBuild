@@ -25,7 +25,15 @@ public class TankController : MonoBehaviour
 
 	private List<Vector3> points => LevelManager.Instance.ActualLevel.GetWayPoints();
 	int pointIndex = 0;
-	Vector3 point => pointIndex > points.Count - 1 ? points[points.Count - 1] : points[pointIndex];
+	Vector3 point
+	{
+		get
+		{
+			Vector3 pos = pointIndex > points.Count - 1 ? points[points.Count - 1] : points[pointIndex];
+			pos.y = transform.position.y;
+			return pos;
+		}
+	}
 
 	public void On() => this.enabled = true;
     public void Off() => this.enabled = false;
@@ -33,11 +41,22 @@ public class TankController : MonoBehaviour
 	private void OnEnable()
 	{
 		Instance = this;
+		engine.enabled = true;
+
+		rb.constraints = RigidbodyConstraints.None;
+		rb.constraints = RigidbodyConstraints.FreezeRotationZ;
 	}
 
 	void OnDisable()
 	{
 		engine.setMotor(0);
+		engine.enabled = false;
+
+		rb.velocity = Vector3.zero;
+		rb.angularVelocity = Vector3.zero;
+
+		transform.localEulerAngles = new Vector3(0f, transform.localEulerAngles.y, 0f);
+		rb.constraints = RigidbodyConstraints.FreezeAll;
 	}
 
 	void Start()
@@ -91,6 +110,17 @@ public class TankController : MonoBehaviour
 		if(TouchPad.Instance.HaveTouch)
 		{
 			engine.setMotor(2);
+
+			if(Tutorial.Instance != null)
+			{
+				if(!Tutorial.Instance.Complete)
+				{
+					if(Tutorial.Instance.HOLD_isDone && !Tutorial.Instance.AIM_isDone)
+					{
+						Tutorial.Instance.SetState(TutorialState.NONE);
+					}
+				}
+			}
 		}
 		else
         {

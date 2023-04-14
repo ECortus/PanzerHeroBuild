@@ -143,7 +143,7 @@ namespace DavidJalbert
             body.mass = bodyMass * (adjustToScale ? cubicScale : 1);
             body.drag = 0;
             body.angularDrag = 0f;
-            body.constraints = RigidbodyConstraints.None;
+            /* body.constraints = RigidbodyConstraints.None; */
             body.useGravity = false;
             body.isKinematic = false;
             body.interpolation = RigidbodyInterpolation.Extrapolate;
@@ -258,13 +258,14 @@ namespace DavidJalbert
             Vector3 rotation = new Vector3(
                 groundXAngle, 
                 transform.rotation.eulerAngles.y/*  + steering * deltaTime * steeringForce */, 
-                groundZAngle
+                /* groundZAngle */ 0f
             );
-            Debug.Log(rotation);
+            /* Debug.Log(rotation); */
 
             if(RotateBody /* && !touching.isTouching */)
             {
-                transform.localRotation = Quaternion.Slerp(transform.localRotation, Quaternion.Euler(rotation), 3f * deltaTime);
+                transform.localRotation = Quaternion.Slerp(transform.localRotation, Quaternion.Euler(rotation), 5f * deltaTime);
+                /* transform.localRotation = Quaternion.Euler(rotation); */
                 /* body.MoveRotation(Quaternion.Euler(rotation)); */
             }
             // ---

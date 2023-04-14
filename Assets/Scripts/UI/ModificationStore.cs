@@ -85,6 +85,12 @@ public class ModificationStore : MonoBehaviour
             cell.cost = CostFormula(LVL + 1);
             cell.UpdateCell();
         }
+
+        if(Tutorial.Instance != null)
+        {
+            Tutorial.Instance.Complete = true;
+            Tutorial.Instance.SetState(TutorialState.NONE);
+        }
     }
 
     int CostFormula(int lvl)

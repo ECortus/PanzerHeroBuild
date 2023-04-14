@@ -4,31 +4,31 @@ using UnityEngine;
 
 public class PlayTypeButton : ShowHideUI
 {
-    public void Open()
+    public void Open(bool value = false)
     {
-        /* if(gameObject.activeInHierarchy)
+        if(value && !isShown)
         {
             StopAllCoroutines();
             StartCoroutine(ShowProcess());
         }
         else
-        { */
+        {
             isShown = true;
             transform.localScale = Vector3.one;
-        /* } */
+        }
     }
 
-    public void Close()
+    public void Close(bool value = false)
     {
-        /* if(gameObject.activeInHierarchy)
+        if(value && isShown)
         {
             StopAllCoroutines();
             StartCoroutine(HideProcess());
         }
         else
-        { */
+        {
             isShown = false;
             transform.localScale = Vector3.zero;
-        /* } */
+        }
     }
 }

@@ -5,6 +5,7 @@ using System.Linq;
 
 public class EnemyAgrrAll : MonoBehaviour
 {
+    public bool Defeated => stats.Count == 0;
     [SerializeField] private GameObject eventPoint;
     [SerializeField] private List<EnemyStats> stats = new List<EnemyStats>();
 

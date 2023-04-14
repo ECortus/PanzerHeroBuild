@@ -13,6 +13,9 @@ public class WaterNoise : MonoBehaviour
     [SerializeField] MeshFilter _meshFilter;
     WaterParam _param;
 
+    [HideInInspector] public float length = 0f;
+    public Transform WaveOrigin;
+
     void Start()
     {
         _param = GetComponentInParent<WaterParam>();
@@ -21,27 +24,39 @@ public class WaterNoise : MonoBehaviour
         timeScale = _param.timeScale;
 
         _meshFilter = GetComponent<MeshFilter>();
-        MakeNoise();
+        /* MakeNoise(); */
     }
 
     void Update()
     {
-        power = _param.powerScale;
-        scale = _param.scale;
-        timeScale = _param.timeScale;
+        if(length > 0f)
+        {
+            power = _param.powerScale;
+            scale = _param.scale;
+            timeScale = _param.timeScale;
 
-        MakeNoise();
-        offsetX += Time.deltaTime * timeScale;
-        offsetY += Time.deltaTime * timeScale;
+            MakeNoise();
+            offsetX += Time.deltaTime * timeScale;
+            offsetY += Time.deltaTime * timeScale;
+        }
     }
 
     void MakeNoise()
     {
         Vector3[] verticies = _meshFilter.mesh.vertices;
 
+        Vector3 point = WaveOrigin.localPosition;
+        float distance = 0f;
+        float delta = 0f;
+
         for(int i = 0; i < verticies.Length; i++)
         {
-            verticies[i].y = CalculateHeight(verticies[i].x, verticies[i].z) * power;
+            distance = Vector3.Distance(point, verticies[i]);
+            delta = (1f - (distance / length));
+
+            if(delta < 0f) continue;
+
+            verticies[i].y = CalculateHeight(verticies[i].x, verticies[i].z) * power * delta;
         }
 
         _meshFilter.mesh.vertices = verticies;

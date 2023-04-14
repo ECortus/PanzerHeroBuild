@@ -64,6 +64,11 @@ public class EnemyStats : MonoBehaviour
         SetMaxStats();
     }
 
+    void Start()
+    {
+        aggrAll = GetComponentInParent<EnemyAgrrAll>();
+    }
+
     public void SetMaxStats()
     {
         HP = MaxHP;

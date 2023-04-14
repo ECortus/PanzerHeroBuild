@@ -19,19 +19,40 @@ public class PlayTypeUI : MonoBehaviour
                 /* rideButt.gameObject.SetActive(false);
                 aimButt.gameObject.SetActive(true); */
                 rideButt.Close();
-                aimButt.Open();
+                aimButt.Open(true);
                 break;
             case PlayState.Ride:
                 /* rideButt.gameObject.SetActive(false);
                 aimButt.gameObject.SetActive(true); */
                 rideButt.Close();
-                aimButt.Open();
+
+                if(Tutorial.Instance != null)
+                {
+                    if(!Tutorial.Instance.Complete)
+                    {
+                        if(!Tutorial.Instance.HOLD_isDone) return;
+                    }
+                }
+
+                aimButt.Open(true);
                 break;
             case PlayState.Aim:
-                if(TankHeadController.Instance.Aiming) rideButt.Open();
-                else rideButt.Open();
-
                 aimButt.Close();
+
+                if(Tutorial.Instance != null)
+                {
+                    if(!Tutorial.Instance.Complete)
+                    {
+                        if(!Tutorial.Instance.RIDE_isDone)
+                        {
+                            rideButt.Close(true);
+                            return;
+                        }
+                    }
+                }
+            
+                if(TankHeadController.Instance.tankShooting.isReloading) rideButt.Close(true);
+                else rideButt.Open(true);
                 break;
             default:
                 /* rideButt.gameObject.SetActive(false);

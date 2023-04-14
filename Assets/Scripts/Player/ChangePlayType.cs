@@ -60,6 +60,17 @@ public class ChangePlayType : MonoBehaviour
         GameManager.Instance.SetFollowTarget(camTarget);
 
         if(TouchPad.Instance != null) TouchPad.Instance.On();
+
+        if(Tutorial.Instance != null)
+        {
+            if(!Tutorial.Instance.Complete)
+            {
+                if(Tutorial.Instance.AIM_isDone && Tutorial.Instance.RIDE_isDone)
+                {
+                    Tutorial.Instance.SetState(TutorialState.NONE);
+                }
+            }
+        }
     }
 
     public void Aim(float aimOnY = 0f)
@@ -72,7 +83,7 @@ public class ChangePlayType : MonoBehaviour
         hpInAim.On();
         HealthUI.Instance.Reset();
 
-        Transform camTarget = GameManager.Instance.prepareToAimCamRoot;
+        Transform camTarget = TankHeadController.Instance.prepareToAimRoot;
         GameManager.Instance.SetFollowTarget(camTarget);
 
         if(TouchPad.Instance != null) TouchPad.Instance.Off();

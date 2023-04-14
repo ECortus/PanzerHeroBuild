@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8154669864854426249}
   - component: {fileID: 6654646507060195354}
   - component: {fileID: 3437968956964142760}
+  - component: {fileID: 8564137651535011551}
   m_Layer: 7
   m_Name: road
   m_TagString: Ground
@@ -84,3 +85,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &8564137651535011551
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 51505624316271174}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.04, y: 0.039999988, z: 0.0009999998}
+  m_Center: {x: 0, y: 0, z: 0.0004999999}

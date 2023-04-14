@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 
-public class Barrel : MonoBehaviour
+public class Barrel : MonoBehaviour, IBoom
 {
     [SerializeField] private LayerMask hitMasks; /// destrictable, unit, tank
-    public float radius;
+    [SerializeField] private float _radius;
+    public float Radius { get { return _radius; } }
 
     [Space]
     [SerializeField] private GameObject effect;
@@ -15,14 +16,13 @@ public class Barrel : MonoBehaviour
     [SerializeField] private Collider collid;
     [SerializeField] private GameObject barrel;
 
-    public Vector3 center
+    public Vector3 Center
 	{
 		get
 		{
 			return transform.position + new Vector3(0f, 3f, 0f);
 		}
 	}
-
 
     void OnCollisionEnter(Collision col)
     {
@@ -45,9 +45,9 @@ public class Barrel : MonoBehaviour
             case "EnemyTank":
                 BOOM();
                 break;
-            case "Destrictable":
+            /* case "Destrictable":
                 BOOM();
-                break;
+                break; */
             default:
                 break;
         }
@@ -55,7 +55,7 @@ public class Barrel : MonoBehaviour
 
     async void BOOM()
     {  
-        Collider[] cols = Physics.OverlapSphere(center, radius, hitMasks);
+        Collider[] cols = Physics.OverlapSphere(Center, Radius, hitMasks);
 
         EnemyStats enemy = null;
         DestrictableObject destrictable = null;
@@ -69,26 +69,26 @@ public class Barrel : MonoBehaviour
                 enemy.GetHit(999f);
                 continue;
             }
-            else if(destrictable == null || !buildings.Contains(destrictable.building))
+            else if(col.TryGetComponent<DestrictableObject>(out destrictable))
             {
-                if(col.TryGetComponent<DestrictableObject>(out destrictable))
+                if(destrictable != null && !buildings.Contains(destrictable.building))
                 {
-                    destrictable.building.GetDestroyedByBarrel(this);
+                    destrictable.building.GetDestroyedByBoom(this);
                     buildings.Add(destrictable.building);
                     continue;
                 }
             }
-            else if(Vector3.Distance(TankController.Instance.Transform.position, center) <= radius)
+            /* else if(Vector3.Distance(TankController.Instance.Transform.position, Center) <= Radius)
             {
                 PlayerStats.Instance.GetHit(5f);
                 continue;
-            }
+            } */
         }
 
         barrel.SetActive(false);
 
         if(effect != null) 
-            ParticlePool.Instance.Insert(ParticleType.BarrelBoomEffect, effect, center);
+            ParticlePool.Instance.Insert(ParticleType.BarrelBoomEffect, effect, Center);
 
         collid.enabled = false;
 
@@ -99,6 +99,6 @@ public class Barrel : MonoBehaviour
     void OnDrawGizmos()
     {
         Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(center, radius);
+        Gizmos.DrawWireSphere(Center, Radius);
     }
 }

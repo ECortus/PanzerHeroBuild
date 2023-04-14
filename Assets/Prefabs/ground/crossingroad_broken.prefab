@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 8764371200942126250}
   - component: {fileID: 1543426131369762076}
   - component: {fileID: 8027759795369885764}
-  - component: {fileID: 8764371200942126249}
+  - component: {fileID: -3371668891003071879}
+  - component: {fileID: 4381684174450913702}
   m_Layer: 0
   m_Name: crossingroad_broken
   m_TagString: Untagged
@@ -85,7 +86,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8764371200942126249
+--- !u!64 &-3371668891003071879
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -96,6 +97,19 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
-  m_Convex: 1
+  m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: -5563094492556209843, guid: c64d491d3caeab34b92b5a14b11c0bc8, type: 3}
+  m_Mesh: {fileID: -5563094492556209843, guid: 4463fc7a66decf84887567b5f1ff84ff, type: 3}
+--- !u!65 &4381684174450913702
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3671926875986348226}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.04271107, y: 0.042115517, z: 0.0014198662}
+  m_Center: {x: -0.005382498, y: -0.0067018275, z: 0.000027495425}
