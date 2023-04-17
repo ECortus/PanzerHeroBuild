@@ -20,6 +20,7 @@ public class TankWheelsForceAway : MonoBehaviour
         foreach(Rigidbody wheel in wheels)
         {
             /* wheel.transform.parent = null; */
+            wheel.isKinematic = false;
 
             Vector3 dir = -wheel.transform.up + new Vector3(
                 Random.Range(-0.5f, 0.5f),
