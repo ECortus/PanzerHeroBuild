@@ -12,7 +12,7 @@ public class EnemyUnitShooting : MonoBehaviour
     [Space]
     [SerializeField] private float scatterForce;
     
-    private float ReloadTime => 0.3f;
+    private float ReloadTime => 0.45f;
     private Vector3 direction;
 
     public void On()

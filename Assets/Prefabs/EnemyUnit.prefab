@@ -1699,6 +1699,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &4045465153954273421
 GameObject:
   m_ObjectHideFlags: 0
@@ -1827,7 +1828,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.96770877
+  m_Radius: 0.52
   m_Height: 4.838544
   m_Direction: 1
   m_Center: {x: 0, y: 2.419272, z: 0}
@@ -3141,6 +3142,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &5737241882756322763
 GameObject:
   m_ObjectHideFlags: 0
@@ -5000,7 +5002,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.9692403
+  m_Radius: 0.52
   m_Height: 4.8462014
   m_Direction: 1
   m_Center: {x: 0, y: 2.4231007, z: 0}

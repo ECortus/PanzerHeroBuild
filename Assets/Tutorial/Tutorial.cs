@@ -10,7 +10,6 @@ public class Tutorial : MonoBehaviour
     [SerializeField] private HandShowHide HOLD, CHANGEPLAYTYPE, ROTATE, SHOOT, UPGRADE;
     public bool HOLD_isDone, AIM_isDone, ROTATE_isDone, SHOOT_isDone, RIDE_isDone, UPGRADE_isDone;
 
-    private bool _complete = false;
     public bool Complete
     {
         get

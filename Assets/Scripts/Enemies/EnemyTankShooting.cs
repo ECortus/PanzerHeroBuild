@@ -9,7 +9,7 @@ public class EnemyTankShooting : MonoBehaviour
     [SerializeField] private Transform muzzle;
     [SerializeField] private GameObject whizzbangPrefab;
     
-    private float ReloadTime => 1.5f;
+    private float ReloadTime => 2.3f;
 
     public void On()
     {
