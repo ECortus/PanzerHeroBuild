@@ -12535,7 +12535,8 @@ MonoBehaviour:
   tank: {fileID: 2247147909018584534}
   head: {fileID: 2247147909651761981}
   prepareToAimRoot: {fileID: 2247147910289435968}
-  gun: {fileID: 2247147910925013972}
+  gunPivot: {fileID: 2247147910925013972}
+  gun: {fileID: 3624936363092822372}
   aimCamRoot: {fileID: 2247147908985832015}
   limitAngleHorizontal: 180
   minAngleVertical: -35

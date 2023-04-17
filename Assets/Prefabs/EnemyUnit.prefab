@@ -4174,6 +4174,7 @@ MonoBehaviour:
   muzzle: {fileID: 6997382423686303658}
   bulletPrefab: {fileID: 1101043062399094408, guid: dfb41940c493da54aa69c7410e1c5fdf,
     type: 3}
+  scatterForce: 7
 --- !u!135 &2997040656933616952
 SphereCollider:
   m_ObjectHideFlags: 0

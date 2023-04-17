@@ -113,13 +113,13 @@ public class TankController : MonoBehaviour
 
 			if(Tutorial.Instance != null)
 			{
-				if(!Tutorial.Instance.Complete)
-				{
-					if(Tutorial.Instance.HOLD_isDone && !Tutorial.Instance.AIM_isDone)
+				/* if(!Tutorial.Instance.Complete)
+				{ */
+					if(Tutorial.Instance.HOLD_isDone && (!Tutorial.Instance.AIM_isDone || Tutorial.Instance.Complete))
 					{
 						Tutorial.Instance.SetState(TutorialState.NONE);
 					}
-				}
+				/* } */
 			}
 		}
 		else

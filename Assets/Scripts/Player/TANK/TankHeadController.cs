@@ -34,7 +34,7 @@ public class TankHeadController : MonoBehaviour
     [SerializeField] private Transform tank;
     [SerializeField] private Transform head;
     public Transform prepareToAimRoot;
-    [SerializeField] private Transform gun, aimCamRoot;
+    [SerializeField] private Transform gunPivot, gun, aimCamRoot;
 
     [Space]
     [SerializeField] private float limitAngleHorizontal;
@@ -102,7 +102,7 @@ public class TankHeadController : MonoBehaviour
 
         shotButton.Reset();
 
-        gun.localEulerAngles = Vector3.zero;
+        gunPivot.localEulerAngles = Vector3.zero;
 
         transform.parent.eulerAngles = new Vector3(0f, transform.parent.eulerAngles.y, 0f);
 
@@ -110,7 +110,7 @@ public class TankHeadController : MonoBehaviour
 
         if(Tutorial.Instance != null)
         {
-            if(!Tutorial.Instance.Complete)
+            if(!Tutorial.Instance.Complete && !Tutorial.Instance.ROTATE_isDone)
             {
                 Tutorial.Instance.SetState(TutorialState.ROTATE, true);
             }
@@ -185,9 +185,36 @@ public class TankHeadController : MonoBehaviour
         TankShootPad.Instance.Off();
     }
 
+    void CorrectGunDirection()
+    {
+        RaycastHit hit;
+        if(Physics.Raycast(prepareToAimRoot.position, prepareToAimRoot.forward, out hit))
+        {
+            float angle = 0f;
+
+            Vector3 pos = new Vector3(prepareToAimRoot.position.x, 0f, 0f);
+            Vector3 point = hit.point;
+            point.y = 0f;
+            point.z = 0f;
+
+            float catet1 = Vector3.Distance(point, pos);
+            float catet2 = prepareToAimRoot.localPosition.y;
+
+            angle = Mathf.Tan(catet2/catet1);
+
+            gun.localEulerAngles = new Vector3(0f, 0f, Mathf.Abs(angle) + 1f);
+        }
+        else
+        {
+            gun.localEulerAngles = new Vector3(0f, 0f, 1f);
+        }
+    }
+
     async void Shot()
     {
         Aiming = true;
+
+        CorrectGunDirection();
 
         await tankShooting.Shooting();
         Up();
@@ -197,6 +224,10 @@ public class TankHeadController : MonoBehaviour
             if(!Tutorial.Instance.Complete)
             {
                 if(Tutorial.Instance.SHOOT_isDone && !Tutorial.Instance.RIDE_isDone) Tutorial.Instance.SetState(TutorialState.NONE);
+            }
+            else
+            {
+                if(Tutorial.Instance.SHOOT_isDone) Tutorial.Instance.SetState(TutorialState.NONE);
             }
         }
 
@@ -214,10 +245,11 @@ public class TankHeadController : MonoBehaviour
 
         if(Tutorial.Instance != null)
         {
-            if(!Tutorial.Instance.Complete)
+            if(!Tutorial.Instance.SHOOT_isDone) Tutorial.Instance.SetState(TutorialState.SHOOT, true);
+            /* if(!Tutorial.Instance.Complete)
             {
                 if(!Tutorial.Instance.SHOOT_isDone) Tutorial.Instance.SetState(TutorialState.SHOOT, true);
-            }
+            } */
         }
         
         TankShootPad.Instance.On();
@@ -232,7 +264,7 @@ public class TankHeadController : MonoBehaviour
         Vector3 last = new Vector3(
             0f,
             head.localRotation.eulerAngles.y,
-            -gun.localRotation.eulerAngles.z
+            -gunPivot.localRotation.eulerAngles.z
         );
 
         lastCamPos = last;
@@ -254,7 +286,7 @@ public class TankHeadController : MonoBehaviour
         Quaternion gunRot = new Quaternion(0f, 0f, -rotation.z, rotation.w);
 
         head.localRotation = Quaternion.Slerp(head.localRotation, headRot, rotate * Time.deltaTime);
-        gun.localRotation = Quaternion.Slerp(gun.localRotation, gunRot, rotate * Time.deltaTime);
+        gunPivot.localRotation = Quaternion.Slerp(gunPivot.localRotation, gunRot, rotate * Time.deltaTime);
     }
 
     Quaternion Clamping(Quaternion rot)

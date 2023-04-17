@@ -15,12 +15,14 @@ public class Tutorial : MonoBehaviour
     {
         get
         {
-            return _complete;
+            return PlayerPrefs.GetInt(DataManager.TutorialKey, 0) == 1;
         }
         set
         {
-            _complete = value;
-            Condition();
+            int val = value ? 1 : 0;
+            PlayerPrefs.SetInt(DataManager.TutorialKey, val);
+            PlayerPrefs.Save();
+            /* Condition(); */
         }
     }
 
@@ -28,16 +30,30 @@ public class Tutorial : MonoBehaviour
     public TutorialState State = TutorialState.NONE;
 
     [Space]
-    [SerializeField] private EnemyAgrrAll enemies;
+    [SerializeField] private ActionZone enemies;
 
     void Awake()
-    {
-        if(Statistics.LevelIndex >= 1) 
+    {   
+        Instance = this;
+
+        if(Complete)
+        {
+            HOLD_isDone = true;
+            AIM_isDone = true;
+            ROTATE_isDone = true;
+            SHOOT_isDone = true;
+            RIDE_isDone = true;
+            UPGRADE_isDone = true;
+            return;
+        }
+
+        if(Statistics.LevelIndex >= 1 && !Complete) 
         {
             if(Statistics.ArmorLVL > 0 || Statistics.DamageLVL > 0 || Statistics.TimeReloadLVL > 0)
             {
-                gameObject.SetActive(false);
-                Instance = null;
+                Complete = true;
+                /* gameObject.SetActive(false);
+                Instance = null; */
                 return;
             }
 
@@ -47,12 +63,12 @@ public class Tutorial : MonoBehaviour
         {
             SetState(TutorialState.NONE);
         }
-
-        Instance = this;
     }
 
     void Update()
     {
+        if(Complete) return;
+
         if(!RIDE_isDone)
         {
             if(HOLD_isDone && ROTATE_isDone && SHOOT_isDone && AIM_isDone)
@@ -77,29 +93,29 @@ public class Tutorial : MonoBehaviour
         switch(State)
         {
             case TutorialState.HOLD:
-                if(!HOLD_isDone) HOLD.Open();
+                /* if(!HOLD_isDone)  */HOLD.Open();
                 HOLD_isDone = done;
                 break;
             case TutorialState.AIM:
-                if(!AIM_isDone) CHANGEPLAYTYPE.Open();
+                /* if(!AIM_isDone)  */CHANGEPLAYTYPE.Open();
                 AIM_isDone = done;
                 PlayType.Set(PlayState.Ride);
                 break;
             case TutorialState.ROTATE:
-                if(!ROTATE_isDone) ROTATE.Open();
+                /* if(!ROTATE_isDone)  */ROTATE.Open();
                 ROTATE_isDone = done;
                 break;
             case TutorialState.SHOOT:
-                if(!SHOOT_isDone) SHOOT.Open();
+                /* if(!SHOOT_isDone)  */SHOOT.Open();
                 SHOOT_isDone = done;
                 break;
             case TutorialState.RIDE:
-                if(!RIDE_isDone) CHANGEPLAYTYPE.Open();
+                /* if(!RIDE_isDone)  */CHANGEPLAYTYPE.Open();
                 RIDE_isDone = done;
                 PlayType.Set(PlayState.Aim);
                 break;
             case TutorialState.UPGRADE:
-                if(!UPGRADE_isDone) UPGRADE.Open();
+                /* if(!UPGRADE_isDone)  */UPGRADE.Open();
                 UPGRADE_isDone = done;
                 break;
             default:

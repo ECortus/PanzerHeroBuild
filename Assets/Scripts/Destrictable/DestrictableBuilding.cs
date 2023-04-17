@@ -80,7 +80,7 @@ public class DestrictableBuilding : MonoBehaviour
 
         TriggerDestrictableObjects(GetObjectsOnRadius(whizzbang.center, destrictableRadius), whizzbang.transform.forward);
 
-        Collider[] cols = Physics.OverlapSphere(whizzbang.center, destrictableRadius * 1.75f, enemyMask);
+        Collider[] cols = Physics.OverlapSphere(whizzbang.center, destrictableRadius * 1.1f, enemyMask);
 
         if(cols.Length > 0)
         {

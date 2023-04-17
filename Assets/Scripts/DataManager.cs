@@ -4,6 +4,8 @@ using UnityEngine;
 
 public static class DataManager
 {
+    public static string TutorialKey = "TutorialComplete";
+
     public static string LevelIndexKey = "LevelIndex";
 
     public static string MoneyKey = "Money";

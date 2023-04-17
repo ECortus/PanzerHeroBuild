@@ -8,13 +8,25 @@ public class EnemyUnitShooting : MonoBehaviour
     [SerializeField] private EnemyStats stats;
     [SerializeField] private Transform pivot, muzzle;
     [SerializeField] private GameObject bulletPrefab;
+
+    [Space]
+    [SerializeField] private float scatterForce;
     
     private float ReloadTime => 0.3f;
+    private Vector3 direction;
 
     public void On()
     {
         this.enabled = true;
-        pivot.transform.up = unit.direction;
+
+        direction = unit.direction;
+        direction += new Vector3(
+            Random.Range(-0.01f, 0.01f) * scatterForce,
+            Random.Range(-0.01f, 0.01f) * scatterForce,
+            0f
+        );
+
+        pivot.transform.up = direction;
 
         if(coroutine == null) coroutine = StartCoroutine(Shooting());
     }

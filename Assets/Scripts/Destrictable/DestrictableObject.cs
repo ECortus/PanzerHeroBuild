@@ -141,12 +141,12 @@ public class DestrictableObject : MonoBehaviour
 
         this.enabled = false;
 
-        Deactive();
+        /* Deactive(); */
     }
 
     async void Deactive()
     {
-        await UniTask.Delay(10000);
+        await UniTask.Delay(25000);
         /* await UniTask.WaitUntil(() => rb.velocity.magnitude < 0.1f); */
 
         rb.isKinematic = true;
