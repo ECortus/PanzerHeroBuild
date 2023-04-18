@@ -857,7 +857,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7e0b035a96940848bf48ce0eb63e91f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  floor: {fileID: 0}
+  floor: {fileID: 8962576687036661693}
   CheckPhysicsAlready: 1
   destrictableParent: {fileID: 6565477442230850398}
   destrictableObjects:
@@ -960,11 +960,16 @@ MonoBehaviour:
   destrictableMask:
     serializedVersion: 2
     m_Bits: 2048
+  nonDestrictableMask:
+    serializedVersion: 2
+    m_Bits: 4096
   enemyMask:
     serializedVersion: 2
     m_Bits: 8192
   destrictableForce: 1400
   destrictableRadius: 6
+  Damaged: 0
+  zone: {fileID: 0}
 --- !u!1 &6565477441170627166
 GameObject:
   m_ObjectHideFlags: 0
@@ -7247,6 +7252,7 @@ GameObject:
   - component: {fileID: 6565477442254356127}
   - component: {fileID: 7790258179186140060}
   - component: {fileID: 4853825876002940393}
+  - component: {fileID: 8962576687036661693}
   m_Layer: 11
   m_Name: Floor
   m_TagString: Destrictable
@@ -7348,6 +7354,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.023576967, y: 0.021612337, z: 0.019999998}
   m_Center: {x: 0.0009851545, y: -0.000040726474, z: -1.6971889e-18}
+--- !u!114 &8962576687036661693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6565477442254356122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 839d8efdc20c93b4f9e36616e73eef39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6565477442302391484
 GameObject:
   m_ObjectHideFlags: 0

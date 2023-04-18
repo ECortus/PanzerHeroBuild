@@ -62,11 +62,12 @@ public class BoomCar : MonoBehaviour, IBoom
                 enemy.GetHit(999f);
                 continue;
             }
-            else if(destrictable == null || !buildings.Contains(destrictable.building))
+            else if(col.TryGetComponent<DestrictableObject>(out destrictable))
             {
-                if(col.TryGetComponent<DestrictableObject>(out destrictable))
+                if(destrictable != null && !buildings.Contains(destrictable.building))
                 {
-                    destrictable.building.GetDestroyedByBoom(this);
+                    /* float distance = (destrictable.transform.position - transform.position).magnitude; */
+                    destrictable.building.GetDestroyedByBoom(this/* , distance */);
                     buildings.Add(destrictable.building);
                     continue;
                 }

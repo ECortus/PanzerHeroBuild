@@ -115,7 +115,7 @@ public class TankController : MonoBehaviour
 			{
 				/* if(!Tutorial.Instance.Complete)
 				{ */
-					if(Tutorial.Instance.HOLD_isDone && (!Tutorial.Instance.AIM_isDone || Tutorial.Instance.Complete))
+					if(Tutorial.Instance.HOLD_isDone && (!Tutorial.Instance.AIM_isDone || Tutorial.Instance.Complete) && !ZatupMoment.DelayOn)
 					{
 						Tutorial.Instance.SetState(TutorialState.NONE);
 					}

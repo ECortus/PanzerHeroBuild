@@ -73,7 +73,8 @@ public class Barrel : MonoBehaviour, IBoom
             {
                 if(destrictable != null && !buildings.Contains(destrictable.building))
                 {
-                    destrictable.building.GetDestroyedByBoom(this);
+                    /* float distance = (destrictable.transform.position - transform.position).magnitude; */
+                    destrictable.building.GetDestroyedByBoom(this/* , distance */);
                     buildings.Add(destrictable.building);
                     continue;
                 }

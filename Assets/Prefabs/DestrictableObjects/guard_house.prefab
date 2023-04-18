@@ -4233,6 +4233,8 @@ MonoBehaviour:
     m_Bits: 8192
   destrictableForce: 1050
   destrictableRadius: 4.5
+  Damaged: 0
+  zone: {fileID: 0}
 --- !u!1 &8004350158163550637
 GameObject:
   m_ObjectHideFlags: 0
@@ -4881,7 +4883,7 @@ PrefabInstance:
     - target: {fileID: 7137096387757684837, guid: f9c75724a89a7a546a9ea70e40d9995c,
         type: 3}
       propertyPath: distanceToDetect
-      value: 10
+      value: 20
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f9c75724a89a7a546a9ea70e40d9995c, type: 3}

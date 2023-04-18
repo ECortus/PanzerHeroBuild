@@ -179,8 +179,8 @@ public class EnemyTank : MonoBehaviour
 
     void OnDrawGizmos()
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(center, maxShootDistance);
+        /* Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(center, maxShootDistance); */
 
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(center, distanceToDetect);

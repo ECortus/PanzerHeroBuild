@@ -24,7 +24,7 @@ TagManager:
   - Window
   - Building
   - Destrictable
-  - 
+  - Nondestrictable
   - Enemy
   - 
   - Whizzbang
@@ -32,7 +32,7 @@ TagManager:
   - 
   - Barrel
   - 
-  - 
+  - Body
   - TinyCar
   - 
   - 

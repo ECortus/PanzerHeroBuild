@@ -5,13 +5,15 @@ using UnityEngine;
 public class House : DestrictableBuilding
 {
     public bool Damaged = false;
-    private ActionZone zone;
+    [HideInInspector] public ActionZone zone;
 
     private float startCount;
 
     void Start()
     {
-        zone = GetComponentInParent<ActionZone>();
+        RefreshComponentsToParts();
+
+        /* zone = GetComponentInParent<ActionZone>(); */
         startCount = destrictableObjects.Count;
     }
 
@@ -19,7 +21,7 @@ public class House : DestrictableBuilding
     {
         if(destrictableObjects.Count != startCount)
         {
-            zone.UpdHouses(this);
+            if(zone != null) zone.UpdHouses(this);
             this.enabled = false;
         }
     }

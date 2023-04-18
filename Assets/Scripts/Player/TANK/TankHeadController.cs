@@ -114,6 +114,11 @@ public class TankHeadController : MonoBehaviour
             {
                 Tutorial.Instance.SetState(TutorialState.ROTATE, true);
             }
+            else if(!Tutorial.Instance.ROTATE_isDone)
+            {
+                Tutorial.Instance.SHOOT_isDone = false;
+                Tutorial.Instance.SetState(TutorialState.ROTATE, true);
+            }
         }
     }
 
@@ -187,7 +192,7 @@ public class TankHeadController : MonoBehaviour
 
     void CorrectGunDirection()
     {
-        RaycastHit hit;
+        /* RaycastHit hit;
         if(Physics.Raycast(prepareToAimRoot.position, prepareToAimRoot.forward, out hit))
         {
             float angle = 0f;
@@ -202,12 +207,13 @@ public class TankHeadController : MonoBehaviour
 
             angle = Mathf.Tan(catet2/catet1);
 
-            gun.localEulerAngles = new Vector3(0f, 0f, Mathf.Abs(angle) + 1f);
+            gun.localEulerAngles = new Vector3(0f, 0f, angle * 1.5f);
         }
         else
         {
             gun.localEulerAngles = new Vector3(0f, 0f, 1f);
-        }
+        } */
+        gun.localEulerAngles = new Vector3(0f, 0f, 1.2f);
     }
 
     async void Shot()

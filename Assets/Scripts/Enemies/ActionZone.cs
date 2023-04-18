@@ -13,17 +13,32 @@ public class ActionZone : MonoBehaviour
     [SerializeField] private List<House> houses = new List<House>();
     [SerializeField] private int reward = 100;
 
+    bool on = false;
+
     void Start()
     {
         stats.Clear();
         stats = transform.GetComponentsInChildren<EnemyStats>().ToList();
 
+        foreach(EnemyStats stat in stats)
+        {
+            stat.aggrAll = this;
+        }
+
         houses.Clear();
         houses = transform.GetComponentsInChildren<House>().ToList();
+
+        foreach(House house in houses)
+        {
+            house.zone = this;
+        }
     }
 
     public void On()
     {
+        if(on) return;
+
+        on = true;
         foreach(EnemyStats stat in stats)
         {
             stat.On();
@@ -32,10 +47,9 @@ public class ActionZone : MonoBehaviour
 
     public void UpdStats(EnemyStats stat)
     { 
-        if(eventPoint == null) return;
-
         stats.Remove(stat);
 
+        if(eventPoint == null) return;
         if(stats.Count == 0) eventPoint.SetActive(false);
     }
 
@@ -45,6 +59,11 @@ public class ActionZone : MonoBehaviour
 
         houses.Remove(house);
 
-        if(houses.Count == 0) Money.Plus(reward);
+        if(houses.Count == 0) Reward();
+    }
+
+    void Reward()
+    {
+        Money.Plus(reward);
     }
 }

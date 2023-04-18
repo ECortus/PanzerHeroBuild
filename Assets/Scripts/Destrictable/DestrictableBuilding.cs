@@ -15,17 +15,12 @@ public class DestrictableBuilding : MonoBehaviour
 
     [Header("Parameters: ")]
     public PhysicMaterial destrictableMaterial;
-    public LayerMask destrictableMask, enemyMask;
+    public LayerMask destrictableMask, nonDestrictableMask, enemyMask;
     public float destrictableForce;
     public float destrictableRadius;
 
-    void Start()
-    {
-        RefreshComponentsToParts();
-    }
-
     [ContextMenu("Refresh")]
-    void RefreshComponentsToParts()
+    public void RefreshComponentsToParts()
     {
         destrictableObjects.Clear();
 
@@ -43,12 +38,13 @@ public class DestrictableBuilding : MonoBehaviour
         }
     }
 
-    public void GetDestroyedByBoom(IBoom boom)
+    public void GetDestroyedByBoom(IBoom boom, float distance = 0f)
     {
         Vector3 direction = (transform.position - boom.Center).normalized;
-        TriggerDestrictableObjects(GetObjectsOnRadius(boom.Center, boom.Radius), direction);
+        float radius = boom.Radius - distance;
+        TriggerDestrictableObjects(GetObjectsOnRadius(boom.Center, radius), direction);
 
-        Collider[] cols = Physics.OverlapSphere(boom.Center, boom.Radius * 1.1f, enemyMask);
+        Collider[] cols = Physics.OverlapSphere(boom.Center, radius * 1.1f, enemyMask);
 
         if(cols.Length > 0)
         {
@@ -74,23 +70,26 @@ public class DestrictableBuilding : MonoBehaviour
         TriggerDestrictableObjects(destrictableObjects, tank.forward);
     }
 
-    public void GetDestroyedByWhizzbang(Whizzbang whizzbang)
+    public void GetDestroyedByWhizzbang(Whizzbang whizzbang, bool killUnits = false)
     {
         if(whizzbang.damage < 1f) return;
 
         TriggerDestrictableObjects(GetObjectsOnRadius(whizzbang.center, destrictableRadius), whizzbang.transform.forward);
 
-        Collider[] cols = Physics.OverlapSphere(whizzbang.center, destrictableRadius * 1.1f, enemyMask);
-
-        if(cols.Length > 0)
+        if(killUnits)
         {
-            EnemyUnit unit;
-            foreach(Collider col in cols)
+            Collider[] cols = Physics.OverlapSphere(whizzbang.center, destrictableRadius * 1.1f, enemyMask);
+
+            if(cols.Length > 0)
             {
-                unit = col.GetComponentInParent<EnemyUnit>();
-                if(unit != null)
+                EnemyUnit unit;
+                foreach(Collider col in cols)
                 {
-                    unit.stats.GetHit(999f);
+                    unit = col.GetComponentInParent<EnemyUnit>();
+                    if(unit != null)
+                    {
+                        unit.stats.GetHit(999f);
+                    }
                 }
             }
         }

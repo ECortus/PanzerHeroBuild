@@ -41,7 +41,14 @@ public class WhizzbangCollision : MonoBehaviour
                 break;
             case "Destrictable":
                 building = col.gameObject.GetComponent<DestrictableObject>().building;
-                building.GetDestroyedByWhizzbang(main);
+                if(col.gameObject.GetComponentInParent<House>() != null)
+                {
+                    building.GetDestroyedByWhizzbang(main, true);
+                }
+                else
+                {
+                    building.GetDestroyedByWhizzbang(main);
+                }
                 main.HitAboveSomething();
                 break;
             case "Ground":

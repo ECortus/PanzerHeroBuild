@@ -75,7 +75,7 @@ public class TankShooting : MonoBehaviour
         else
         {
             /* await UniTask.Delay(ReloadTime); */
-            await UniTask.Delay(10);
+            await UniTask.Delay(69);
         }
 
         return isReloading;

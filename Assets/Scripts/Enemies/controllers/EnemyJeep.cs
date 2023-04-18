@@ -6,10 +6,10 @@ using System.Linq;
 
 public class EnemyJeep : MonoBehaviour
 {
-    [SerializeField] private bool LockMovement = false;
+    private bool LockMovement = false;
 
 	[SerializeField] private float rotateSpeed;
-    [SerializeField] private float stopDistance = 35f;
+    /* [SerializeField] private float stopDistance = 35f; */
     [SerializeField] private float distanceToDetect = 15f;
 
     [Space]
@@ -31,8 +31,8 @@ public class EnemyJeep : MonoBehaviour
         {
             target = transform.position;
 
-            if(HaveDetectPlayer || patrolWay.Count == 0) target = TankController.Instance.center;
-            else target = patrolWay[patrolIndex].position;
+            /* if(HaveDetectPlayer || patrolWay.Count == 0) target = TankController.Instance.center;
+            else  */target = patrolWay[patrolIndex].position;
 
             return target;
         }
@@ -42,7 +42,7 @@ public class EnemyJeep : MonoBehaviour
 	{
 		get
 		{
-			return transform.position /* - transform.up * engine.colliderRadius * ((int)engine.colliderRadius / 1 + 1) / 10f */;
+			return transform.position - transform.up * engine.colliderRadius * ((int)engine.colliderRadius / 1 + 1) / 10f;
 		}
 	}
 
@@ -79,6 +79,12 @@ public class EnemyJeep : MonoBehaviour
             if(!LockMovement) Patrol();
             return;
         }
+        else
+        {
+            if(!LockMovement) Patrol();
+        }
+
+        /* Patrol(); */
 
         if(!stats.Active || !GameManager.Instance.GetActive()) 
         {
@@ -86,7 +92,7 @@ public class EnemyJeep : MonoBehaviour
 
             rb.velocity = Vector3.zero;
             return;
-        }
+        }/* 
 
 		if(DistanceToPoint(point) < stopDistance)
 		{
@@ -104,7 +110,7 @@ public class EnemyJeep : MonoBehaviour
             }
 
             Rotate();
-        }
+        } */
 	}
 
     void Patrol()
@@ -114,7 +120,7 @@ public class EnemyJeep : MonoBehaviour
             return;
         }
 
-        if(DistanceToPoint(point) < 1.5f)
+        if(DistanceToPoint(point) < 2f)
         {
             patrolIndex++;
             if(patrolIndex > patrolWay.Count - 1) patrolIndex = 0;
@@ -166,8 +172,8 @@ public class EnemyJeep : MonoBehaviour
 
     void OnDrawGizmos()
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(center, stopDistance);
+        /* Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(center, stopDistance); */
 
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(center, distanceToDetect);

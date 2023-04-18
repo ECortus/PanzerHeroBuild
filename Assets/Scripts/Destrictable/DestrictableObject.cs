@@ -6,6 +6,7 @@ using Cysharp.Threading.Tasks;
 public class DestrictableObject : MonoBehaviour
 {
     private int Layer => (int)Mathf.Log(building.destrictableMask.value, 2);
+    private int nonLayer => (int)Mathf.Log(building.nonDestrictableMask.value, 2);
 
     private DestrictableBuilding _building;
     public DestrictableBuilding building
@@ -88,6 +89,7 @@ public class DestrictableObject : MonoBehaviour
         rb.collisionDetectionMode = CollisionDetectionMode.Discrete;
         rb.interpolation = RigidbodyInterpolation.None;
 
+        col.enabled = true;
         col.convex = true;
         col.isTrigger = false;
         col.material = building.destrictableMaterial;
@@ -127,7 +129,8 @@ public class DestrictableObject : MonoBehaviour
 
     public void Trigger()
     {
-        /* gameObject.layer = 0; */
+        gameObject.tag = "Destrictable";
+        gameObject.layer = Layer;
 
         rb.constraints = RigidbodyConstraints.None;
         rb.useGravity = true;

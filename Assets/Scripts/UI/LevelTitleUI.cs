@@ -10,12 +10,15 @@ public class LevelTitleUI : MonoBehaviour
     [SerializeField] private Image[] grid;
 
     [SerializeField] private Sprite complete, uncomplete;
+    private int level => Statistics.LevelIndex + 1;
 
     public void Upd()
     {
-        levelCounter.text = $"LEVEL {Statistics.LevelIndex + 1}";
+        levelCounter.text = $"LEVEL {level}";
 
-        int count = (Statistics.LevelIndex + 1) % grid.Length;
+        int count = (level) % grid.Length;
+        count += ((level) / grid.Length > 0 && (level) % grid.Length == 0 ? grid.Length : 0);
+
         foreach(Image child in grid)
         {
             if(count > 0)

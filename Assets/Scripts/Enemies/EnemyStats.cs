@@ -6,7 +6,7 @@ using UnityEngine.Events;
 public class EnemyStats : MonoBehaviour
 {
     [SerializeField] private EnemyHealthUI healthUI;
-    [SerializeField] private ActionZone aggrAll;
+    public ActionZone aggrAll;
 
     [Header("Default stats(on start and handle set-s) ")]
     public float _DefaultHP = 100f;
@@ -64,10 +64,10 @@ public class EnemyStats : MonoBehaviour
         SetMaxStats();
     }
 
-    void Start()
+    /* void Start()
     {
         aggrAll = GetComponentInParent<ActionZone>();
-    }
+    } */
 
     public void SetMaxStats()
     {
@@ -88,19 +88,18 @@ public class EnemyStats : MonoBehaviour
 
     public void GetHit(float dmg)
     {
+        if(aggrAll != null) aggrAll.On();
+
         if(!Active)
         {
             if(dmg >= HP)
             {
                 HP = 0;
                 Death();
-
-                if(aggrAll != null) aggrAll.On();
                 return;
             }
             
             On();
-            if(aggrAll != null) aggrAll.On();
         }
 
         if(dmg >= HP)

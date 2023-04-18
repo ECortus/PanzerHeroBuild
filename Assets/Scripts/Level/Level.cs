@@ -34,7 +34,8 @@ public class Level : MonoBehaviour
     {
 		GameManager.Instance.SetActive(false);
 
-        Money.Plus(500);
+        int money = Random.Range(444, 666);
+        Money.Plus(money);
         MoneyUI.Instance.ResetMoney();
         Money.Save();
 

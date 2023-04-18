@@ -32,7 +32,7 @@ public static class Money
     
     public static void Load()
     {
-        money = PlayerPrefs.GetInt(key, 1000);
+        money = PlayerPrefs.GetInt(key, 0);
         MoneyUI.Instance.ResetMoney();
     }
 }

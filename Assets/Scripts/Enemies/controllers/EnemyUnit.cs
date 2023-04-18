@@ -235,8 +235,8 @@ public class EnemyUnit : MonoBehaviour
         Gizmos.color = Color.black;
         Gizmos.DrawSphere(center, 0.5f);
 
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(center, maxShootDistance);
+        /* Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(center, maxShootDistance); */
 
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(center, distanceToDetect);

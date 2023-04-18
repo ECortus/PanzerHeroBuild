@@ -17,7 +17,6 @@ public class TankCollision : MonoBehaviour
             case "Building":
                 break;
             case "EnemyUnit":
-                col.gameObject.GetComponent<EnemyStats>().GetHit(999f);
                 break;
             case "Destrictable":
                 break;

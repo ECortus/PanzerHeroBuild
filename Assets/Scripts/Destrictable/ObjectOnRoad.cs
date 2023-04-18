@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class ObjectOnRoad : DestrictableBuilding
 {
+    void Start()
+    {
+        RefreshComponentsToParts();
+    }
+
     void OnTriggerEnter(Collider col)
     {
         GameObject go = col.gameObject;
