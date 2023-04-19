@@ -4228,6 +4228,9 @@ MonoBehaviour:
   destrictableMask:
     serializedVersion: 2
     m_Bits: 2048
+  nonDestrictableMask:
+    serializedVersion: 2
+    m_Bits: 0
   enemyMask:
     serializedVersion: 2
     m_Bits: 8192
@@ -4569,6 +4572,7 @@ GameObject:
   - component: {fileID: 2965991704319357305}
   - component: {fileID: 2965991704319357304}
   - component: {fileID: 2965991704319357307}
+  - component: {fileID: 6913606150362242810}
   m_Layer: 11
   m_Name: Floor
   m_TagString: Destrictable
@@ -4670,6 +4674,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.03440649, y: 0.032544296, z: 0.0040129377}
   m_Center: {x: 0.0015510338, y: 0.00031330466, z: 0.0020000003}
+--- !u!114 &6913606150362242810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8663381672006562622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 839d8efdc20c93b4f9e36616e73eef39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &9178339719931765453
 GameObject:
   m_ObjectHideFlags: 0
